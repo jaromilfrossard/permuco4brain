@@ -7,7 +7,7 @@
 \method{image}{brainperm}(x, effect = NULL, ...)
 }
 \arguments{
-\item{x}{a brainperm model.}
+\item{x}{a brainperm object.}
 
 \item{effect}{an integer indicating which effect to plot.}
 

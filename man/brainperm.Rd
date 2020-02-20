@@ -19,30 +19,30 @@ brainperm(
 )
 }
 \arguments{
-\item{formula}{A formula object defining the design of the model. The left part should a 3 dimentional array. Its row are the observations (or design), its colomn are the samples (or time-point) and the third dimention are the nodes of the graph. Each row should correspond to the \code{data}.}
+\item{formula}{A formula object defining the design of the model. The left part should be a 3 dimensional array. Its row are the observations (or design), its colomn are the samples (or time-point) and the third dimension are the space (or the nodes of the graph). Each row should correspond to the design in the \code{data} argument.}
 
 \item{data}{A dataframe containing the design.}
 
-\item{graph}{An igraph object representing an undirected graph. It specifies the neighborgoods/spatial relationship between the nodes.}
+\item{graph}{An igraph object. It specifies the neighborgoods/spatial relationship between the signal/nodes.}
 
-\item{np}{A scalar indicating the number of permutations. Will be overwrite by \code{P} if specified.}
+\item{np}{A scalar indicating the number of permutations. It will be overwrite if \code{P} is manually specified.}
 
 \item{test}{A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.}
 
 \item{aggr_FUN}{A function used as mass function. It should aggregate the statistics of a cluster into one scalar. Default is the sum of squares fot t statistic and sum for F statistic.}
 
-\item{method}{A character string specifying the re-sampling method. See \code{permuco}.}
+\item{method}{A character string specifying the re-sampling method. See \code{permuco} for details on permutation methods.}
 
 \item{threshold}{See \code{clusterlm} in \code{permuco}.}
 
 \item{multcomp}{The multiple comparison procedure only \code{"clustermass"} (default) and \code{"troendle"}is available.}
 
-\item{effect}{An integer indicating the effect to test. Refer to the \code{assign} attribute of the \code{model.matrix} object. If \code{NULL} it will test all the effects.}
+\item{effect}{An integer indicating the effect to test. It refers to the \code{assign} attribute of the \code{model.matrix} object. The default (\code{effect = NULL}) compute all effects.}
 
 \item{...}{further arguments}
 }
 \description{
-Compute permutation test of on multiple signals spatially distributed like full-scalp EEG analysis.
+Compute permutation test of on multiple signals spatially distributed like full-scalp EEG.
 }
 \details{
 The random effects model is only avaible with a F statistic.\cr

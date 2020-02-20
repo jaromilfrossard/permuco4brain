@@ -9,7 +9,7 @@ WARNING: permuco4brain currently works with the `flip` branch of permuco. Downlo
 
 This package is an add-on to permuco to compute cluster-mass test on spatio-temporal data, like full-scalp EEG data.
 
-The package is still in developpement and will change.
+The package is still in developpement and you can expect changes.
 
 
 The main function is brainperm() and it needs:
@@ -17,6 +17,8 @@ The main function is brainperm() and it needs:
 1. formula: a formula object definig the design (right side) and a 3D array containing the signals. Its dimension is the design X times X channel. Each "rows" of the 3D array should be related to the corresponding row of the data.
 2. data: a dataframe containing the variables of the design.
 3. graph: an igraph object defining spatial adjacency of the channels (third dimension of the signal). The names of the vertices should correspond to the names of the 3rd dimension of signal.
+
+You can inspect result using the summary() method and vizualize them using image().
 
 
 
