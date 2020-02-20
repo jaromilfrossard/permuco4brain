@@ -1,0 +1,170 @@
+---
+title: "Using permuco4brain with eeguana"
+output: rmarkdown::html_vignette
+bibliography: ref.bib
+vignette: >
+  %\VignetteIndexEntry{permuco4brain-with-eeguana}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+### Extracting 3D array using eeguana
+
+The `eeguana` package [@nicenboim_eeguana_2020] provides tools for the preprocessing of EEG data. Once the pre-processing done with eeguana the 3D matrix can be easly extracted to be pass in the brainperm() function.
+
+The EEG data [@nicenboim_eeg_2019] available on an Open Science Framework repository was analysed using the `eeguana` package. We will use the same dataset for the following tutorial.
+
+### Downloading data from OSF
+
+From the [EEG data](https://osf.io/ut7xq/) repository we found the "03_data_summarization.Rmd" file which provides functions to easly download the dataset. It is large (more than 20Gb) so we only download the pre-processed data using ICA. Following the first chunk of the "03_data_summarization.Rmd" file you should have (at least):
+
+1. A folder `data/` containing 5 csv files, 2 tsv files and 2 folders. 
+2. The folder `data/preproc_ica/` contains 120 RDA files (1 for each subect). Each file contains an `eeg_lst` object from eeguana with pre-processed EEG data.
+3. The folder `data/opensesame_files/` contains 120 csv files (1 for each subect)
+
+
+## Computing the ERPs
+
+First, we compute ERP following the design of the experiment and save them in the folder `data_erp/`. To reduce the number of sample (and the computing time), we delete samples (or time-point) before the event and downsample to 256Hz. Finally the ERP are computed by taking the average for each sample, each channel and each experimental condition, which are the interaction between the `within` participant factors `region` and `cond`.
+
+
+```{r within, echo=TRUE,eval=FALSE}
+library(tidyverse)
+library(eeguana)
+
+datadir <- "data/preproc_ica/"
+
+lf <- list.files(datadir)
+
+for(i in 1:length(lf)){
+  print(i)
+  eeg <- readRDS(paste0(datadir,lf[i]))
+  
+  erp <- eeg%>%
+    filter(.sample>=0)%>%
+    eeg_downsample(q=2)%>%
+    group_by(.recording,.sample,region,cond)%>%
+    summarize_at(channel_names(.), mean, na.rm = TRUE)
+  saveRDS(erp, file = paste0("data_erp/",lf[i]))
+}
+```
+
+The previous script should produce 120 files in the folder `data_erp/`, one for each participant.
+
+The ERP can be combine into 1 `eeg_lst` object by running:
+
+```{r erps, echo=TRUE,eval=FALSE}
+datadir <- "data_erp/"
+lf <- list.files(datadir)
+
+erps <- list()
+
+for(i in 1:length(lf)){
+  print(i)
+  erps[[i]] <- readRDS(paste0(datadir,lf[i]))%>%
+    mutate(subject_nr = as.numeric(strsplit(.recording,"[._]")[[1]][1]))
+}
+
+erps <- do.call("bind",erps)
+```
+
+Now, the `erps` object contains the ERP for all participants. Its class is `eeg_lst` which means that it can be manipulate using the functions of `eeguana`.
+
+## Adding the `between`-participant variables
+
+We download the `between`-participant variables by combining 4 files. We choose to keep the age, the batch and the occipation as `between`-participant factors. 
+
+```{r between, echo=TRUE,eval=FALSE}
+df_subj <- bind_rows(read_csv("data/students.csv") %>%
+                         mutate(batch =1, student = "yes"),
+                       read_csv("data/students_2.csv") %>%
+                         mutate(batch =2, student = "yes"),
+                       read_csv("data/nonstudents.csv") %>%
+                         mutate(batch =1, student = "no"),
+                       read_csv("data/nonstudents_2.csv")%>%
+                         mutate(batch =2, student = "no"))%>%
+  select(subj_order = NR, subject_nr, age = Alter, batch, 
+         occupation = student)
+```
+
+
+The dataset does not contain the `between`-participants variables for all participants, so we choose to delete 8 participants from our analysis. 
+
+
+```{r remove, echo=TRUE,eval=FALSE}
+subject_to_rm <- c(21,35,316,111,222,322,98,245)
+
+erps <- erps%>%
+  filter(!(subject_nr%in%subject_to_rm))
+
+df_subj <- df_subj%>%
+  filter(!(subject_nr%in%subject_to_rm))
+```
+
+Finally we merge the `between`-participants variables to the `erps` object and remove the uninteresting channels from our analysis.
+
+```{r merge, echo=TRUE,eval=FALSE}
+erps <- erps%>%
+  left_join(df_subj ,by = c("subject_nr"))
+
+chan_to_rm = c("M1","M2","HEOG","VEOG")
+erps <- erps%>%
+  select(-one_of(chan_to_rm))
+```
+
+## Extracting the 3D matrix
+
+We extract the 3D matrix using the following script. The dimension are design X sample X channel.
+
+```{r array, echo=TRUE,eval=FALSE}
+signal <- erps
+  signal_tbl()%>%
+  group_by(.id)%>%
+  nest()%>%
+  mutate(data = map(data,~as.matrix(.x[-1])))%>%
+  pull(data)%>%
+  invoke(abind::abind,.,along = 3)%>%
+  aperm(c(3,1,2))
+```
+
+The design containing both the between and within variables is simply extracted using the `segments_tbl()` function. Moreover, we center the covariate as it makes more sense for the test.
+
+```{r design, echo=TRUE,eval=FALSE}
+design <- segments_tbl(erps)%>%
+  ungroup()%>%
+  mutate(age_c = age - mean(age))
+```
+
+
+Finally the graph of adjacency is computed using the 32 channels layout data in `eeguana` and the `position_to_graph()` function from `permuco4brain`. Note that, as previously we deleted some channels. Moreover, we can chech the adjacency graph using the `plot()` function from `igraph`.
+
+```{r graph, echo=TRUE,eval=FALSE}
+library(permuco4brain)
+
+data("layout_32_1020")
+layout <- layout_32_1020%>%
+  filter(!(.channel%in%c(chan_to_rm)))
+
+graph <- position_to_graph(layout, delta = .75,name = .channel,
+                          x = .x, y = .y, z = .z)
+igraph::plot.igraph(graph)
+```
+
+Now, we have the 3 object we need to run a clustermass test, the 3D array containing the signals, a dataframe containing the design and a graph defining the spatial adjacency of the channels. We can save these object before running the analysis.
+
+```{r save, echo=TRUE,eval=FALSE}
+# save(signal = signal,
+#      design = design,
+#      graph = graph,file = "signal_design_graph.RData")
+```
+
+### Bibliography
+
