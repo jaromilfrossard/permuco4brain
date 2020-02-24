@@ -125,7 +125,7 @@ erps <- erps%>%
 We extract the 3D matrix using the following script. The dimension are design X sample X channel.
 
 ```{r array, echo=TRUE,eval=FALSE}
-signal <- erps
+signal <- erps%>%
   signal_tbl()%>%
   group_by(.id)%>%
   nest()%>%
