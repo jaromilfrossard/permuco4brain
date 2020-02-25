@@ -173,7 +173,7 @@ Now, we have the 3 object we need to run a clustermass test, the 3D array contai
 Finally, we use `permuco4brain` for testing the difference between experimental conditions. We have a repeated measures ANCOVA, with 1 covariate (the centred age), 1 between-participants factors (the occuptation) and 2 within-participants factors (reguiib and conditions). The permutation tests is computed for all samples, all channels while controling for the family-wise error rate (FWER).
 
 
-```{r save, echo=TRUE,eval=FALSE}
+```{r model, echo=TRUE,eval=FALSE}
 formula <- signal ~ age_c*occupation*region*cond +Error(.recording/(region*cond))
 model <- brainperm(formula = formula, data = design, graph = graph)
 ```
