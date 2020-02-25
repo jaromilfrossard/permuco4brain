@@ -61,7 +61,7 @@ brainperm_rnd <- function(formula, data, method, threshold, np, P, graph, effect
              compute_clustermass_array(distribution = distribution,threshold = threshold,
                                        alternative = alternative, aggr_FUN = aggr_FUN,graph = graph)}},
          "troendle" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative){
-           compute_troendle_array(distribution = distribution,graph = graph, alternative)
+           compute_troendle_array(distribution = distribution,graph = graph, alternative = alternative)
          }})
 
 
