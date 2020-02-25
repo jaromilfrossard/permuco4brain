@@ -6,6 +6,7 @@
 #'@param data A dataframe containing the design.
 #'@param graph An igraph object. It specifies the neighborgoods/spatial relationship between the signal/nodes.
 #'@param np A scalar indicating the number of permutations. It will be overwrite if \code{P} is manually specified.
+#'@param type A character string to specify the type of re-sampling transformation. Default is \code{"permutation"} and \code{"signflip"} is also available. Is overridden if P is given. See help from \code{Pmat} in \code{permuco}.
 #'@param test A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.
 #'@param method A character string specifying the re-sampling method. See \code{permuco} for details on permutation methods.
 #'@param threshold See \code{clusterlm} in \code{permuco}.
@@ -24,8 +25,8 @@
 #'
 #'@import permuco
 #'@export
-brainperm <- function(formula, data, graph, np = 5000, test = "fisher", aggr_FUN = NULL,
-                        method = NULL, threshold = NULL, multcomp = "clustermass", effect = NULL,...){
+brainperm <- function(formula, data, graph, np = 5000,method = NULL, type = "permutation", test = "fisher", aggr_FUN = NULL,
+                      threshold = NULL, multcomp = "clustermass", effect = NULL,...){
 
 
   Terms <- terms(formula, special = "Error", data = data)
@@ -53,10 +54,13 @@ brainperm <- function(formula, data, graph, np = 5000, test = "fisher", aggr_FUN
   }
 
   multcomp <- match.arg(multcomp, c("clustermass", "troendle"), several.ok = F)
+
+  type <- match.arg(type, c("permutation", "signflip"), several.ok = F)
+
   if (is.null(indError)) {
     result <- brainperm_fix(formula = formula, data = data, method = method, threshold = threshold, np = np, P = dotargs$P,
                                graph = graph, effect = effect, coding_sum = dotargs$coding_sum, test = test,
-                               aggr_FUN = aggr_FUN, multcomp = multcomp, ncores = ncores,
+                               aggr_FUN = aggr_FUN, multcomp = multcomp, ncores = ncores, type = type,
                                return_distribution = dotargs$return_distribution,new_method = dotargs$new_method,
                                rnd_rotation = dotargs$rnd_rotation)
   }
@@ -67,7 +71,7 @@ brainperm <- function(formula, data, graph, np = 5000, test = "fisher", aggr_FUN
     }
     result <- brainperm_rnd(formula = formula, data = data, method = method, threshold = threshold, np = np, P = dotargs$P,
                             graph = graph, effect = effect, coding_sum = dotargs$coding_sum, test = test,
-                            aggr_FUN = aggr_FUN, multcomp = multcomp, ncores = ncores,
+                            aggr_FUN = aggr_FUN, multcomp = multcomp, ncores = ncores, type = type,
                             return_distribution = dotargs$return_distribution,new_method = dotargs$new_method)
   }
   return(result)

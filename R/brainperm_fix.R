@@ -1,5 +1,5 @@
 #' @importFrom stats rnorm qt pt
-brainperm_fix <- function(formula, data, method, threshold, np, P, graph, effect, coding_sum, test,
+brainperm_fix <- function(formula, data, method, threshold, np, P, graph, effect, coding_sum, test,type,
                              aggr_FUN, multcomp, return_distribution,ncores,new_method,rnd_rotation){
 
   ##Method$
@@ -110,12 +110,12 @@ brainperm_fix <- function(formula, data, method, threshold, np, P, graph, effect
   if(is.null(P)){switch(method,
                         "huh_jhun" = {
                           switch (test,
-                                  "t" = {P <- Pmat(np = np, n = dim_y[1] - NCOL(mm) + 1)},
+                                  "t" = {P <- Pmat(np = np, n = dim_y[1] - NCOL(mm) + 1,type = type)},
                                   "fisher" = {{
                                     P <- lapply(as.numeric(table(col_ref))[-1],
-                                                function(cx){Pmat(np = np, n = dim_y[1] - NCOL(mm) + cx)})}}
+                                                function(cx){Pmat(np = np, n = dim_y[1] - NCOL(mm) + cx,type = type)})}}
                           )},
-                        {P <- Pmat(np = np, n = dim_y[1])})}
+                        {P <- Pmat(np = np, n = dim_y[1],type = type)})}
 
 
   if(sum(permuco:::np.Pmat(P) <= 3999)>0){

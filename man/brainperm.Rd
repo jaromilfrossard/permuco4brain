@@ -9,9 +9,10 @@ brainperm(
   data,
   graph,
   np = 5000,
+  method = NULL,
+  type = "permutation",
   test = "fisher",
   aggr_FUN = NULL,
-  method = NULL,
   threshold = NULL,
   multcomp = "clustermass",
   effect = NULL,
@@ -27,11 +28,11 @@ brainperm(
 
 \item{np}{A scalar indicating the number of permutations. It will be overwrite if \code{P} is manually specified.}
 
+\item{method}{A character string specifying the re-sampling method. See \code{permuco} for details on permutation methods.}
+
 \item{test}{A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.}
 
 \item{aggr_FUN}{A function used as mass function. It should aggregate the statistics of a cluster into one scalar. Default is the sum of squares fot t statistic and sum for F statistic.}
-
-\item{method}{A character string specifying the re-sampling method. See \code{permuco} for details on permutation methods.}
 
 \item{threshold}{See \code{clusterlm} in \code{permuco}.}
 

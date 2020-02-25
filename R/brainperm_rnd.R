@@ -19,7 +19,7 @@
 #'@importFrom stats update as.formula contr.sum model.frame contrasts<- model.matrix qf
 #'@importFrom igraph permute.vertices
 # #'@export
-brainperm_rnd <- function(formula, data, method, threshold, np, P, graph, effect, coding_sum, test,
+brainperm_rnd <- function(formula, data, method, threshold, np, P, graph, effect, coding_sum, test,type,
                                aggr_FUN, multcomp, return_distribution,ncores,new_method){
 
 
@@ -129,7 +129,7 @@ brainperm_rnd <- function(formula, data, method, threshold, np, P, graph, effect
     permuco:::checkBalancedData(fixed_formula = formula_f, data = cbind(mf))
 
     #compute permutation
-    if (is.null(P)) {P = Pmat(np = np, n = dim(signal)[1])}
+    if (is.null(P)) {P = Pmat(np = np, n = dim(signal)[1],type = type)}
     np = permuco:::np.Pmat(P)
 
     ##distribution
