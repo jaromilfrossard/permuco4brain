@@ -102,21 +102,25 @@ The dataset does not contain the `between`-participants variables for all partic
 ```{r remove, echo=TRUE,eval=FALSE}
 subject_to_rm <- c(21,35,316,111,222,322,98,245)
 
-erps <- erps%>%
+erps <- 
+  erps%>%
   filter(!(subject_nr%in%subject_to_rm))
 
-df_subj <- df_subj%>%
+df_subj <- 
+  df_subj%>%
   filter(!(subject_nr%in%subject_to_rm))
 ```
 
 Finally we merge the `between`-participants variables to the `erps` object and remove the uninteresting channels from our analysis.
 
 ```{r merge, echo=TRUE,eval=FALSE}
-erps <- erps%>%
+erps <- 
+  erps%>%
   left_join(df_subj ,by = c("subject_nr"))
 
-chan_to_rm = c("M1","M2","HEOG","VEOG")
-erps <- erps%>%
+chan_to_rm <- c("M1","M2","HEOG","VEOG")
+erps <- 
+  erps%>%
   select(-one_of(chan_to_rm))
 ```
 
@@ -125,7 +129,8 @@ erps <- erps%>%
 We extract the 3D matrix using the following script. The dimension are design X sample X channel.
 
 ```{r array, echo=TRUE,eval=FALSE}
-signal <- erps%>%
+signal <- 
+  erps%>%
   signal_tbl()%>%
   group_by(.id)%>%
   nest()%>%
@@ -138,7 +143,8 @@ signal <- erps%>%
 The design containing both the between and within variables is simply extracted using the `segments_tbl()` function. Moreover, we center the covariate as it makes more sense for the test.
 
 ```{r design, echo=TRUE,eval=FALSE}
-design <- segments_tbl(erps)%>%
+design <- 
+  segments_tbl(erps)%>%
   ungroup()%>%
   mutate(age_c = age - mean(age))
 ```
@@ -148,14 +154,12 @@ Finally the graph of adjacency is computed using the 32 channels layout data in 
 
 ```{r graph, echo=TRUE,eval=FALSE}
 library(permuco4brain)
-
-data("layout_32_1020")
-layout <- layout_32_1020%>%
+layout <- 
+  channels_tbl(erps)%>%
   filter(!(.channel%in%c(chan_to_rm)))
 
 graph <- position_to_graph(layout, delta = .75,name = .channel,
                           x = .x, y = .y, z = .z)
-igraph::plot.igraph(graph)
 ```
 
 Now, we have the 3 object we need to run a clustermass test, the 3D array containing the signals, a dataframe containing the design and a graph defining the spatial adjacency of the channels. We can save these object before running the analysis.
@@ -165,6 +169,15 @@ Now, we have the 3 object we need to run a clustermass test, the 3D array contai
 #      design = design,
 #      graph = graph,file = "signal_design_graph.RData")
 ```
+
+Finally, we use `permuco4brain` for testing the difference between experimental conditions. We have a repeated measures ANCOVA, with 1 covariate (the centred age), 1 between-participants factors (the occuptation) and 2 within-participants factors (reguiib and conditions). The permutation tests is computed for all samples, all channels while controling for the family-wise error rate (FWER).
+
+
+```{r save, echo=TRUE,eval=FALSE}
+formula <- signal ~ age_c*occupation*region*cond +Error(.recording/(region*cond))
+model <- brainperm(formula = formula, data = design, graph = graph)
+```
+
 
 ### Bibliography
 

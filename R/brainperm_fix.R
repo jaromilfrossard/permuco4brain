@@ -183,7 +183,7 @@ brainperm_fix <- function(formula, data, method, threshold, np, P, graph, effect
   cat("Computing Effect:\n")
 
   for(i in 1:length(colx)){
-    cat(i," (",attr(terms,"term.labels")[i], ") of ", length(colx), ". Start at ", as.character(Sys.time()),". ",sep = "")
+    cat(i," (",names(colx)[i], ") of ", length(colx), ". Start at ", as.character(Sys.time()),". ",sep = "")
     cat("\n")
 
     ###dfi
