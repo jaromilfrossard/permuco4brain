@@ -71,7 +71,8 @@ compute_clustermass_array = function(distribution, threshold, aggr_FUN, graph, a
                   statistic = as.numeric(vertex_attr(graph,name=c("statistic"))),
                   pvalue = as.numeric(vertex_attr(graph,name=c("pvalue"))),
                   cluster_id = as.numeric(vertex_attr(graph,name=c("cluster_id"))),
-                  clustermass = as.numeric(vertex_attr(graph,name=c("clustermass"))))
+                  clustermass = as.numeric(vertex_attr(graph,name=c("clustermass"))),
+                  stringsAsFactors = F)
 
   df$pvalue[is.na(df$pvalue)]=1
   df$cluster_id[is.na(df$cluster_id)]=0

@@ -30,6 +30,8 @@ brainperm(
 
 \item{method}{A character string specifying the re-sampling method. See \code{permuco} for details on permutation methods.}
 
+\item{type}{A character string to specify the type of re-sampling transformation. Default is \code{"permutation"} and \code{"signflip"} is also available. Is overridden if P is given. See help from \code{Pmat} in \code{permuco}.}
+
 \item{test}{A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.}
 
 \item{aggr_FUN}{A function used as mass function. It should aggregate the statistics of a cluster into one scalar. Default is the sum of squares fot t statistic and sum for F statistic.}

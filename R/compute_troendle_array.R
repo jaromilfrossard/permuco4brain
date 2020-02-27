@@ -27,7 +27,8 @@ compute_troendle_array = function(distribution,alternative, graph){
   df = data.frame(channel = vertex_attr(graph, name = c("channel")),
                   sample = as.numeric(vertex_attr(graph, name = c("sample"))),
                   statistic = as.numeric(vertex_attr(graph, name = c("statistic"))),
-                  pvalue = as.numeric(vertex_attr(graph, name = c("pvalue"))))
+                  pvalue = as.numeric(vertex_attr(graph, name = c("pvalue"))),
+                  stringsAsFactors = F)
 
 
 
