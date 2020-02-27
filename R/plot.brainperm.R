@@ -10,15 +10,14 @@
 #' @importFrom igraph get.edgelist
 #' @export
 plot.brainperm <- function(x, effect = 1, samples,...){
+  # save parameters
   par0 <- par()
 
   dotargs = list(...)
-
   dotargs_par <- dotargs[names(dotargs) %in% names(par())]
 
+
   if(is.null(dotargs$alpha)){dotargs$alpha = 0.05}
-
-
 
   if (is.null(dotargs_par$mar)) {
     dotargs_par$mar = c(0, 0, 2, 0)
@@ -28,11 +27,15 @@ plot.brainperm <- function(x, effect = 1, samples,...){
   }
   par(dotargs_par)
 
-
+  #Vertex data
   graph <- x$graph
   df <- data.frame(vertex_attr(graph),stringsAsFactors = F)
   df <- with(df,xyz2polar(name,x,y,z))
 
+  #radius of channels
+  rad = min(dist(cbind(df$x,df$y)),na.rm = T)*(1/4)
+
+  #Edge data
   df_edge <- data.frame(get.edgelist(graph),stringsAsFactors = F)
   colnames(df_edge)= c("from","to")
   df_edge <- left_join(df_edge,df,by = c("from"="name") )
@@ -40,32 +43,38 @@ plot.brainperm <- function(x, effect = 1, samples,...){
   df_edge <- left_join(df_edge,df,by = c("to"="name") )
   colnames(df_edge)[5:6] <- c("x.to","y.to")
 
-  rad = min(dist(cbind(df$x,df$y)),na.rm = T)*(1/4)
-
+  #plot dimension
   xlim <- range(df$x)
   xlim <- c(xlim[1]-rad,xlim[2]+rad)
   ylim <- range(df$y)
   ylim <- c(ylim[1]-rad,ylim[2]+rad)
-  mfrow = floor(sqrt(length(samples)))
-  mfrow = c(mfrow,ceiling(length(samples)/mfrow))
+
+  #mfrow args
+  mfrow <- floor(sqrt(length(samples)))
+  mfrow <- c(mfrow,ceiling(length(samples)/mfrow))
 
   if (is.null(dotargs_par$mfrow)) {
-    dotargs_par$mfrow = mfrow
+    dotargs_par$mfrow <- mfrow
   }
+
+
+  title <- names(x$multiple_comparison)[effect]
+
+
   par(dotargs_par)
 
 
 
   for(sample_id in 1:length(samples)){
-    main = paste0("sample: ",samples[sample_id])
+    main <- paste0("sample: ",samples[sample_id])
 
   plot(0,type="n",xlim = xlim,ylim = ylim, bty ="n",
-       xaxt = "n",yaxt = "n",xlab = "",ylab = "",main = main,...,...)
+       xaxt = "n",yaxt = "n",xlab = "",ylab = "",main = main,...=...)
   with(df_edge,segments(x.from,y.from,x.to,y.to))
   df_sampi <- left_join(df,subset(x$multiple_comparison[[effect]]$clustermass$data,
                             sample==(samples[sample_id])), by = c("name" = "channel"))
 
-  u_cl =unique(df_sampi$cluster_id)
+  u_cl <- unique(df_sampi$cluster_id)
   for(cli in u_cl){
     df_cli = df_sampi[df_sampi$cluster_id == cli,,drop=F]
     if(cli==0){
@@ -81,6 +90,8 @@ plot.brainperm <- function(x, effect = 1, samples,...){
   }
   text(labels = df$name,x=df$x,y=df$y)
   }
+
+  title(title, outer = T, cex = 2)
 
 
   par0 <- par0[!names(par0) %in% c("cin", "cra", "csi", "cxy", "din", "page")]
