@@ -1,6 +1,6 @@
 #' Plot of a graph of the channels
 #'
-#' @description Plot the graphs of the channels for several samples. Red indicates significant clusters, grey non-significant and white reprensent below the threshold.
+#' @description Plot the graphs of the channels for several samples. Red indicates significant clusters, grey non-significant and white represent below the threshold.
 #'
 #' @param x brainperm object with a clustermass test.
 #' @param effect an integer specifying which effect to plot.
@@ -33,7 +33,12 @@ plot.brainperm <- function(x, effect = 1, samples,...){
   df <- with(df,xyz2polar(name,x,y,z))
 
   #radius of channels
-  rad = min(dist(cbind(df$x,df$y)),na.rm = T)*(1/4)
+  if(length(df$x)!=1){
+    rad <- min(dist(cbind(df$x,df$y)),na.rm = T)*(1/4)}
+  else{
+    rad <-0.4
+  }
+
 
   #Edge data
   df_edge <- data.frame(get.edgelist(graph),stringsAsFactors = F)
@@ -44,10 +49,20 @@ plot.brainperm <- function(x, effect = 1, samples,...){
   colnames(df_edge)[5:6] <- c("x.to","y.to")
 
   #plot dimension
-  xlim <- range(df$x)
+  if(length(df$x)==1){
+    xlim <- c(df$x-0.5,df$x+0.5)
+  }else{
+    xlim <- range(df$x)
+  }
+  if(length(df$y)==1){
+    ylim <- c(df$y-0.5,df$y+0.5)
+  }else{
+    ylim <- range(df$y)
+  }
+
   xlim <- c(xlim[1]-rad,xlim[2]+rad)
-  ylim <- range(df$y)
   ylim <- c(ylim[1]-rad,ylim[2]+rad)
+
 
   #mfrow args
   mfrow <- floor(sqrt(length(samples)))
