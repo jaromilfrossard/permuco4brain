@@ -175,20 +175,9 @@ layout <-
 
 graph <- position_to_graph(layout, delta = .75,name = .channel,
                           x = .x, y = .y, z = .z)
-igraph::rglplot(graph)
 ```
 
-```{r plotgraph, echo=FALSE, message=FALSE, warning=FALSE, webgl=TRUE}
-library(tidyverse)
-library(eeguana)
-library(permuco)
-library(permuco4brain)
-library(igraph)
-library(rgl)
-load("../data_vignettes/signal_design_graph.RData")
-#igraph::rglplot(graph)
-```
-
+You can use `igraph::rglplot(graph)` to have a 3D representation of the adjacency between channels.
 Now, we have the 3 object we need to run a clustermass test, the 3D array containing the signals, a dataframe containing the design and a graph defining the spatial adjacency of the channels. We can save these object before running the analysis.
 
 ```{r save, echo=TRUE,eval=FALSE}
