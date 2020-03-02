@@ -9,10 +9,13 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+library(knitr)
+library(rgl)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+knit_hooks$set(webgl = hook_webgl)
 ```
 
 
@@ -166,13 +169,25 @@ design <-
 Finally the graph of adjacency is computed using the 32 channels layout data in `eeguana` and the `position_to_graph()` function from `permuco4brain`. Note that, as previously we deleted some channels. Moreover, we can chech the adjacency graph using the `plot()` function from `igraph`.
 
 ```{r graph, echo=TRUE,eval=FALSE}
-library(permuco4brain)
 layout <- 
   channels_tbl(erps)%>%
   filter(!(.channel%in%c(chan_to_rm)))
 
 graph <- position_to_graph(layout, delta = .75,name = .channel,
                           x = .x, y = .y, z = .z)
+igraph::rglplot(graph)
+```
+
+```{r plotgraph, echo=FALSE, message=FALSE, warning=FALSE, webgl=TRUE}
+library(tidyverse)
+library(eeguana)
+library(permuco)
+library(permuco4brain)
+library(igraph)
+library(rgl)
+print(list.files())
+#load("signal_design_graph.RData")
+#igraph::rglplot(graph)
 ```
 
 Now, we have the 3 object we need to run a clustermass test, the 3D array containing the signals, a dataframe containing the design and a graph defining the spatial adjacency of the channels. We can save these object before running the analysis.

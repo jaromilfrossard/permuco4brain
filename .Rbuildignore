@@ -1,2 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+signal_design_graph.RData
+^doc$
+^Meta$
