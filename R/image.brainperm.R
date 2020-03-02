@@ -9,11 +9,7 @@
 #' @export
 image.brainperm = function(x, effect = NULL,...){
 
-
   multcomp = x$multcomp[1]
-
-
-
 
   if(is.null(effect)){effect = x$effect[1]}
 
@@ -74,6 +70,9 @@ image.brainperm = function(x, effect = NULL,...){
       cl_mat = matrix(as.numeric(pval_mat<dotargs$alpha),nrow = nrow(pval_mat))
     }
 
+
+
+
   # if(dotargs$add_border){
   #   b_mat <- data
   #   egos <- ego(multiple_comparison[[effect]][[multcomp]]$graph, V(multiple_comparison[[effect]][[multcomp]]$graph))
@@ -95,10 +94,14 @@ image.brainperm = function(x, effect = NULL,...){
 
 
   ## non significant sample in grey
+
   ns_mat = f_mat
-  ns_mat[pval_mat<dotargs$alpha]=NA
+  ns_mat[pval_mat<dotargs$alpha]<-NA
   ns_mat[pval_mat>=dotargs$alpha]=1
+
   ns_mat[cl_mat==0]=NA
+
+
 
   ## plot only significant in color
   sign_mat = f_mat
@@ -107,10 +110,14 @@ image.brainperm = function(x, effect = NULL,...){
   xlim= c(1,nrow(f_mat))
   ylim= c(1,ncol(f_mat))
 
-
   #rev matrix and plot
-  sign_mat = t(apply(sign_mat, 2, rev))
-  ns_mat = t(apply(ns_mat, 2, rev))
+  if(nrow(sign_mat)==1){
+    sign_mat = t(sign_mat)}else{
+      sign_mat = t(apply(sign_mat, 2, rev))}
+  if(nrow(sign_mat)!=1){
+    ns_mat = t(ns_mat)}else{
+      ns_mat = t(apply(ns_mat, 2, rev))}
+
 
   image(1:nrow(ns_mat),1:ncol(ns_mat), ns_mat,yaxt="n",col="grey", xlab=dotargs$xlab, main=dotargs$main,ylab=dotargs$ylab)
   # if(dotargs$add_border){image(1:nrow(b_mat),1:ncol(b_mat), b_mat,add=T,col= "black")}
@@ -120,6 +127,7 @@ image.brainperm = function(x, effect = NULL,...){
        labels = rev(enames[c(xlim[1]:xlim[2])%% 2 == 0]))
   axis(side=4,at = c(xlim[1]:xlim[2])[c(xlim[1]:xlim[2])%% 2 != 0],
        labels = rev(enames[c(xlim[1]:xlim[2])%% 2 != 0]))
+
 }
 
 

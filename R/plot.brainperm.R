@@ -1,6 +1,6 @@
 #' Plot of a graph of the channels
 #'
-#' @description Graph of the channels for several samples. Red indicates significant clusters, grey non-significant and white reprensent below the threshold.
+#' @description Plot the graphs of the channels for several samples. Red indicates significant clusters, grey non-significant and white reprensent below the threshold.
 #'
 #' @param x brainperm object with a clustermass test.
 #' @param effect an integer specifying which effect to plot.
