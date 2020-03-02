@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 The `eeguana` package [@nicenboim_eeguana_2020] provides tools for the preprocessing of EEG data. Once the pre-processing done with eeguana the 3D matrix can be easly extracted to be pass in the brainperm() function.
 
-The EEG data [@nicenboim_eeg_2019] available on an Open Science Framework repository was analysed using the `eeguana` package. We will use the same dataset for the following tutorial.
+The EEG data [@nicenboim_eeg_2019] available on an Open Science Framework repository was analysed using the `eeguana` package by @nicenboim2019words. We will use the same dataset for the following tutorial.
 
 ### Downloading data from OSF
 
@@ -31,15 +31,28 @@ From the [EEG data](https://osf.io/ut7xq/) repository we found the "03_data_summ
 3. The folder `data/opensesame_files/` contains 120 csv files (1 for each subect)
 
 
+## R package
+
+In the following analysis, we will mainly use function from the tidyverse [@wickham_tidyverse_2019], from eeguana [@nicenboim_eeguana_2020], from permuco [@frossard_permuco], from permuco4brain [@frossard_permuco4brain] and from igraph [@csardi_igraph]:
+
+```{r package, echo=TRUE,eval=FALSE}
+library(tidyverse)
+library(eeguana)
+library(permuco)
+library(permuco4brain)
+library(igraph)
+```
+
+
 ## Computing the ERPs
 
 First, we compute ERP following the design of the experiment and save them in the folder `data_erp/`. To reduce the number of sample (and the computing time), we delete samples (or time-point) before the event and downsample to 256Hz. Finally the ERP are computed by taking the average for each sample, each channel and each experimental condition, which are the interaction between the `within` participant factors `region` and `cond`.
 
 
-```{r within, echo=TRUE,eval=FALSE}
-library(tidyverse)
-library(eeguana)
 
+
+
+```{r within, echo=TRUE,eval=FALSE}
 datadir <- "data/preproc_ica/"
 
 lf <- list.files(datadir)
