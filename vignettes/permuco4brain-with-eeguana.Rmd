@@ -185,8 +185,7 @@ library(permuco)
 library(permuco4brain)
 library(igraph)
 library(rgl)
-print(list.files())
-#load("signal_design_graph.RData")
+load("../data_vignettes/signal_design_graph.RData")
 #igraph::rglplot(graph)
 ```
 

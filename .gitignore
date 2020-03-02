@@ -3,6 +3,6 @@
 .RData
 .Ruserdata
 inst/doc
-signal_design_graph.RData
+data_vignettes/signal_design_graph.RData
 doc
 Meta
