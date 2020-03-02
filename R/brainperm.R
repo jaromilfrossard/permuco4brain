@@ -60,7 +60,7 @@ brainperm <- function(formula, data, graph, np = 5000,method = NULL, type = "per
   if (is.null(indError)) {
     result <- brainperm_fix(formula = formula, data = data, method = method, threshold = threshold, np = np, P = dotargs$P,
                                graph = graph, effect = effect, coding_sum = dotargs$coding_sum, test = test,
-                               aggr_FUN = aggr_FUN, multcomp = multcomp, ncores = ncores, type = type,
+                               aggr_FUN = aggr_FUN, multcomp = multcomp, ncores = dotargs$ncores, type = type,
                                return_distribution = dotargs$return_distribution,new_method = dotargs$new_method,
                                rnd_rotation = dotargs$rnd_rotation)
   }
@@ -71,7 +71,7 @@ brainperm <- function(formula, data, graph, np = 5000,method = NULL, type = "per
     }
     result <- brainperm_rnd(formula = formula, data = data, method = method, threshold = threshold, np = np, P = dotargs$P,
                             graph = graph, effect = effect, coding_sum = dotargs$coding_sum, test = test,
-                            aggr_FUN = aggr_FUN, multcomp = multcomp, ncores = ncores, type = type,
+                            aggr_FUN = aggr_FUN, multcomp = multcomp, ncores = dotargs$ncores, type = type,
                             return_distribution = dotargs$return_distribution,new_method = dotargs$new_method)
   }
   return(result)
