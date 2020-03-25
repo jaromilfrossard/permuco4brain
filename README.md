@@ -3,7 +3,7 @@
 
 `permuco4brain` currently works with permuco 1.1.1 (github) . Download it using: 
 
-`devtools::install_github(jaromilfrossard/permuco)`
+`devtools::install_github("jaromilfrossard/permuco")`
 
 This package is an add-on to permuco for computing clustermass tests on spatio-temporal data (eg: full-scalp EEG data).
 
