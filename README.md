@@ -1,16 +1,15 @@
 # `permuco4brain`
 
 
-WARNING: permuco4brain currently works with the `flip` branch of permuco. Download it using: 
+`permuco4brain` currently works with permuco 1.1.1 (github) . Download it using: 
 
-`devtools::install_github(jaromilfrossard/permuco, ref = "flip")`
+`devtools::install_github(jaromilfrossard/permuco)`
 
+This package is an add-on to permuco for computing clustermass tests on spatio-temporal data (eg: full-scalp EEG data).
 
+The package is still under developpement and you can expect changes.
 
-This package is an add-on to permuco to compute cluster-mass test on spatio-temporal data, like full-scalp EEG data.
-
-The package is still in developpement and you can expect changes.
-
+# Functionality
 
 The main function is brainperm() and it needs:
 
@@ -19,6 +18,14 @@ The main function is brainperm() and it needs:
 3. graph: an igraph object defining spatial adjacency of the channels (third dimension of the signal). The names of the vertices should correspond to the names of the 3rd dimension of signal.
 
 You can inspect result using the summary() method and vizualize them using image().
+
+# Installation
+
+Install `permuco4brain` using:
+
+`devtools::install_github("jaromilfrossard/permuco4brain", build_vignettes = TRUE)`
+
+In the vignette, you will find information how to extract the 3D array, the design dataframe and the graph from an `eeg_lst` object of the `eeguana` package. Check the `eeguana` package for preprocessing EEG data within `R` (https://github.com/bnicenboim/eeguana).
 
 
 
