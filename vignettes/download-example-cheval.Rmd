@@ -1,0 +1,197 @@
+---
+title: "Download example of full scalp EEG data"
+output: rmarkdown::html_vignette
+bibliography: ref.bib
+vignette: >
+  %\VignetteIndexEntry{download-example-cheval}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+library(knitr)
+library(rgl)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+knit_hooks$set(webgl = hook_webgl)
+```
+
+
+
+In the following tutorial, we download data analysed by [@cheval]. They are stored in the [zenodo repository](https://zenodo.org/record/1169140) in a "edf" files.
+
+## Installing packages
+
+We need the several packages including `tidyverse`  [@tidyverse], `edf` [@edf], `abind` [@abind], `xlsx` [@xlsx] and `permuco4brain` [@frossard_permuco4brain] that we active using:
+
+```{r package, echo=TRUE,eval=FALSE}
+library(tidyverse)
+library(edf)
+library(abind)
+library(xlsx)
+library(permuco4brain)
+```
+
+## Downloading data
+
+We download the data in a temporary files and we unzip the edf files also in a temporary file.
+
+```{r download, echo=TRUE,eval=FALSE}
+temp_zip <- tempfile()
+temp_edf <- tempfile()
+download.file("https://zenodo.org/record/1169140/files/ERP_by_subject_by_condition_data.zip",temp_zip)
+unzip(zipfile = temp_zip, exdir = temp_edf)
+```
+
+
+We store the names of the files in a data frame using:
+
+```{r filename, echo=TRUE,eval=FALSE}
+df <- data.frame(filename = list.files(paste0(temp_edf,"/raw_data/")),
+                 stringsAsFactors = F)
+```
+
+
+If your are not familiar with edf files you can explore the first file using:
+
+```{r edf, echo=TRUE,eval=FALSE}
+edf1 <- read.edf(file.path(temp_edf,paste0("raw_data/",list.files(paste0(temp_edf,"/raw_data/"))[1])))
+```
+
+
+We download information about the subject and we keep only the meaure "Moderate to Vigorous Physical Activity" (MVPA) that we center:
+
+```{r beetween, echo=TRUE,eval=FALSE}
+df_bw <- read.csv("https://zenodo.org/record/1169140/files/data_self_report_R_subset_zen.csv",sep=";")
+df_bw <- df_bw %>%
+  mutate(subject = paste0("S",subject),
+         mvpa_c = MVPA-mean(MVPA))%>%
+  select(subject,mvpa_c)
+``` 
+
+
+## Reshaping data
+
+We create the design from the filenames and we join the "between-participant" information. Moreover we keep only neutral shapes "Round" rows.
+
+```{r join, echo=TRUE,eval=FALSE}
+df<- 
+  df%>%
+  group_by(filename)%>%
+  separate(filename,into = c("participant","neutral_stim","av","action","shape","edf"),remove = F)%>%
+  select(-edf,-av)%>%
+  left_join(df_bw,by=c("participant"="subject"))%>%
+  filter(!shape%in%c("Carre","Neutre"))
+```
+
+
+We import the edf files and retrive only the signals:
+
+```{r signal, echo=TRUE,eval=FALSE}
+df<-
+  df%>%
+  mutate(edf = map (filename,function(ii){
+    path <- file.path(temp_edf,paste0("raw_data/",ii))
+    read.edf(path)
+  }))%>%
+  mutate(signal = map(edf,function(listi){
+    listi$signal%>%
+      map(function(channel)channel$data)%>%
+      as.data.frame()%>%
+      as.matrix()
+  }))%>%
+  ungroup()
+```
+
+We compute the signal relative to the neutral "Round" shapes:
+
+```{r relative, echo=TRUE,eval=FALSE}
+df<-
+  df%>%
+  select(participant,shape,action,mvpa_c,signal)%>%
+  pivot_wider(names_from = shape,values_from = signal)%>%
+  mutate(PA_rel = map2(AP,Rond,`-`),
+         Sed_rel = map2(SED,Rond,`-`))%>%
+  select(-AP,-Rond,-SED)%>%
+  pivot_longer(PA_rel:Sed_rel,names_to = "stimuli", values_to = "signal")
+```
+
+We `unlink()` the temporary files:
+
+```{r unlink, echo=TRUE,eval=FALSE}
+unlink(temp_zip)
+unlink(temp_edf)
+```
+
+## Extracting the signal, the design and the graph
+
+We create the 3D array that stores the signals:
+
+```{r array, echo=TRUE,eval=FALSE}
+signal<- 
+  (df%>%
+  pull(signal)%>%
+  invoke(abind::abind,.,along = 3)%>%
+  aperm(c(3,1,2)))[,102:512,]
+```
+
+We create the dataframe that stores the design:
+
+```{r design, echo=TRUE,eval=FALSE}
+design<-
+  df%>%
+  select(participant, action, stimuli,mvpa_c)%>%
+  as.data.frame()
+```
+
+Download the position of the channel from [biosemi](www.biosemi.com):
+
+```{r biosemi, echo=TRUE,eval=FALSE}
+temp_xl <- tempfile()
+download.file("https://www.biosemi.com/download/Cap_coords_all.xls",temp_xl,mode="wb")
+coord <-  read.xlsx(file=temp_xl, sheetIndex = 3, header =T,startRow=34)
+unlink(temp_xl)
+```
+
+We clean the data from biosemi and sort it accordingly to the thrid dimension of the signal array:
+
+```{r coord, echo=TRUE,eval=FALSE}
+coord<- 
+  coord%>%
+  select(channel = Electrode, x= "x...r.sinÎ..cosÏ.",
+         y = "y...r.sinÎ..sinÏ.", z = "z...r.cosÎ.")%>%
+  filter(!is.na(x),!is.na(y),!is.na(z))%>%
+  mutate(channel = as.character(channel))%>%
+  mutate(channel = if_else(channel=="Iz (inion)","Iz",channel),
+         channel = if_else(channel=="T7 (T3)","T7",channel),
+         channel = if_else(channel=="T8 (T4)","T8",channel),
+         channel = if_else(channel=="Afz","AFz",channel))%>%
+  arrange(match(channel,dimnames(signal)[3]))
+```
+
+The graph is computed using $\delta=35$ as the maximal distance defining adjacency:
+
+```{r graph, echo=TRUE,eval=FALSE}
+graph <- position_to_graph(coord,delta = 35, name="channel")
+```
+
+
+## Final step
+
+The 3 objects `signal`, `design`, `graph` are saved for future re-use:
+
+```{r save, echo=TRUE,eval=FALSE}
+# save(signal,design,graph,file = "signal_design_graph.RData")
+```
+
+Or we simply run the permutation test:
+
+```{r brainperm, echo=TRUE,eval=FALSE}
+clustermass <- brainperm(signal ~ action*stimuli*mvpa_c + Error(participant/(action*stimuli)),
+                         data = design, graph = graph)
+```
+
+# Reference
+
