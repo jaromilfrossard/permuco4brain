@@ -21,12 +21,24 @@ You can inspect result using the summary() method and vizualize them using image
 
 # Installation
 
-Install `permuco4brain` using:
+Make sure to install `permuco4brain` with its full documentation:
 
 `devtools::install_github("jaromilfrossard/permuco4brain", build_vignettes = TRUE)`
 
-In the vignette, you will find information how to extract the 3D array, the design dataframe and the graph from an `eeg_lst` object of the `eeguana` package. Check the `eeguana` package for preprocessing EEG data within `R` (https://github.com/bnicenboim/eeguana).
 
+# Documentation
+
+The following vignette presents how to use `permuco4brain` in combinaison with `eeguana` :
+
+`vignette("permuco4brain-with-eeguana", package="permuco4brain")`
+
+
+You will find information how to extract the 3D array, the design dataframe and the graph from an `eeg_lst` object of the `eeguana` package. Check the `eeguana` package for preprocessing EEG data within `R` (https://github.com/bnicenboim/eeguana).
+
+
+The next vignette presents how to use `permuco4brain` with signal stored in edf files:
+
+`vignette("download-example-cheval", package="permuco4brain")`
 
 
 
