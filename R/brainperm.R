@@ -43,7 +43,7 @@ brainperm <- function(formula, data, graph, np = 5000,method = NULL, type = "per
   }
 
 
-  if(is.null(dotargs$ncores)){ncores = detectCores()-1}
+  if(is.null(dotargs$ncores)){dotargs$ncores = detectCores()-1}
 
   if (is.null(dotargs$coding_sum)) {
     switch(test, t = {
