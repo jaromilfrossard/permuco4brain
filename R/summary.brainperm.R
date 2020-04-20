@@ -34,6 +34,7 @@ summary.brainperm = function(object, multcomp = NULL, table_type = "cluster",
     out[[i]] <- brainperm_full_table(multiple_comparison[[i]],effect_name = names(multiple_comparison)[i],
                                      multcomp = multcomp,... = ...)
   })}
+  names(out) = names(multiple_comparison)
 
 
 
