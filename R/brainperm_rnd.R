@@ -26,7 +26,7 @@ brainperm_rnd <- function(formula, data, method, threshold, np, P, graph, effect
 ##Method$
   if(is.null(method)){method = "Rd_kheradPajouh_renaud"}
   if(!new_method){
-    method <- match.arg(method,c("Rd_kheradPajouh_renaud","Rde_kheradPajouh_renaud"))}
+    method <- match.arg(method,c("Rd_kheradPajouh_renaud","Rd_kheradPajouh_renaud_replic","Rde_kheradPajouh_renaud"))}
 
    ###Aggr FUN
    if(is.null(aggr_FUN)){

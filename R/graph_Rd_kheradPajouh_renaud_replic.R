@@ -1,4 +1,3 @@
-#'@importFrom parallel parApply makeCluster detectCores stopCluster
 graph_Rd_kheradPajouh_renaud_replic = function(args){
   #select x
   mm = args$mm
