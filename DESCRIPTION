@@ -20,5 +20,6 @@ Suggests:
     rmarkdown,
     rgl,
     tidyverse,
+    ggplot2,
     eeguana
 VignetteBuilder: knitr

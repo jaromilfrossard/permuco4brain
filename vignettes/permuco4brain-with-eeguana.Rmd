@@ -1,5 +1,7 @@
 ---
 title: "Using permuco4brain with eeguana"
+author: "Jaromil Frossard"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: ref.bib
 vignette: >

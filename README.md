@@ -29,7 +29,7 @@ You can inspect result using the `summary()` method and vizualize them using `im
 
 # Documentation
 
-The following vignette is presenting how to use `permuco4brain` in combinaison with `eeguana` :
+The following vignette presents how to use `permuco4brain` in combinaison with `eeguana` :
 
 `vignette("permuco4brain-with-eeguana", package = "permuco4brain")`
 
@@ -37,7 +37,7 @@ The following vignette is presenting how to use `permuco4brain` in combinaison w
 You will find information how to extract the 3D array, the design dataframe and the graph from an `eeg_lst` object of the `eeguana` package. Check the `eeguana` package for preprocessing EEG data within `R` (https://github.com/bnicenboim/eeguana).
 
 
-The next vignette is presenting how to use `permuco4brain` with signals stored in edf files:
+The next vignette presents how to use `permuco4brain` with signals stored in edf files:
 
 `vignette("download-example-cheval", package = "permuco4brain")`
 

@@ -3,6 +3,7 @@
 .RData
 .Ruserdata
 test.R
+model.RData
 inst/doc
 doc
 Meta

@@ -1,0 +1,149 @@
+---
+title: "Figure using ggplot2"
+author: "Jaromil Frossard"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+bibliography: ref.bib
+vignette: >
+  %\VignetteIndexEntry{figure-ggplot2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+library(knitr)
+library(rgl)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+knit_hooks$set(webgl = hook_webgl)
+
+myeval = F
+```
+
+
+`permuco4brain` has currently 2 built in function for plotting. The `image()` function provide a heatmap of test for 1 effect and the `plot()` function draw the adjacency graph for 1 time and 1 effect where the vertex are colored depending and the $p$-value. The function are fast but not easy to custom. Hence they are usefull for checking results of the test but are ready for publication purpouse. 
+
+In this vignette, we show how to extract the results of the test to produce 3 type of graphical representations using `ggplot2` [@ggplot2]. The function are slower but provides plots that can be custom for publication purpouse.
+
+We assume that you have already run the example in the `download-example-cheval` included in `permuco4brain`:
+
+```{r eval=FALSE, include=TRUE}
+devtools::install_github("jaromilfrossard/permuco4brain", build_vignettes = TRUE)
+vignette("download-example-cheval",package = "permuco4brain")
+```
+
+In the `download-example-cheval` vignette, the final step is to perfom test on a repeated measures ANCOVA model using `signal ~ action*stimuli*mvpa_c + Error(participant/(action*stimuli))`. In the following tutorial, we will assume the same dataset but adjusting a slighty simplier model, using the formula: `signal ~ action*stimuli + Error(participant/(action*stimuli))`.
+
+
+## The heatmap
+
+In this section, we create a similar heatmap than the `image()` function applied to a `brainperm` object. We will need the following package:
+
+```{r eval=myeval, message=FALSE, warning=FALSE, include=TRUE}
+library(permuco)
+library(permuco4brain)
+library(tidyverse)
+library(ggplot2)
+library(igraph)
+```
+
+Make sure you load the `brainperm` model:
+
+```{r eval=F, message=FALSE, warning=FALSE, include=TRUE}
+load("model.RData")
+```
+
+
+
+```{r eval=myeval, message=FALSE, warning=FALSE, include=F}
+load("../model.RData")
+```
+
+We need first to get the channel attributes saved in the `igraph` object. We will nedd from this object the spatial position of the channels.
+
+```{r eval=myeval, message=FALSE, warning=FALSE, include=TRUE}
+chan_tbl <- get.vertex.attribute(model$graph)%>%
+  as_tibble()
+```
+
+
+Next we get the results of the test by specifying the `table_type = "full"` argument from the `summary()` method. It produces a list with a table per effect/interaction. Here we tranform it inta a large table:
+
+```{r eval=myeval, message=FALSE, warning=FALSE, include=TRUE}
+### test tibble
+df_gg <- summary(model,table_type = "full")
+df_gg <-
+  tibble(effect = names(df_gg),
+         data = df_gg)%>%
+  unnest(data)
+```
+
+Next we merge channel information into the dataframe:
+
+```{r eval=myeval, message=FALSE, warning=FALSE, include=TRUE}
+### add channel info
+df_gg <- df_gg%>%
+  nest(data=-channel)%>%
+  left_join(chan_tbl,by = c("channel"="name"))
+```
+
+
+We sort the channels and effects which is useful for ordering panels:
+
+```{r eval=myeval, fig.height=6, fig.width=7, message=FALSE, warning=FALSE, include=TRUE}
+### order channel
+df_gg <- df_gg%>%
+  arrange(y,desc(x))%>%
+  mutate(order = 1:n())%>%
+  mutate(channel = fct_reorder(channel,order,min))%>%
+  select(-order)%>%
+  unnest(data)%>%
+  mutate(effect = fct_relevel(effect,c("action","stimuli","action:stimuli")))
+```
+
+
+In the heatmap, the test below the threshold are transparent, the non-significant cluster are in white and the significant cluster are colored accordingly to the pvalue:
+
+```{r eval=myeval, fig.height=6, fig.width=7, message=FALSE, warning=FALSE, include=TRUE}
+df_gg%>%
+  ggplot() +
+  geom_tile(data = .%>%filter(cluster_id != 0, pvalue >= 0.05),
+            aes(x = sample, y = channel), fill = "white") +
+  geom_tile(data = .%>%filter(cluster_id != 0, pvalue < 0.05),
+            aes(x = sample, y = channel, fill = pvalue)) +
+  scale_fill_gradientn(colours = c("red", "yellow"),
+                       limits = c(0, 0.05)) +
+  facet_grid(col = vars(effect)) +
+  theme(legend.position = 'bottom')
+```
+
+```{r eval=myeval, message=FALSE, warning=FALSE, include=F}
+ggsave(filename = "figure_ggplot2_heatmap_pval.png",dpi = 72, height = 7,width = 10, units = "in")
+```
+
+
+![](figure_ggplot2_heatmap_pval.png)
+
+We can slight change the coloring are choose to display statistics of the significant clusters. It mays provide a good visual information of the time/channels that drive the effect.
+
+```{r eval=myeval, fig.height=6, fig.width=7, message=FALSE, warning=FALSE, include=TRUE}
+df_gg%>%
+  ggplot() +
+  geom_tile(data = .%>%filter(cluster_id != 0, pvalue >= 0.05),
+            aes(x = sample, y = channel), fill = "white") +
+  geom_tile(data = .%>%filter(cluster_id != 0, pvalue < 0.05),
+            aes(x = sample, y = channel, fill = statistic)) +
+  scale_fill_gradientn(colours = c("yellow", "red")) +
+  facet_grid(col = vars(effect)) +
+  theme(legend.position = 'bottom')
+```
+
+```{r eval=myeval, message=FALSE, warning=FALSE, include=F}
+ggsave(filename = "figure_ggplot2_heatmap_stat.png",dpi = 72, height = 7,width = 10, units = "in")
+```
+
+
+![](figure_ggplot2_heatmap_stat.png)
+
