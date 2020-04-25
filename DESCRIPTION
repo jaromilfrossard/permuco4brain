@@ -21,5 +21,7 @@ Suggests:
     rgl,
     tidyverse,
     ggplot2,
-    eeguana
+    eeguana,
+    geofacet,
+    ggforce
 VignetteBuilder: knitr
