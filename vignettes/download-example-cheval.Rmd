@@ -22,11 +22,11 @@ knit_hooks$set(webgl = hook_webgl)
 
 
 
-In the following tutorial, we download data analysed by [@cheval]. They are stored in the [zenodo repository](https://zenodo.org/record/1169140) in a "edf" files.
+In the following tutorial, we download EEG data analysed in @cheval. This data-set is stored in the [zenodo repository](https://zenodo.org/record/1169140) as "edf" files.
 
 ## Installing packages
 
-We need the several packages including `tidyverse`  [@tidyverse], `edf` [@edf], `abind` [@abind], `xlsx` [@xlsx] and `permuco4brain` [@frossard_permuco4brain] that we active using:
+We need several packages including `tidyverse`  [@tidyverse], `edf` [@edf], `abind` [@abind], `xlsx` [@xlsx] and `permuco4brain` [@frossard_permuco4brain]:
 
 ```{r package, echo=TRUE,eval=FALSE}
 library(tidyverse)
@@ -56,14 +56,14 @@ df <- data.frame(filename = list.files(paste0(temp_edf,"/raw_data/")),
 ```
 
 
-If your are not familiar with edf files you can explore the first file using:
+If your are not familiar with edf files, you can explore the first one using:
 
 ```{r edf, echo=TRUE,eval=FALSE}
 edf1 <- read.edf(file.path(temp_edf,paste0("raw_data/",list.files(paste0(temp_edf,"/raw_data/"))[1])))
 ```
 
 
-We download information about the subject and we keep only the meaure "Moderate to Vigorous Physical Activity" (MVPA) that we center:
+We download information about the subject and we keep only the measure of "Moderate to Vigorous Physical Activity" (MVPA) that we center:
 
 ```{r beetween, echo=TRUE,eval=FALSE}
 df_bw <- read.csv("https://zenodo.org/record/1169140/files/data_self_report_R_subset_zen.csv",sep=";")
@@ -76,7 +76,7 @@ df_bw <- df_bw %>%
 
 ## Reshaping data
 
-We create the design from the filenames and we join the "between-participant" information. Moreover we keep only neutral shapes "Round" rows.
+We create the design from the filenames and we join the "between"-participant data. Moreover, we use only the "Round" stimuli as neutral shapes.
 
 ```{r join, echo=TRUE,eval=FALSE}
 df<- 
@@ -89,7 +89,7 @@ df<-
 ```
 
 
-We import the edf files and retrive only the signals:
+We import the edf files and retrieve only the signals:
 
 ```{r signal, echo=TRUE,eval=FALSE}
 df<-
@@ -107,7 +107,7 @@ df<-
   ungroup()
 ```
 
-We compute the signal relative to the neutral "Round" shapes:
+We compute the signals relative to the neutral "Round" shapes within each participant:
 
 ```{r relative, echo=TRUE,eval=FALSE}
 df<-
@@ -139,7 +139,7 @@ signal<-
   aperm(c(3,1,2)))[,102:512,]
 ```
 
-We create the dataframe that stores the design:
+We create the data-frame that stores the design:
 
 ```{r design, echo=TRUE,eval=FALSE}
 design<-
@@ -148,7 +148,7 @@ design<-
   as.data.frame()
 ```
 
-Download the position of the channel from [biosemi](www.biosemi.com):
+We download the position of the channels from [biosemi](www.biosemi.com):
 
 ```{r biosemi, echo=TRUE,eval=FALSE}
 temp_xl <- tempfile()
@@ -157,7 +157,7 @@ coord <-  read.xlsx(file=temp_xl, sheetIndex = 3, header =T,startRow=34)
 unlink(temp_xl)
 ```
 
-We clean the data from biosemi and sort it accordingly to the thrid dimension of the signal array:
+We clean the data from biosemi and sort it accordingly to the third dimension of the signal array:
 
 ```{r coord, echo=TRUE,eval=FALSE}
 coord<- 
@@ -182,13 +182,13 @@ graph <- position_to_graph(coord,delta = 35, name="channel")
 
 ## Final step
 
-The 3 objects `signal`, `design`, `graph` are saved for future re-use:
+The 3 objects `signal`, `design`, `graph` are saved for future uses:
 
 ```{r save, echo=TRUE,eval=FALSE}
 # save(signal,design,graph,file = "signal_design_graph.RData")
 ```
 
-Or we simply run the permutation test:
+Or we simply run the permutation tests:
 
 ```{r brainperm, echo=TRUE,eval=FALSE}
 clustermass <- brainperm(signal ~ action*stimuli*mvpa_c + Error(participant/(action*stimuli)),

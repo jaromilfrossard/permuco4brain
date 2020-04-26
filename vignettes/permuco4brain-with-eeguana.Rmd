@@ -1,5 +1,5 @@
 ---
-title: "Using permuco4brain with eeguana"
+title: "Using `permuco4brain` with `eeguana`"
 author: "Jaromil Frossard"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -23,22 +23,22 @@ knit_hooks$set(webgl = hook_webgl)
 
 ### Extracting 3D array using eeguana
 
-The `eeguana` package [@nicenboim_eeguana_2020] provides tools for the preprocessing of EEG data. Once the pre-processing done with eeguana the 3D matrix can be easly extracted to be pass in the brainperm() function.
+The `eeguana` package [@nicenboim_eeguana_2020] provides tools for the pre-processing of EEG data. Once the pre-processing done with eeguana the 3D matrix can be easily extracted to be pass in the `brainperm()` function.
 
-The EEG data [@nicenboim_eeg_2019] available on an Open Science Framework repository was analysed using the `eeguana` package by @nicenboim2019words. We will use the same dataset for the following tutorial.
+The EEG data [@nicenboim_eeg_2019] available on an Open Science Framework repository was analysed using the `eeguana` package by @nicenboim2019words. We use the same data-set for the following tutorial.
 
 ### Downloading data from OSF
 
-From the [EEG data](https://osf.io/ut7xq/) repository we found the "03_data_summarization.Rmd" file which provides functions to easly download the dataset. It is large (more than 20Gb) so we only download the pre-processed data using ICA. Following the first chunk of the "03_data_summarization.Rmd" file you should have (at least):
+From the [EEG data](https://osf.io/ut7xq/) repository we found the "03_data_summarization.Rmd" file which provides functions to easily download the data-set. It is large (more than 20Gb) so we only download the pre-processed data using ICA. Following the first chunk of the "03_data_summarization.Rmd" file you should have (at least):
 
 1. A folder `data/` containing 5 csv files, 2 tsv files and 2 folders. 
-2. The folder `data/preproc_ica/` contains 120 RDA files (1 for each subect). Each file contains an `eeg_lst` object from eeguana with pre-processed EEG data.
-3. The folder `data/opensesame_files/` contains 120 csv files (1 for each subect)
+2. The folder `data/preproc_ica/` contains 120 RDA files (1 for each subject). Each file contains an `eeg_lst` object from eeguana with pre-processed EEG data.
+3. The folder `data/opensesame_files/` contains 120 csv files (1 for each subject)
 
 
 ## R package
 
-In the following analysis, we will mainly use function from the tidyverse [@tidyverse], from eeguana [@nicenboim_eeguana_2020], from permuco [@frossard_permuco], from permuco4brain [@frossard_permuco4brain] and from igraph [@csardi_igraph]:
+In the following analysis, we will mainly use functions from the `tidyverse` [@tidyverse], from `eeguana` [@nicenboim_eeguana_2020], from `permuco` [@frossard_permuco], from `permuco4brain` [@frossard_permuco4brain] and from `igraph` [@csardi_igraph]:
 
 ```{r package, echo=TRUE,eval=FALSE}
 library(tidyverse)
@@ -51,7 +51,7 @@ library(igraph)
 
 ## Computing the ERPs
 
-First, we compute ERP following the design of the experiment and save them in the folder `data_erp/`. To reduce the number of sample (and the computing time), we delete samples (or time-point) before the event and downsample to 256Hz. Finally the ERP are computed by taking the average for each sample, each channel and each experimental condition, which are the interaction between the `within` participant factors `region` and `cond`.
+First, we compute ERP following the design of the experiment and save them in the folder `data_erp/`. To reduce the number of sample (and the computing time), we delete samples (or time-point) before the event and down-sample to 256Hz. Finally the ERPs are computed by taking the average for each sample, each channel and each experimental condition, which are the interaction between the `within` participant factors `region` and `cond`.
 
 
 
@@ -98,7 +98,7 @@ Now, the `erps` object contains the ERP for all participants. Its class is `eeg_
 
 ## Adding the `between`-participant variables
 
-We download the `between`-participant variables by combining 4 files. We choose to keep the age, the batch and the occipation as `between`-participant factors. 
+We download the `between`-participant variables by combining 4 files. We choose to keep the age, the batch and the occupation as `between`-participant factors. 
 
 ```{r between, echo=TRUE,eval=FALSE}
 df_subj <- bind_rows(read_csv("data/students.csv") %>%
@@ -114,7 +114,7 @@ df_subj <- bind_rows(read_csv("data/students.csv") %>%
 ```
 
 
-The dataset does not contain the `between`-participants variables for all participants, so we choose to delete 8 participants from our analysis. 
+The data-set does not contain the `between`-participants variables for all participants, so we choose to delete 8 participants from our analysis. 
 
 
 ```{r remove, echo=TRUE,eval=FALSE}
@@ -144,7 +144,7 @@ erps <-
 
 ## Extracting the 3D matrix
 
-We extract the 3D matrix using the following script. The dimension are design X sample X channel.
+We extract the 3D matrix using the following script. The dimensions are design $\times$ sample $\times$ channel.
 
 ```{r array, echo=TRUE,eval=FALSE}
 signal <- 
@@ -158,7 +158,7 @@ signal <-
   aperm(c(3,1,2))
 ```
 
-The design containing both the between and within variables is simply extracted using the `segments_tbl()` function. Moreover, we center the covariate as it makes more sense for the test.
+The design which contains both the between and within variables is simply extracted using the `segments_tbl()` function. Moreover, we center the covariate as it makes more sense for the test.
 
 ```{r design, echo=TRUE,eval=FALSE}
 design <- 
@@ -168,7 +168,7 @@ design <-
 ```
 
 
-Finally the graph of adjacency is computed using the 32 channels layout data in `eeguana` and the `position_to_graph()` function from `permuco4brain`. Note that, as previously we deleted some channels. Moreover, we can chech the adjacency graph using the `plot()` function from `igraph`.
+Finally the graph of adjacency is computed using the 32 channels layout data in `eeguana` and the `position_to_graph()` function from `permuco4brain`. Note that, as previously we deleted some channels. Moreover, we can check the adjacency graph using the `plot()` function from `igraph`.
 
 ```{r graph, echo=TRUE,eval=FALSE}
 layout <- 
@@ -180,7 +180,7 @@ graph <- position_to_graph(layout, delta = .75,name = .channel,
 ```
 
 You can use `igraph::rglplot(graph)` to have a 3D representation of the adjacency between channels.
-Now, we have the 3 object we need to run a clustermass test, the 3D array containing the signals, a dataframe containing the design and a graph defining the spatial adjacency of the channels. We can save these object before running the analysis.
+Now, we have the 3 object we need to run a clustermass test, the 3D array containing the signals, a data-frame containing the design and a graph defining the spatial adjacency of the channels. We can save these object before running the analysis.
 
 ```{r save, echo=TRUE,eval=FALSE}
 # save(signal = signal,
@@ -188,7 +188,7 @@ Now, we have the 3 object we need to run a clustermass test, the 3D array contai
 #      graph = graph,file = "signal_design_graph.RData")
 ```
 
-Finally, we use `permuco4brain` for testing the difference between experimental conditions. We have a repeated measures ANCOVA, with 1 covariate (the centred age), 1 between-participants factors (the occuptation) and 2 within-participants factors (reguiib and conditions). The permutation tests is computed for all samples, all channels while controling for the family-wise error rate (FWER).
+Finally, we use `permuco4brain` for testing the difference between experimental conditions. We have a repeated measures ANCOVA, with 1 covariate (the centered age), 1 between-participants factors (the occupation) and 2 within-participants factors (reguion and conditions). The permutation tests is computed for all samples, all channels while controlling for the family-wise error rate (FWER).
 
 
 ```{r model, echo=TRUE,eval=FALSE}

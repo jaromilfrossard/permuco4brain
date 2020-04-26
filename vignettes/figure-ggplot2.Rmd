@@ -23,9 +23,9 @@ myeval = F
 ```
 
 
-`permuco4brain` has currently 2 built in function for plotting. The `image()` function provide a heatmap of test for 1 effect and the `plot()` function draw the adjacency graph for 1 time and 1 effect where the vertex are colored depending and the $p$-value. The function are fast but not easy to custom. Hence they are usefull for checking results of the test but are ready for publication purpouse. 
+`permuco4brain` has currently 2 built-in functions for plotting. The `image()` function provides a heatmap of the results for 1 effect and the `plot()` function draws the adjacency graph for 1 time and 1 effect where the vertices are colored depending and the $p$-value. These functions are fast but not easy to custom. Hence they are useful for checking results of the test but are may not be useful for publication purpose. 
 
-In this vignette, we show how to extract the results of the test to produce 3 type of graphical representations using `ggplot2` [@ggplot2]. The function are slower but provides plots that can be custom for publication purpouse.
+In this vignette, we show how to extract the results of the test to produce 3 types of graphical representations using `ggplot2` [@ggplot2]. These function may be slower to run but provides plots that can be custom for publication.
 
 We assume that you have already run the example in the `download-example-cheval` included in `permuco4brain`:
 
@@ -34,12 +34,12 @@ devtools::install_github("jaromilfrossard/permuco4brain", build_vignettes = TRUE
 vignette("download-example-cheval",package = "permuco4brain")
 ```
 
-In the `download-example-cheval` vignette, the final step is to perfom test on a repeated measures ANCOVA model using `signal ~ action*stimuli*mvpa_c + Error(participant/(action*stimuli))`. In the following tutorial, we will assume the same dataset but adjusting a slighty simplier model, using the formula: `signal ~ action*stimuli + Error(participant/(action*stimuli))`.
+In the `download-example-cheval` vignette, the final step is to perform test on a repeated measures ANCOVA model using `signal ~ action*stimuli*mvpa_c + Error(participant/(action*stimuli))`. In the following tutorial, we will assume the same data-set but adjusting a slightly simpler model, using the formula: `signal ~ action*stimuli + Error(participant/(action*stimuli))`.
 
 
-## The heatmap
+## The heat-map
 
-In this section, we create a similar heatmap than the `image()` function applied to a `brainperm` object. We will need the following package:
+In this section, we create a similar heat-map than the `image()` function applied to a `brainperm` object. We need the following package:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=TRUE}
 library(permuco)
@@ -49,7 +49,7 @@ library(ggplot2)
 library(igraph)
 ```
 
-Make sure you load the `brainperm` model:
+Make sure to load the `brainperm` model:
 
 ```{r eval=F, message=FALSE, warning=FALSE, include=TRUE}
 load("model.RData")
@@ -61,7 +61,7 @@ load("model.RData")
 load("../model.RData")
 ```
 
-We need first to get the channel attributes saved in the `igraph` object. We will nedd from this object the spatial position of the channels.
+We need first to get the channel's attributes saved in the `igraph` object. We need from this object the spatial position of the channels.
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=TRUE}
 chan_tbl <- get.vertex.attribute(model$graph)%>%
@@ -69,7 +69,7 @@ chan_tbl <- get.vertex.attribute(model$graph)%>%
 ```
 
 
-Next we get the results of the test by specifying the `table_type = "full"` argument from the `summary()` method. It produces a list with a table per effect/interaction. Here we tranform it inta a large table:
+Next we get the results of the test by specifying the `table_type = "full"` argument from the `summary()` method. It produces a list with a table per effect/interaction. Here we transform it into a large table:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=TRUE}
 ### test tibble
@@ -80,7 +80,7 @@ df_gg <-
   unnest(data)
 ```
 
-Next we merge channel information into the dataframe:
+Next we merge the channel's information to the data-frame with the tests information:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=TRUE}
 ### add channel info
@@ -90,7 +90,7 @@ df_gg <- df_gg%>%
 ```
 
 
-We sort the channels and effects which is useful for ordering panels:
+We sort the channels and effects which will be is useful for ordering the panels:
 
 ```{r eval=myeval, fig.height=6, fig.width=7, message=FALSE, warning=FALSE, include=TRUE}
 ### order channel
@@ -104,7 +104,7 @@ df_gg <- df_gg%>%
 ```
 
 
-In the heatmap, the test below the threshold are transparent, the non-significant cluster are in white and the significant cluster are colored accordingly to the pvalue:
+In the heat-map, we represent the test below the threshold transparent, the non-significant clusters in white and the significant clusters colored accordingly to their $p$-value:
 
 ```{r eval=myeval, fig.height=6, fig.width=7, message=FALSE, warning=FALSE, include=TRUE}
 df_gg%>%
@@ -126,7 +126,7 @@ ggsave(filename = "figure_ggplot2_heatmap_pval.png",dpi = 72, height = 7,width =
 
 ![](figure_ggplot2_heatmap_pval.png)
 
-We can slight change the coloring are choose to display statistics of the significant clusters. It mays provide a good visual information of the time/channels that drive the effect.
+We can slight change the coloring by choosing to display the observed statistics of the individual tests. It may provide a good visual information of which time-points or channels drive the effect.
 
 ```{r eval=myeval, fig.height=6, fig.width=7, message=FALSE, warning=FALSE, include=TRUE}
 df_gg%>%
@@ -149,7 +149,7 @@ ggsave(filename = "figure_ggplot2_heatmap_stat.png",dpi = 72, height = 7,width =
 
 ## The signals on grid
 
-In EEG it is common to plot the ERP of each channel on a grid that is clode the true spatial position of the channels. This type representation displays usually the data or average but we adapt to display the result of a clustermass test. We will use the `geofacet` [@geofacet] package and its webapp as it allows to construct the grid. 
+In EEG analysis, it is common to plot the ERP of each channel on the representation of the head. This type representation usually displays the data or average per group but we adapt it to display the statistical signal for each effect. We will use the `geofacet` [@geofacet] package and its web-app to construct the grid. 
 
 We need the following package:
 
@@ -165,7 +165,7 @@ library(geofacet)
 
 
 
-First we use the `table_type = "full"` from the `summary()` method to get the result from all the tests (all effects, all time points, all channels) and we store it in a dataframe
+First we use the `table_type = "full"` from the `summary()` method to get the result from all the tests (all effects, all time points, all channels) and we store it in a data-frame:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 df_gg <- summary(model, table_type = "full")
@@ -174,7 +174,7 @@ df_gg <- tibble(effect = names(df_gg),
   unnest(data)
 ```
 
-We get the position from the channels using:
+We get the position from the channels by getting the attributes of the graph:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 chan_tbl = get.vertex.attribute(model$graph)%>%
@@ -182,7 +182,7 @@ chan_tbl = get.vertex.attribute(model$graph)%>%
 ```
 
 
-We use a hidden function from `eeguana` [@nicenboim_eeguana_2020] to transform the 3D coordinate in a 2D system:
+Then we use an internal function from `eeguana` [@nicenboim_eeguana_2020] to transform the 3D coordinate system into 2D:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 chan_polar <- eeguana:::polar(chan_tbl%>% pull(x),
@@ -197,7 +197,7 @@ chan_tbl <- chan_tbl%>%
 ```
 
 
-Then we transform the position of the channel in order to simplify the creation of the grid:
+Next we transform the position of the channel in order to simplify the creation of the grid as we need positive and integer values:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 df_grid = chan_tbl%>%
@@ -211,7 +211,7 @@ df_grid = chan_tbl%>%
          col=col-min(col)+1)
 ```
 
-Then, running `grid_design()` will launch the web-app from `geofacet` on your browser. It allows to fine-tune the position of each channel and copy-paste the dataframe.
+Then, running the function `grid_design()` launches the web-app from `geofacet` on your browser. It allows to fine-tune the position of each channel and copy-paste the resulting data-frame.
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 # grid_design(data= df_grid)
@@ -237,7 +237,7 @@ df_grid <- data.frame(
   stringsAsFactors = FALSE)
 ```
 
-The final plot is creating using the grid and highlighting the time-point in significant cluster. Here is the example for the interaction:
+The final plot is created by using the grid and highlighting the time-points in significant clusters. Here is the example for the interaction:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 df_gg%>%
@@ -265,9 +265,9 @@ ggsave(filename = "figure_ggplot2_signal_grid.png",dpi = 72, height = 9,width = 
 
 ## The graph of the channels
 
-In the following presentation, we plot the graph of adjacency of the channel for 1 sample by highlightning channel in significant cluster. It produces an accurate reprentation the clusters at a precise time-frame.
+In the following section, we plot the graph of adjacency of the channel for 1 sample by highlighting the channels belonging to significant clusters. It produces an accurate representation the clusters at a precise time-point.
 
-We need the following package and the `ggforce` [@ggforce] package facilitate the representation of the channels.
+In addition to the usual package we need `ggforce` [@ggforce] as it facilitates the representation of the channels (using `geom_circle()`).
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 library(permuco)
@@ -279,14 +279,14 @@ library(ggforce)
 ```
 
 
-As previously we get the channels 3D position data:
+As previously, we get the channels position data:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 chan_tbl = get.vertex.attribute(model$graph)%>%
   as_tibble()
 ```
 
-We compute their 2D projection:
+We compute their 2D projection using the hidden function from `eeguana`:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 chan_polar <- eeguana:::polar(chan_tbl%>% pull(x),
@@ -299,7 +299,7 @@ chan_tbl <- chan_tbl%>%
   bind_cols(chan_polar)
 ```
 
-The data from the test are put in a dataframe using:
+We store the data from the test in a data-frame:
 
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
@@ -310,7 +310,7 @@ df_gg <-
   unnest(data)
 ```
 
-And we merge data from test and channel position:
+And we merge data from test and the channel position:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 df_gg <- df_gg%>%
@@ -320,7 +320,7 @@ df_gg <- df_gg%>%
   mutate(effect = fct_relevel(effect,c("action","stimuli","action:stimuli")))
 ```
 
-We use the channel position data to compute the size of the channel. Here the radius of the circle will be the $1/5$ of the minimal distance between 2 channels.
+Next we use the channel position to compute the size of the channel. Here the radius of the circles will be the $1/5$ of the minimal distance between 2 channels.
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 rad <- 
@@ -330,7 +330,7 @@ rad <-
   min())/5
 ```
 
-Next we create retrive data to compute the edges:
+We get the data of the edges of the adjacency graph:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 df_chan_pos <- 
@@ -345,7 +345,7 @@ edge_tbl = as_data_frame(model$graph, what = c("edges"))%>%
   rename(x_to = x_pol,y_to = y_pol)
 ```
 
-We asjust the position of the edges in order to match the size of the channel using simple triangle geometry formula:
+In order to have a representation of the edges that fits nicely with the size of the circles, we reduce the length of each segment using simple triangle geometry formula:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 edge_tbl<- 
@@ -360,7 +360,7 @@ edge_tbl<-
             y_to = if_else(y_from < y_to, y_to-dy,y_to+dy))
 ```
 
-Finally, we reorder the plot the result for 1 time frame:
+Finally, the plot the result for 1 time-frame:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 df_gg%>%
@@ -395,7 +395,7 @@ ggsave(filename = "figure_ggplot2_graph_80.png",dpi = 72, height = 6,width = 9, 
 
 
 
-Or several time-frame of 1 effect (here the interaction). We delete the name of the channels to have a better reading of the plot.
+Or several time-frames of 1 effect (here the interaction). We deleted the names of the channels not to overload the representation.
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 df_gg%>%
