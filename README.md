@@ -21,17 +21,16 @@ it using:
 devtools::install_github("jaromilfrossard/permuco", build_vignettes = TRUE)
 ```
 
-The package is still under development and you can expect changes.
-
+`permuco4brain` is still under development and you can expect changes.
 Make sure to install `permuco4brain` with its full documentation:
 
 ``` r
 devtools::install_github("jaromilfrossard/permuco4brain", build_vignettes = TRUE)
 ```
 
-Functionality
+## Functionality
 
-The main function is `brainperm()` and it needs:
+The main function of `permuco4brain` is `brainperm()` and it needs:
 
 1.  `formula`: a formula object defining the design (right side) and a
     3D array containing the signals (left side). The signal is a 3D
@@ -48,8 +47,13 @@ using `image()`.
 
 ## Documentation
 
-1.  The following vignette presents how to use `permuco4brain` in
-    combination with `eeguana` :
+Visite <https://jaromilfrossard.github.io/permuco4brain> or check the
+vignette:
+
+1.  The
+    [permuco4brain-with-eeguana](https://jaromilfrossard.github.io/permuco4brain/articles/permuco4brain-with-eeguana.html)
+    vignette presents how to use `permuco4brain` in combination with
+    `eeguana` :
 
 <!-- end list -->
 
@@ -62,8 +66,10 @@ data-frame and the graph from an `eeg_lst` object of the `eeguana`
 package. Check the `eeguana` package for pre-processing EEG data within
 `R` (<https://github.com/bnicenboim/eeguana>).
 
-2.  The next vignette presents how to use `permuco4brain` with signals
-    stored in edf files:
+2.  The
+    [download-example-cheval](https://jaromilfrossard.github.io/permuco4brain/articles/download-example-cheval.html)
+    vignette presents how to use `permuco4brain` with signals stored in
+    `edf` files:
 
 <!-- end list -->
 
@@ -71,10 +77,12 @@ package. Check the `eeguana` package for pre-processing EEG data within
 vignette("download-example-cheval", package = "permuco4brain")
 ```
 
-In this tutorial, you learn how to download EEG data from zenodo and
+In this tutorial, you learn how to download EEG data from `zenodo` and
 analyze them using `permuco4brain`.
 
-3.  The next vignette presents how to use `ggplot2` to produce graphical
+3.  The
+    [figure-ggplot2](https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html)
+    vignette presents how to use `ggplot2` to produce graphical
     representation for publication:
 
 <!-- end list -->

@@ -97,13 +97,15 @@
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="kw">devtools</span>::<span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"jaromilfrossard/permuco"</span>, build_vignettes = <span class="fl">TRUE</span>)
 </pre></div>
-<p>The package is still under development and you can expect changes.</p>
-<p>Make sure to install <code>permuco4brain</code> with its full documentation:</p>
+<p><code>permuco4brain</code> is still under development and you can expect changes. Make sure to install <code>permuco4brain</code> with its full documentation:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="kw">devtools</span>::<span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"jaromilfrossard/permuco4brain"</span>, build_vignettes = <span class="fl">TRUE</span>)
 </pre></div>
-<p>Functionality</p>
-<p>The main function is <code><a href="reference/brainperm.html">brainperm()</a></code> and it needs:</p>
+</div>
+<div id="functionality" class="section level2">
+<h2 class="hasAnchor">
+<a href="#functionality" class="anchor"></a>Functionality</h2>
+<p>The main function of <code>permuco4brain</code> is <code><a href="reference/brainperm.html">brainperm()</a></code> and it needs:</p>
 <ol>
 <li>
 <code>formula</code>: a formula object defining the design (right side) and a 3D array containing the signals (left side). The signal is a 3D array visible in the global environment. Its dimension is the design X samples X channels. Each “rows” of the 3D array should be related to the corresponding row of the design (<code>data</code> argument).</li>
@@ -117,22 +119,23 @@
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#documentation" class="anchor"></a>Documentation</h2>
+<p>Visite <a href="https://jaromilfrossard.github.io/permuco4brain" class="uri">https://jaromilfrossard.github.io/permuco4brain</a> or check the vignette:</p>
 <ol>
-<li>The following vignette presents how to use <code>permuco4brain</code> in combination with <code>eeguana</code> :</li>
+<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/permuco4brain-with-eeguana.html">permuco4brain-with-eeguana</a> vignette presents how to use <code>permuco4brain</code> in combination with <code>eeguana</code> :</li>
 </ol>
 <!-- end list --><div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span>(<span class="st">"permuco4brain-with-eeguana"</span>, package = <span class="st">"permuco4brain"</span>)
 </pre></div>
 <p>You will find information how to extract the 3D array, the design data-frame and the graph from an <code>eeg_lst</code> object of the <code>eeguana</code> package. Check the <code>eeguana</code> package for pre-processing EEG data within <code>R</code> (<a href="https://github.com/bnicenboim/eeguana" class="uri">https://github.com/bnicenboim/eeguana</a>).</p>
 <ol>
-<li>The next vignette presents how to use <code>permuco4brain</code> with signals stored in edf files:</li>
+<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/download-example-cheval.html">download-example-cheval</a> vignette presents how to use <code>permuco4brain</code> with signals stored in <code>edf</code> files:</li>
 </ol>
 <!-- end list --><div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span>(<span class="st">"download-example-cheval"</span>, package = <span class="st">"permuco4brain"</span>)
 </pre></div>
-<p>In this tutorial, you learn how to download EEG data from zenodo and analyze them using <code>permuco4brain</code>.</p>
+<p>In this tutorial, you learn how to download EEG data from <code>zenodo</code> and analyze them using <code>permuco4brain</code>.</p>
 <ol>
-<li>The next vignette presents how to use <code>ggplot2</code> to produce graphical representation for publication:</li>
+<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html">figure-ggplot2</a> vignette presents how to use <code>ggplot2</code> to produce graphical representation for publication:</li>
 </ol>
 <!-- end list --><div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span>(<span class="st">"figure-ggplot2"</span>, package = <span class="st">"permuco4brain"</span>)
