@@ -4,8 +4,8 @@ Title: Extension of permuco on time-space data, like full scalp EEG
 Version: 0.1.0
 Date: 2020-03-02
 Authors@R: c(
-  person("Frossard", "Jaromil", email = "jaromil.frossard@unige.ch",role = c("aut", "cre")),
-  person("Renaud","Olivier",email="olivier.renaud@unige.ch",role=c("aut")))
+  person("Jaromil","Frossard",  email = "jaromil.frossard@unige.ch",role = c("aut", "cre")),
+  person("Olivier","Renaud",email="olivier.renaud@unige.ch",role=c("aut")))
 URL: https://github.com/jaromilfrossard/permuco4brain
 Description: Compute the cluster mass test for multiple signal.
 License: GPL (>= 2)
