@@ -4,3 +4,6 @@
 ^Meta$
 test.R
 model.RData
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
