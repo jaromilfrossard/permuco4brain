@@ -7,3 +7,4 @@ model.RData
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^\.github$
