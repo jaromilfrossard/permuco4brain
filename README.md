@@ -8,14 +8,14 @@
 <!-- badges: end -->
 
 `permuco4brain` provides functions to compute permutation test in brain
-imagery data. It is specially designed for EEG/ERP data. `permuco4brain`
-is an add-on to `permuco` to computing clustermass tests on
-spatio-temporal data (eg: full-scalp EEG data).
+imagery data. It is specially designed for M-EEG/ERP data.
+`permuco4brain` is an add-on to `permuco` to computing clustermass tests
+on spatio-temporal data (eg: full-scalp EEG data).
 
 ## Installation
 
-`permuco4brain` currently works with permuco 1.1.1 (github). Download it
-using:
+`permuco4brain` currently works with `permuco` 1.1.1 (github). Download
+it using:
 
 ``` r
 devtools::install_github("jaromilfrossard/permuco", build_vignettes = TRUE)

@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Extension of permuco on time-space data, like full scalp EEG">
-<meta property="og:description" content="Compute the cluster mass test for multiple signal.">
+<meta property="og:description" content="Compute the cluster mass test on multiple signals spacially distributed.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -84,7 +84,62 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-Compute the cluster mass test for multiple signal.
+<div id="permuco4brain" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#permuco4brain" class="anchor"></a>permuco4brain</h1></div>
+<!-- badges: start -->
+<!-- badges: end -->
+<p><code>permuco4brain</code> provides functions to compute permutation test in brain imagery data. It is specially designed for M-EEG/ERP data. <code>permuco4brain</code> is an add-on to <code>permuco</code> to computing clustermass tests on spatio-temporal data (eg: full-scalp EEG data).</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p><code>permuco4brain</code> currently works with <code>permuco</code> 1.1.1 (github). Download it using:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw">devtools</span>::<span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"jaromilfrossard/permuco"</span>, build_vignettes = <span class="fl">TRUE</span>)
+</pre></div>
+<p>The package is still under development and you can expect changes.</p>
+<p>Make sure to install <code>permuco4brain</code> with its full documentation:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">devtools</span>::<span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"jaromilfrossard/permuco4brain"</span>, build_vignettes = <span class="fl">TRUE</span>)
+</pre></div>
+<p>Functionality</p>
+<p>The main function is <code><a href="reference/brainperm.html">brainperm()</a></code> and it needs:</p>
+<ol>
+<li>
+<code>formula</code>: a formula object defining the design (right side) and a 3D array containing the signals (left side). The signal is a 3D array visible in the global environment. Its dimension is the design X samples X channels. Each “rows” of the 3D array should be related to the corresponding row of the design (<code>data</code> argument).</li>
+<li>
+<code>data</code>: a data-frame containing the variables of the design.</li>
+<li>
+<code>graph</code>: an <code>igraph</code> object defining spatial adjacency of the channels (third dimension of the signal). The names of the vertices should correspond to the names of the 3rd dimension of signal.</li>
+</ol>
+<p>You can inspect result using the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> method and visualize them using <code><a href="https://rdrr.io/r/graphics/image.html">image()</a></code>.</p>
+</div>
+<div id="documentation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#documentation" class="anchor"></a>Documentation</h2>
+<ol>
+<li>The following vignette presents how to use <code>permuco4brain</code> in combination with <code>eeguana</code> :</li>
+</ol>
+<!-- end list --><div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span>(<span class="st">"permuco4brain-with-eeguana"</span>, package = <span class="st">"permuco4brain"</span>)
+</pre></div>
+<p>You will find information how to extract the 3D array, the design data-frame and the graph from an <code>eeg_lst</code> object of the <code>eeguana</code> package. Check the <code>eeguana</code> package for pre-processing EEG data within <code>R</code> (<a href="https://github.com/bnicenboim/eeguana" class="uri">https://github.com/bnicenboim/eeguana</a>).</p>
+<ol>
+<li>The next vignette presents how to use <code>permuco4brain</code> with signals stored in edf files:</li>
+</ol>
+<!-- end list --><div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span>(<span class="st">"download-example-cheval"</span>, package = <span class="st">"permuco4brain"</span>)
+</pre></div>
+<p>In this tutorial, you learn how to download EEG data from zenodo and analyze them using <code>permuco4brain</code>.</p>
+<ol>
+<li>The next vignette presents how to use <code>ggplot2</code> to produce graphical representation for publication:</li>
+</ol>
+<!-- end list --><div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span>(<span class="st">"figure-ggplot2"</span>, package = <span class="st">"permuco4brain"</span>)
+</pre></div>
+<p>In this tutorial, you find 3 different types of plot that present the results of a clustermass test. All of them use the <code>ggplot2</code> package and may easily be customized for publication.</p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

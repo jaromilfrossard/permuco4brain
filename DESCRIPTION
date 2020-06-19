@@ -7,7 +7,7 @@ Authors@R: c(
   person("Jaromil","Frossard",  email = "jaromil.frossard@unige.ch",role = c("aut", "cre")),
   person("Olivier","Renaud",email="olivier.renaud@unige.ch",role=c("aut")))
 URL: https://github.com/jaromilfrossard/permuco4brain
-Description: Compute the cluster mass test for multiple signal.
+Description: Compute the cluster mass test on multiple signals spacially distributed.
 License: GPL (>= 2)
 Imports: permuco,stats,Matrix,igraph,tidyr,dplyr
 Encoding: UTF-8
