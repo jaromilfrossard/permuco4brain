@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Computer clustermass test based on multiple signal. — brainperm" />
-<meta property="og:description" content="Compute permutation test of on multiple signals spatially distributed like full-scalp EEG." />
+<meta property="og:description" content="Compute permutation test with FWER correction of on multiple signals spatially distributed." />
 
 
 
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Compute permutation test of on multiple signals spatially distributed like full-scalp EEG.</p>
+    <p>Compute permutation test with FWER correction of on multiple signals spatially distributed.</p>
     </div>
 
     <pre class="usage"><span class='fu'>brainperm</span>(
@@ -209,8 +209,8 @@
 <p>Other arguments could be pass in <code>...</code> :<br /> <br />
 <code>P</code> : A matrix containing the permutation of class <code>matrix</code> or <code>Pmat</code>; which is used for the reproductibility of the results. The first column must be the identity. <code>P</code> overwrites <code>np</code> argument.<br /> <br />
 <code>return_distribution = FALSE</code> : return the permutation distribution of the statistics. Warnings : return one high dimentional matrices (number of test times number of permutation) for each test.<br />
-<code>coding_sum</code> : a logical defining the coding of the design matrix to <code>contr.sum</code>: set by default to <code>TRUE</code> for ANOVA (when the argument <code>test</code> is <code>"fisher"</code> ) to tests main effects and is set to <code>FALSE</code> when <code>test</code> is <code>"t"</code>.  If <code>coding_sum</code> is set to <code>FALSE</code> the design matrix is computed with the coding defined in the dataframe and the tests of simple effets are possible with a coding of the dataframe set to <code>contr.treatment</code>. <br />
-<code>ncores</code> : An integer specifiying the number of cores for parrallel computing. Default is <code>detectCores()-1</code>.</p>
+<code>coding_sum = TRUE</code> : a logical defining the coding of the design matrix to <code>contr.sum</code>: set by default to <code>TRUE</code> for ANOVA (when the argument <code>test</code> is <code>"fisher"</code> ) to tests main effects and is set to <code>FALSE</code> when <code>test</code> is <code>"t"</code>.  If <code>coding_sum</code> is set to <code>FALSE</code> the design matrix is computed with the coding defined in the dataframe and the tests of simple effets are possible with a coding of the dataframe set to <code>contr.treatment</code>. <br />
+<code>ncores = detectCores()-1</code> : An integer specifiying the number of cores for parrallel computing. Default is <code>detectCores()-1</code>.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

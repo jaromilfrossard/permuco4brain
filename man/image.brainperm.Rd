@@ -2,7 +2,7 @@
 % Please edit documentation in R/image.brainperm.R
 \name{image.brainperm}
 \alias{image.brainperm}
-\title{Plot a statistical map of one effect.}
+\title{Statistical heatmap of the test.}
 \usage{
 \method{image}{brainperm}(x, effect = NULL, ...)
 }
@@ -14,5 +14,5 @@
 \item{...}{other argument pass to image().,}
 }
 \description{
-plot the significant test for 1 effect, all samples and all channels. Channels are in the y-axis and the samples in the x-axis. Non-significant cluster are shown in grey and the significant one in color from yellow to red as a function of the individual statistics.
+Plot the significant test for 1 effect, all samples and all channels. Channels are in the y-axis and the samples in the x-axis. Non-significant cluster are shown in grey and the significant one in color from yellow to red as a function of the individual statistics.
 }

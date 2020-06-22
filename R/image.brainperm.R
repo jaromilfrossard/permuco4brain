@@ -1,6 +1,7 @@
-#' Plot a statistical map of one effect.
+#' Statistical heatmap of the test.
 #'
-#' @description plot the significant test for 1 effect, all samples and all channels. Channels are in the y-axis and the samples in the x-axis. Non-significant cluster are shown in grey and the significant one in color from yellow to red as a function of the individual statistics.
+#' @description Plot the significant test for 1 effect, all samples and all channels. Channels are in the y-axis and the samples in the x-axis. Non-significant cluster are shown in grey and the significant one in color from yellow to red as a function of the individual statistics.
+#'
 #' @param x a brainperm object.
 #' @param effect an integer indicating which effect to plot.
 #' @param ... other argument pass to image().,

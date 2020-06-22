@@ -45,7 +45,7 @@ brainperm(
 \item{...}{further arguments}
 }
 \description{
-Compute permutation test of on multiple signals spatially distributed like full-scalp EEG.
+Compute permutation test with FWER correction of on multiple signals spatially distributed.
 }
 \details{
 The random effects model is only avaible with a F statistic.\cr
@@ -53,6 +53,6 @@ The random effects model is only avaible with a F statistic.\cr
 Other arguments could be pass in \code{...} :\cr \cr
 \code{P} : A matrix containing the permutation of class \code{matrix} or \code{Pmat}; which is used for the reproductibility of the results. The first column must be the identity. \code{P} overwrites \code{np} argument.\cr \cr
 \code{return_distribution = FALSE} : return the permutation distribution of the statistics. Warnings : return one high dimentional matrices (number of test times number of permutation) for each test.\cr
-\code{coding_sum} : a logical defining the coding of the design matrix to \code{contr.sum}: set by default to \code{TRUE} for ANOVA (when the argument \code{test} is \code{"fisher"} ) to tests main effects and is set to \code{FALSE} when \code{test} is \code{"t"}.  If \code{coding_sum} is set to \code{FALSE} the design matrix is computed with the coding defined in the dataframe and the tests of simple effets are possible with a coding of the dataframe set to \code{contr.treatment}. \cr
-\code{ncores} : An integer specifiying the number of cores for parrallel computing. Default is \code{detectCores()-1}.
+\code{coding_sum = TRUE} : a logical defining the coding of the design matrix to \code{contr.sum}: set by default to \code{TRUE} for ANOVA (when the argument \code{test} is \code{"fisher"} ) to tests main effects and is set to \code{FALSE} when \code{test} is \code{"t"}.  If \code{coding_sum} is set to \code{FALSE} the design matrix is computed with the coding defined in the dataframe and the tests of simple effets are possible with a coding of the dataframe set to \code{contr.treatment}. \cr
+\code{ncores = detectCores()-1} : An integer specifiying the number of cores for parrallel computing. Default is \code{detectCores()-1}.
 }

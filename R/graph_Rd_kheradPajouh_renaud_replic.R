@@ -9,12 +9,14 @@ graph_Rd_kheradPajouh_renaud_replic = function(args){
 
   #####
   zid <- args$mm_id
+  zid_0 <- as.integer(zid%*%t(contr.sum(ncol(zid)+1)))
+  zid_0 = matrix( (zid_0==1L)+ (zid_0==ncol(zid)),ncol= ncol(zid)+1)
   factors = names(attr(mm,"contrasts"))
   eff = colnames(args$link)
   wfact_link <- sapply(strsplit(eff,":"),function(effi){sum(!effi%in%factors)==0})
   link_fact <- args$link[,wfact_link,drop=F]
   wfact_mm <- (attr(mm,"assign"))%in%c(0,link_fact[2,,drop=F]+link_fact[3,,drop=F])
-  ZE = permuco:::khatrirao(zid,mm[,wfact_mm,drop=F])
+  ZE = permuco:::khatrirao(zid_0,mm[,wfact_mm,drop=F])
   mm_gr=cbind(mm[,wfact_mm,drop=F],ZE)
   qr_gr = qr(mm_gr)
   #hii = diag(qr.fitted(qr_gr,diag(length(args$y))))
