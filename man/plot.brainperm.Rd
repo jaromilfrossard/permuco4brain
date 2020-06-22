@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.brainperm.R
 \name{plot.brainperm}
 \alias{plot.brainperm}
-\title{Plot of a graph of the channels}
+\title{Plot a graph of the channels for 1 sample/time-point}
 \usage{
 \method{plot}{brainperm}(x, effect = 1, samples, ...)
 }
@@ -18,3 +18,8 @@
 \description{
 Plot the graphs of the channels for several samples. Red indicates significant clusters, grey non-significant and white represent below the threshold.
 }
+\seealso{
+Other plotting functions: 
+\code{\link{image.brainperm}()}
+}
+\concept{plotting functions}

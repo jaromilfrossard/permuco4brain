@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.brainperm.R
 \name{summary.brainperm}
 \alias{summary.brainperm}
-\title{Print method for \code{brainperm} object}
+\title{Summary method for \code{brainperm} object}
 \usage{
 \method{summary}{brainperm}(
   object,
@@ -26,3 +26,8 @@
 \description{
 Display the results of the \code{brainperm} object.
 }
+\seealso{
+Other summary functions: 
+\code{\link{print.brainperm}()}
+}
+\concept{summary functions}

@@ -1,4 +1,4 @@
-#' Print method for \code{brainperm} object
+#' Summary method for \code{brainperm} object
 #'
 #' @description Display the results of the \code{brainperm} object.
 #'
@@ -7,6 +7,7 @@
 #' @param table_type a character string indicating the type of table. The default value, \code{table_type = "cluster"}, displays results by clusters. If \code{table_type = "full"}, the table shows the results by individual tests.
 #' @param alternative a character string indicating the alternative hypothesis for t-test. Default value \code{"two.sided"}. \code{"less"} and \code{"greater"} is also available.
 #' @param ... other arguments pass to print.
+#' @family summary functions
 #' @export
 summary.brainperm = function(object, multcomp = NULL, table_type = "cluster",
                                 alternative = "two.sided",...){

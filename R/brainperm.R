@@ -14,7 +14,7 @@
 #'@param multcomp The multiple comparison procedure only \code{"clustermass"} (default) and \code{"troendle"}is available.
 #'@param effect An integer indicating the effect to test. It refers to the \code{assign} attribute of the \code{model.matrix} object. The default (\code{effect = NULL}) compute all effects.
 #'@param ... further arguments
-#' @details
+#'@details
 #' The random effects model is only avaible with a F statistic.\cr
 #'
 #' Other arguments could be pass in \code{...} :\cr \cr
@@ -24,6 +24,7 @@
 #' \code{ncores = detectCores()-1} : An integer specifiying the number of cores for parrallel computing. Default is \code{detectCores()-1}.
 #'
 #'@import permuco
+#'@family main functions
 #'@export
 brainperm <- function(formula, data, graph, np = 5000,method = NULL, type = "permutation", test = "fisher", aggr_FUN = NULL,
                       threshold = NULL, multcomp = "clustermass", effect = NULL,...){

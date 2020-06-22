@@ -2,7 +2,7 @@
 % Please edit documentation in R/image.brainperm.R
 \name{image.brainperm}
 \alias{image.brainperm}
-\title{Statistical heatmap of the test.}
+\title{Heatmap (time-space) of the tests.}
 \usage{
 \method{image}{brainperm}(x, effect = NULL, ...)
 }
@@ -16,3 +16,8 @@
 \description{
 Plot the significant test for 1 effect, all samples and all channels. Channels are in the y-axis and the samples in the x-axis. Non-significant cluster are shown in grey and the significant one in color from yellow to red as a function of the individual statistics.
 }
+\seealso{
+Other plotting functions: 
+\code{\link{plot.brainperm}()}
+}
+\concept{plotting functions}

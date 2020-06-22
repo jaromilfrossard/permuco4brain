@@ -56,3 +56,4 @@ Other arguments could be pass in \code{...} :\cr \cr
 \code{coding_sum = TRUE} : a logical defining the coding of the design matrix to \code{contr.sum}: set by default to \code{TRUE} for ANOVA (when the argument \code{test} is \code{"fisher"} ) to tests main effects and is set to \code{FALSE} when \code{test} is \code{"t"}.  If \code{coding_sum} is set to \code{FALSE} the design matrix is computed with the coding defined in the dataframe and the tests of simple effets are possible with a coding of the dataframe set to \code{contr.treatment}. \cr
 \code{ncores = detectCores()-1} : An integer specifiying the number of cores for parrallel computing. Default is \code{detectCores()-1}.
 }
+\concept{main functions}

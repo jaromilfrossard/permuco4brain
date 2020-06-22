@@ -2,7 +2,7 @@
 % Please edit documentation in R/position_to_graph.R
 \name{position_to_graph}
 \alias{position_to_graph}
-\title{Create igraph object from position of the channels}
+\title{\code{igraph} object from the positions of the channels}
 \usage{
 position_to_graph(data, delta = 4, name = "name", x = "x", y = "y", z = "z")
 }
@@ -22,3 +22,4 @@ position_to_graph(data, delta = 4, name = "name", x = "x", y = "y", z = "z")
 \description{
 Create an igraph object defining adjacency of the channels. Adjacency is defined when 2 channels have a (EUclidean) distance inferior to delta.
 }
+\concept{helper functions}

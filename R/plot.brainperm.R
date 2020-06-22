@@ -1,4 +1,4 @@
-#' Plot of a graph of the channels
+#' Plot a graph of the channels for 1 sample/time-point
 #'
 #' @description Plot the graphs of the channels for several samples. Red indicates significant clusters, grey non-significant and white represent below the threshold.
 #'
@@ -8,6 +8,7 @@
 #' @param ... other arguments including: \code{effect}: an integer specifying the effect to plot, \code{alpha}: argument to pass in par() and argument to pass in plot().
 #' @importFrom graphics par plot text
 #' @importFrom igraph get.edgelist
+#' @family plotting functions
 #' @export
 plot.brainperm <- function(x, effect = 1, samples,...){
   # save parameters

@@ -1,4 +1,4 @@
-#'Create igraph object from position of the channels
+#' \code{igraph} object from the positions of the channels
 #'
 #' Create an igraph object defining adjacency of the channels. Adjacency is defined when 2 channels have a (EUclidean) distance inferior to delta.
 #'
@@ -9,6 +9,7 @@
 #' @param y the colomn in the data containing the Y position of the channels.
 #' @param z the colomn in the data containing the Z position of the channels.
 #' @importFrom stats dist
+#' @family helper functions
 #' @export
 position_to_graph <- function(data, delta = 4, name = "name", x = "x", y = "y", z = "z"){
   mc <- match.call()

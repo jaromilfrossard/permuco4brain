@@ -1,4 +1,4 @@
-#' Statistical heatmap of the test.
+#' Heatmap (time-space) of the tests.
 #'
 #' @description Plot the significant test for 1 effect, all samples and all channels. Channels are in the y-axis and the samples in the x-axis. Non-significant cluster are shown in grey and the significant one in color from yellow to red as a function of the individual statistics.
 #'
@@ -7,6 +7,7 @@
 #' @param ... other argument pass to image().,
 #' @importFrom tidyr pivot_wider
 #' @importFrom graphics image box axis
+#' @family plotting functions
 #' @export
 image.brainperm = function(x, effect = NULL,...){
 

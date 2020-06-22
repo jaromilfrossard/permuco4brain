@@ -16,4 +16,8 @@ Display the results of the \code{brainperm} object.
 }
 \seealso{
 summary.brainperm
+
+Other summary functions: 
+\code{\link{summary.brainperm}()}
 }
+\concept{summary functions}

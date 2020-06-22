@@ -1,1 +1,25 @@
 destination: docs
+
+reference:
+- title: Main Function
+  desc: >
+   Run the permutation test on the signals
+  contents:
+   - has_concept("main functions")
+- title: Summary Functions
+  desc: >
+   Display a summary/table of the results
+  contents:
+   - has_concept("summary functions")
+- title: Vizualisation Functions
+  desc: >
+   Display fast vizualisation of the results
+  contents:
+   - has_concept("plotting functions")
+- title: Helper Functions
+  desc: >
+   Help reshaping the data in the appropriate format
+  contents:
+   - has_concept("helper functions")
+
+
