@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: ref.bib
 vignette: >
-  %\VignetteIndexEntry{permuco4brain-with-eeguana}
+  %\VignetteIndexEntry{Using `permuco4brain` with `eeguana`}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+options(rmarkdown.html_vignette.check_title = FALSE)
 knit_hooks$set(webgl = hook_webgl)
 ```
 

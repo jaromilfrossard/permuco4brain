@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: ref.bib
 vignette: >
-  %\VignetteIndexEntry{download-example-cheval}
+  %\VignetteIndexEntry{Download example of full scalp EEG data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 knit_hooks$set(webgl = hook_webgl)
+options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 
