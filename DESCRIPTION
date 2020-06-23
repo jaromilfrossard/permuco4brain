@@ -18,7 +18,6 @@ Depends:
 Suggests: 
     knitr,
     rmarkdown,
-    rgl,
     tidyverse,
     ggplot2,
     geofacet,
