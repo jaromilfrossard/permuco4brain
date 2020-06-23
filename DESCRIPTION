@@ -22,7 +22,8 @@ Suggests:
     tidyverse,
     ggplot2,
     geofacet,
-    ggforce
+    ggforce,
+    testthat
 Remotes: 
     github::bnicenboim/eeguana
 VignetteBuilder: knitr

@@ -44,6 +44,9 @@ brainperm(
 
 \item{...}{further arguments}
 }
+\value{
+a \code{brainperm} object.
+}
 \description{
 Compute permutation test with FWER correction of on multiple signals spatially distributed.
 }

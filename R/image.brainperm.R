@@ -4,7 +4,10 @@
 #'
 #' @param x a brainperm object.
 #' @param effect an integer indicating which effect to plot.
-#' @param ... other argument pass to image().,
+#' @param ... other argument pass to image().
+#'
+#' @return a heatmap of the test generated using the \link{image} function.
+#'
 #' @importFrom tidyr pivot_wider
 #' @importFrom graphics image box axis
 #' @family plotting functions

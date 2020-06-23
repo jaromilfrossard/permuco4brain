@@ -15,6 +15,9 @@
 
 \item{...}{other arguments including: \code{effect}: an integer specifying the effect to plot, \code{alpha}: argument to pass in par() and argument to pass in plot().}
 }
+\value{
+a plot of a graph of the channels.
+}
 \description{
 Plot the graphs of the channels for several samples. Red indicates significant clusters, grey non-significant and white represent below the threshold.
 }

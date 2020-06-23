@@ -11,7 +11,10 @@
 
 \item{effect}{an integer indicating which effect to plot.}
 
-\item{...}{other argument pass to image().,}
+\item{...}{other argument pass to image().}
+}
+\value{
+a heatmap of the test generated using the \link{image} function.
 }
 \description{
 Plot the significant test for 1 effect, all samples and all channels. Channels are in the y-axis and the samples in the x-axis. Non-significant cluster are shown in grey and the significant one in color from yellow to red as a function of the individual statistics.

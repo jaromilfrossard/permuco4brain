@@ -14,6 +14,9 @@
 #'@param multcomp The multiple comparison procedure only \code{"clustermass"} (default) and \code{"troendle"}is available.
 #'@param effect An integer indicating the effect to test. It refers to the \code{assign} attribute of the \code{model.matrix} object. The default (\code{effect = NULL}) compute all effects.
 #'@param ... further arguments
+#'
+#'@return a \code{brainperm} object.
+#'
 #'@details
 #' The random effects model is only avaible with a F statistic.\cr
 #'

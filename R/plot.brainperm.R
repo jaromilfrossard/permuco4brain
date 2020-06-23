@@ -6,6 +6,9 @@
 #' @param effect an integer specifying which effect to plot.
 #' @param samples a vetor of integers specifying the samples to plots.
 #' @param ... other arguments including: \code{effect}: an integer specifying the effect to plot, \code{alpha}: argument to pass in par() and argument to pass in plot().
+#'
+#' @return a plot of a graph of the channels.
+#'
 #' @importFrom graphics par plot text
 #' @importFrom igraph get.edgelist
 #' @family plotting functions

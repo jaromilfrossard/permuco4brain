@@ -4,6 +4,9 @@
 #'
 #' @param x a \code{brainperm} object.
 #' @param ... others arguments pass to code{summary.brainperm}.
+#'
+#' @return print a summary object
+#'
 #' @seealso summary.brainperm
 #' @family summary functions
 #' @export

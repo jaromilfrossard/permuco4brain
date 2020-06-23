@@ -11,6 +11,9 @@
 
 \item{...}{others arguments pass to code{summary.brainperm}.}
 }
+\value{
+print a summary object
+}
 \description{
 Display the results of the \code{brainperm} object.
 }

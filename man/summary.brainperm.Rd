@@ -23,6 +23,9 @@
 
 \item{...}{other arguments pass to print.}
 }
+\value{
+a list of tables containing the results of the test for each effect.
+}
 \description{
 Display the results of the \code{brainperm} object.
 }
