@@ -5,6 +5,11 @@ cache: packages
 r_check_args: "--no-vignettes"
 warnings_are_errors: true
 
+addons:
+  apt:
+    packages:
+      - libudunits2-dev
+
 os:
   - linux
   - osx
@@ -13,3 +18,5 @@ r:
   - oldrel
   - release
   - devel
+
+
