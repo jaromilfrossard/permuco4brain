@@ -92,7 +92,7 @@
 </h1>
                         <h4 class="author">Jaromil Frossard</h4>
             
-            <h4 class="date">2020-06-22</h4>
+            <h4 class="date">2020-06-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/permuco4brain-with-eeguana.Rmd"><code>vignettes/permuco4brain-with-eeguana.Rmd</code></a></small>
       <div class="hidden name"><code>permuco4brain-with-eeguana.Rmd</code></div>
@@ -104,7 +104,7 @@
 <div id="extracting-3d-array-using-eeguana" class="section level3">
 <h3 class="hasAnchor">
 <a href="#extracting-3d-array-using-eeguana" class="anchor"></a>Extracting 3D array using eeguana</h3>
-<p>The <code>eeguana</code> package <span class="citation">(Nicenboim 2018)</span> provides tools for the pre-processing of EEG data. Once the pre-processing done with eeguana the 3D matrix can be easily extracted to be pass in the <code><a href="../reference/brainperm.html">brainperm()</a></code> function.</p>
+<p>The <code>eeguana</code> package <span class="citation">(Nicenboim 2018)</span> provides tools for the pre-processing of EEG data. Once the pre-processing done with eeguana the 3D matrix can be easily extracted to be pass in the <code>brainperm()</code> function.</p>
 <p>The EEG data <span class="citation">(Nicenboim 2019)</span> available on an Open Science Framework repository was analysed using the <code>eeguana</code> package by <span class="citation">Nicenboim, Vasishth, and Rösler (2019)</span>. We use the same data-set for the following tutorial.</p>
 </div>
 <div id="downloading-data-from-osf" class="section level3">
@@ -248,7 +248,7 @@
 <p>Finally, we use <code>permuco4brain</code> for testing the difference between experimental conditions. We have a repeated measures ANCOVA, with 1 covariate (the centered age), 1 between-participants factors (the occupation) and 2 within-participants factors (reguion and conditions). The permutation tests is computed for all samples, all channels while controlling for the family-wise error rate (FWER).</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="kw">formula</span> <span class="op">&lt;-</span> <span class="kw">signal</span> <span class="op">~</span> <span class="kw">age_c</span><span class="op">*</span><span class="kw">occupation</span><span class="op">*</span><span class="kw">region</span><span class="op">*</span><span class="kw">cond</span> <span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">Error</a></span>(<span class="kw">.recording</span><span class="op">/</span>(<span class="kw">region</span><span class="op">*</span><span class="kw">cond</span>))
-<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainperm.html">brainperm</a></span>(formula = <span class="kw">formula</span>, data = <span class="kw">design</span>, graph = <span class="kw">graph</span>)
+<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu">brainperm</span>(formula = <span class="kw">formula</span>, data = <span class="kw">design</span>, graph = <span class="kw">graph</span>)
 </pre></div>
 <div id="bibliography" class="section level3 unnumbered">
 <h3 class="hasAnchor">

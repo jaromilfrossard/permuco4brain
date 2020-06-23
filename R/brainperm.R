@@ -1,4 +1,4 @@
-#'Computer clustermass test based on multiple signal.
+#'Computer clustermass test based on multiple signal
 #'
 #'@description Compute permutation test with FWER correction of on multiple signals spatially distributed.
 #'

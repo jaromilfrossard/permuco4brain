@@ -2,7 +2,7 @@
 % Please edit documentation in R/brainperm.R
 \name{brainperm}
 \alias{brainperm}
-\title{Computer clustermass test based on multiple signal.}
+\title{Computer clustermass test based on multiple signal}
 \usage{
 brainperm(
   formula,

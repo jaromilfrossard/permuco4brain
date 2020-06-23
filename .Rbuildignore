@@ -3,6 +3,7 @@
 ^doc$
 ^Meta$
 test.R
+hex.R
 model.RData
 ^_pkgdown\.yml$
 ^docs$

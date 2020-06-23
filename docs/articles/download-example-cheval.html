@@ -91,7 +91,7 @@
       <h1 data-toc-skip>Download example of full scalp EEG data</h1>
                         <h4 class="author">Jaromil Frossard</h4>
             
-            <h4 class="date">2020-06-22</h4>
+            <h4 class="date">2020-06-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/download-example-cheval.Rmd"><code>vignettes/download-example-cheval.Rmd</code></a></small>
       <div class="hidden name"><code>download-example-cheval.Rmd</code></div>
@@ -116,23 +116,23 @@
 <div id="downloading-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#downloading-data" class="anchor"></a>Downloading data</h2>
-<p>We download the data in a temporary files and we unzip the edf files also in a temporary file.</p>
+<p>We download the data in a temporary files and we also unzip the <code>.edf</code> files in a temporary file.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="kw">temp_zip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span>()
 <span class="kw">temp_edf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span>()
 <span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span>(<span class="st">"https://zenodo.org/record/1169140/files/ERP_by_subject_by_condition_data.zip"</span>,<span class="kw">temp_zip</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(zipfile = <span class="kw">temp_zip</span>, exdir = <span class="kw">temp_edf</span>)
 </pre></div>
-<p>We store the names of the files in a data frame using:</p>
+<p>Then, we store the names of the files in a data frame using:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="kw">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(filename = <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw">temp_edf</span>,<span class="st">"/raw_data/"</span>)),
                  stringsAsFactors = <span class="kw">F</span>)
 </pre></div>
-<p>If your are not familiar with edf files, you can explore the first one using:</p>
+<p>If your are not familiar with EEG <code>.edf</code> files, you can explore the first one using:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="kw">edf1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edf/man/read.edf.html">read.edf</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw">temp_edf</span>,<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"raw_data/"</span>,<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw">temp_edf</span>,<span class="st">"/raw_data/"</span>))[<span class="fl">1</span>])))
 </pre></div>
-<p>We download information about the subject and we keep only the measure of “Moderate to Vigorous Physical Activity” (MVPA) that we center:</p>
+<p>We download information on the subject and we only keep the centred measure of “Moderate to Vigorous Physical Activity” (MVPA) as between subjet covariates:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="kw">df_bw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="st">"https://zenodo.org/record/1169140/files/data_self_report_R_subset_zen.csv"</span>,sep=<span class="st">";"</span>)
 <span class="kw">df_bw</span> <span class="op">&lt;-</span> <span class="kw">df_bw</span> <span class="op">%&gt;%</span>
@@ -144,7 +144,7 @@
 <div id="reshaping-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#reshaping-data" class="anchor"></a>Reshaping data</h2>
-<p>We create the design from the filenames and we join the “between”-participant data. Moreover, we use only the “Round” stimuli as neutral shapes.</p>
+<p>We create the design from the filenames and we join the “between”-subject data. Moreover, we keep only the <code>"Round"</code> stimuli as neutral shapes.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="kw">df</span><span class="op">&lt;-</span> 
   <span class="kw">df</span><span class="op">%&gt;%</span>
@@ -154,7 +154,7 @@
   <span class="fu">left_join</span>(<span class="kw">df_bw</span>,by=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"participant"</span>=<span class="st">"subject"</span>))<span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="op">!</span><span class="kw">shape</span><span class="op">%in%</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Carre"</span>,<span class="st">"Neutre"</span>))
 </pre></div>
-<p>We import the edf files and retrieve only the signals:</p>
+<p>We import the <code>.edf</code> files and retrieve only the signals:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="kw">df</span><span class="op">&lt;-</span>
   <span class="kw">df</span><span class="op">%&gt;%</span>
@@ -170,7 +170,7 @@
   }))<span class="op">%&gt;%</span>
   <span class="fu">ungroup</span>()
 </pre></div>
-<p>We compute the signals relative to the neutral “Round” shapes within each participant:</p>
+<p>We compute the signals relative to the neutral <code>"Round"</code> shapes within each participant:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="kw">df</span><span class="op">&lt;-</span>
   <span class="kw">df</span><span class="op">%&gt;%</span>
@@ -240,9 +240,19 @@
 </pre></div>
 <p>Or we simply run the permutation tests:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="kw">clustermass</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainperm.html">brainperm</a></span>(<span class="kw">signal</span> <span class="op">~</span> <span class="kw">action</span><span class="op">*</span><span class="kw">stimuli</span><span class="op">*</span><span class="kw">mvpa_c</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">Error</a></span>(<span class="kw">participant</span><span class="op">/</span>(<span class="kw">action</span><span class="op">*</span><span class="kw">stimuli</span>)),
+<span class="kw">clustermass</span> <span class="op">&lt;-</span> <span class="fu">brainperm</span>(<span class="kw">signal</span> <span class="op">~</span> <span class="kw">action</span><span class="op">*</span><span class="kw">stimuli</span><span class="op">*</span><span class="kw">mvpa_c</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">Error</a></span>(<span class="kw">participant</span><span class="op">/</span>(<span class="kw">action</span><span class="op">*</span><span class="kw">stimuli</span>)),
                          data = <span class="kw">design</span>, graph = <span class="kw">graph</span>)
 </pre></div>
+<p>We vizualise the result with a heatmap for the effect of the stimuli:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/image.html">image</a></span>(<span class="kw">clustermass</span>, effect = <span class="fl">2</span>)
+</pre></div>
+<p><img src="download-example-cheval_files/figure-html/unnamed-chunk-3-1.png" width="100%"></p>
+<p>Or to have a better understanding of the sptial distribution we can plot a graph the select samples (corresponding to 195ms, 214ms, 234ms and 254ms):</p>
+<div class="sourceCode" id="cb18"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="kw">clustermass</span>, effect = <span class="fl">2</span>,samples = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">100</span>,<span class="fl">120</span>,<span class="fl">120</span>,<span class="fl">130</span>))
+</pre></div>
+<p><img src="download-example-cheval_files/figure-html/unnamed-chunk-4-1.png" width="100%"></p>
 </div>
 <div id="reference" class="section level1 unnumbered">
 <h1 class="hasAnchor">
