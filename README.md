@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/jaromilfrossard/permuco4brain.svg?branch=master)](https://travis-ci.org/jaromilfrossard/permuco4brain)
 <!-- badges: end -->
 
 `permuco4brain` provides functions to compute permutation test in brain
