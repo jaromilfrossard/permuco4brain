@@ -22,4 +22,5 @@ reference:
   contents:
    - has_concept("helper functions")
 
-
+news:
+  cran_dates: false
