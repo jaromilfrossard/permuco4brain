@@ -26,3 +26,4 @@ Suggests:
 Remotes: 
     github::bnicenboim/eeguana
 VignetteBuilder: knitr
+BugReports: https://github.com/jaromilfrossard/permuco4brain/issues

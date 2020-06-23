@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/jaromilfrossard/permuco4brain.svg?branch=master)](https://travis-ci.org/jaromilfrossard/permuco4brain)
+[![R build status](https://github.com/jaromilfrossard/permuco4brain/workflows/R-CMD-check/badge.svg)](https://github.com/jaromilfrossard/permuco4brain/actions)
 <!-- badges: end -->
 
 `permuco4brain` provides functions to compute permutation test in brain imagery data. It is specially designed for M-EEG/ERP data. `permuco4brain` is an add-on to `permuco` to computing clustermass tests on spatio-temporal data (eg: full-scalp EEG data).

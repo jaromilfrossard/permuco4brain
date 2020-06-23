@@ -7,6 +7,8 @@
 
 [![Travis build
 status](https://travis-ci.org/jaromilfrossard/permuco4brain.svg?branch=master)](https://travis-ci.org/jaromilfrossard/permuco4brain)
+[![R build
+status](https://github.com/jaromilfrossard/permuco4brain/workflows/R-CMD-check/badge.svg)](https://github.com/jaromilfrossard/permuco4brain/actions)
 <!-- badges: end -->
 
 `permuco4brain` provides functions to compute permutation test in brain
