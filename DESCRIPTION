@@ -28,6 +28,7 @@ Suggests:
     purrr,
     covr
 Remotes: 
-    github::bnicenboim/eeguana
+    github::bnicenboim/eeguana,
+    github::jaromilfrossard/permuco
 VignetteBuilder: knitr
 BugReports: https://github.com/jaromilfrossard/permuco4brain/issues
