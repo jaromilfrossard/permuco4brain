@@ -1,5 +1,6 @@
 context("Test permutation method")
 library(permuco4brain)
+library(permuco)
 library(fields)
 library(dplyr)
 library(tidyr)
