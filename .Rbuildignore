@@ -11,3 +11,4 @@ model.RData
 ^\.github$
 ^README\.Rmd$
 ^\.travis\.yml$
+^codecov\.yml$

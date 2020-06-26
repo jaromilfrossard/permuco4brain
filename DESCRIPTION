@@ -22,7 +22,11 @@ Suggests:
     ggplot2,
     geofacet,
     ggforce,
-    testthat
+    testthat,
+    fields,
+    MASS,
+    purrr,
+    covr
 Remotes: 
     github::bnicenboim/eeguana
 VignetteBuilder: knitr
