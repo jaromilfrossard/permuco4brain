@@ -27,7 +27,7 @@ The EEG data [@nicenboim_eeg_2019] available on an Open Science Framework reposi
 
 ### Downloading data from OSF
 
-From the [EEG data](https://osf.io/ut7xq/) repository we found the "03_data_summarization.Rmd" file which provides functions to easily download the data-set. It is large (more than 20Gb) so we only download the pre-processed data using ICA. Following the first chunk of the "03_data_summarization.Rmd" file you should have (at least):
+From the [EEG data](https://osf.io/ut7xq/) repository we found the "03_data_summarization.Rmd" file which provides functions to easily download the data-set. It is large (more than 20GB) so we only download the pre-processed data using ICA. Following the first chunk of the "03_data_summarization.Rmd" file you should have (at least):
 
 1. A folder `data/` containing 5 csv files, 2 tsv files and 2 folders. 
 2. The folder `data/preproc_ica/` contains 120 RDA files (1 for each subject). Each file contains an `eeg_lst` object from eeguana with pre-processed EEG data.
@@ -186,7 +186,7 @@ Now, we have the 3 object we need to run a clustermass test, the 3D array contai
 #      graph = graph,file = "signal_design_graph.RData")
 ```
 
-Finally, we use `permuco4brain` for testing the difference between experimental conditions. We have a repeated measures ANCOVA, with 1 covariate (the centered age), 1 between-participants factors (the occupation) and 2 within-participants factors (reguion and conditions). The permutation tests is computed for all samples, all channels while controlling for the family-wise error rate (FWER).
+Finally, we use `permuco4brain` for testing the difference between experimental conditions. We have a repeated measures ANCOVA, with 1 covariate (the centered age), 1 between-participants factors (the occupation) and 2 within-participants factors (region and condition). The permutation tests is computed for all samples, all channels while controlling for the family-wise error rate (FWER).
 
 
 ```{r model, echo=TRUE,eval=FALSE}

@@ -11,15 +11,18 @@ position_to_graph(data, delta = 4, name = "name", x = "x", y = "y", z = "z")
 
 \item{delta}{an double defining the maximal distance for adjacency of two channels.}
 
-\item{name}{the colomn in the data containing the name of the channels.}
+\item{name}{the column in the data containing the name of the channels.}
 
-\item{x}{the colomn in the data containing the X position of the channels.}
+\item{x}{the column in the data containing the X position of the channels.}
 
-\item{y}{the colomn in the data containing the Y position of the channels.}
+\item{y}{the column in the data containing the Y position of the channels.}
 
-\item{z}{the colomn in the data containing the Z position of the channels.}
+\item{z}{the column in the data containing the Z position of the channels.}
+}
+\value{
+an \code{igraph} object.
 }
 \description{
-Create an igraph object defining adjacency of the channels. Adjacency is defined when 2 channels have a (EUclidean) distance inferior to delta.
+Create an igraph object defining adjacency of the channels. Adjacency is defined when 2 channels have a (Euclidean) distance inferior to delta.
 }
 \concept{helper functions}

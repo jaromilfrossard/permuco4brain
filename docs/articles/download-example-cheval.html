@@ -91,7 +91,7 @@
       <h1 data-toc-skip>Download example of full scalp EEG data</h1>
                         <h4 class="author">Jaromil Frossard</h4>
             
-            <h4 class="date">2020-06-26</h4>
+            <h4 class="date">2020-06-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/download-example-cheval.Rmd"><code>vignettes/download-example-cheval.Rmd</code></a></small>
       <div class="hidden name"><code>download-example-cheval.Rmd</code></div>
@@ -132,7 +132,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="kw">edf1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edf/man/read.edf.html">read.edf</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw">temp_edf</span>,<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"raw_data/"</span>,<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw">temp_edf</span>,<span class="st">"/raw_data/"</span>))[<span class="fl">1</span>])))
 </pre></div>
-<p>We download information on the subject and we only keep the centred measure of “Moderate to Vigorous Physical Activity” (MVPA) as between subjet covariates:</p>
+<p>We download information on the subject and we only keep the centered measure of “Moderate to Vigorous Physical Activity” (MVPA) as between subject covariates:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="kw">df_bw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="st">"https://zenodo.org/record/1169140/files/data_self_report_R_subset_zen.csv"</span>,sep=<span class="st">";"</span>)
 <span class="kw">df_bw</span> <span class="op">&lt;-</span> <span class="kw">df_bw</span> <span class="op">%&gt;%</span>

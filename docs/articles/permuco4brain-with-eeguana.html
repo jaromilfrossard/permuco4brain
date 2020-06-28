@@ -92,7 +92,7 @@
 </h1>
                         <h4 class="author">Jaromil Frossard</h4>
             
-            <h4 class="date">2020-06-26</h4>
+            <h4 class="date">2020-06-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/permuco4brain-with-eeguana.Rmd"><code>vignettes/permuco4brain-with-eeguana.Rmd</code></a></small>
       <div class="hidden name"><code>permuco4brain-with-eeguana.Rmd</code></div>
@@ -110,7 +110,7 @@
 <div id="downloading-data-from-osf" class="section level3">
 <h3 class="hasAnchor">
 <a href="#downloading-data-from-osf" class="anchor"></a>Downloading data from OSF</h3>
-<p>From the <a href="https://osf.io/ut7xq/">EEG data</a> repository we found the “03_data_summarization.Rmd” file which provides functions to easily download the data-set. It is large (more than 20Gb) so we only download the pre-processed data using ICA. Following the first chunk of the “03_data_summarization.Rmd” file you should have (at least):</p>
+<p>From the <a href="https://osf.io/ut7xq/">EEG data</a> repository we found the “03_data_summarization.Rmd” file which provides functions to easily download the data-set. It is large (more than 20GB) so we only download the pre-processed data using ICA. Following the first chunk of the “03_data_summarization.Rmd” file you should have (at least):</p>
 <ol style="list-style-type: decimal">
 <li>A folder <code>data/</code> containing 5 csv files, 2 tsv files and 2 folders.</li>
 <li>The folder <code>data/preproc_ica/</code> contains 120 RDA files (1 for each subject). Each file contains an <code>eeg_lst</code> object from eeguana with pre-processed EEG data.</li>
@@ -245,7 +245,7 @@
 <span class="co">#      design = design,</span>
 <span class="co">#      graph = graph,file = "signal_design_graph.RData")</span>
 </pre></div>
-<p>Finally, we use <code>permuco4brain</code> for testing the difference between experimental conditions. We have a repeated measures ANCOVA, with 1 covariate (the centered age), 1 between-participants factors (the occupation) and 2 within-participants factors (reguion and conditions). The permutation tests is computed for all samples, all channels while controlling for the family-wise error rate (FWER).</p>
+<p>Finally, we use <code>permuco4brain</code> for testing the difference between experimental conditions. We have a repeated measures ANCOVA, with 1 covariate (the centered age), 1 between-participants factors (the occupation) and 2 within-participants factors (region and condition). The permutation tests is computed for all samples, all channels while controlling for the family-wise error rate (FWER).</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="kw">formula</span> <span class="op">&lt;-</span> <span class="kw">signal</span> <span class="op">~</span> <span class="kw">age_c</span><span class="op">*</span><span class="kw">occupation</span><span class="op">*</span><span class="kw">region</span><span class="op">*</span><span class="kw">cond</span> <span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">Error</a></span>(<span class="kw">.recording</span><span class="op">/</span>(<span class="kw">region</span><span class="op">*</span><span class="kw">cond</span>))
 <span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainperm.html">brainperm</a></span>(formula = <span class="kw">formula</span>, data = <span class="kw">design</span>, graph = <span class="kw">graph</span>)

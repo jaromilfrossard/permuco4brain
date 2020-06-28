@@ -16,7 +16,7 @@ coverage](https://codecov.io/gh/jaromilfrossard/permuco4brain/branch/master/grap
 `permuco4brain` provides functions to compute permutation test in brain
 imagery data. It is specially designed for M-EEG/ERP data.
 `permuco4brain` is an add-on to `permuco` to computing clustermass tests
-on spatio-temporal data (eg: full-scalp EEG data).
+on spatio-temporal data (e.g.: full-scalp EEG data).
 
 ## Installation
 
@@ -53,7 +53,7 @@ using `image()`.
 
 ## Documentation
 
-Visite <https://jaromilfrossard.github.io/permuco4brain> or check the
+Visit <https://jaromilfrossard.github.io/permuco4brain> or check the
 vignette:
 
 1.  The

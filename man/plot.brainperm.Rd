@@ -11,7 +11,7 @@
 
 \item{effect}{an integer specifying which effect to plot.}
 
-\item{samples}{a vetor of integers specifying the samples to plots.}
+\item{samples}{a vector of integers specifying the samples to plots.}
 
 \item{...}{other arguments including: \code{effect}: an integer specifying the effect to plot, \code{alpha}: argument to pass in par() and argument to pass in plot().}
 }

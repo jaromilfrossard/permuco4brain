@@ -26,9 +26,11 @@ Suggests:
     fields,
     MASS,
     purrr,
-    covr
+    covr,
+    spelling
 Remotes: 
     github::bnicenboim/eeguana,
     github::jaromilfrossard/permuco
 VignetteBuilder: knitr
 BugReports: https://github.com/jaromilfrossard/permuco4brain/issues
+Language: en-US

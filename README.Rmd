@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/jaromilfrossard/permuco4brain/branch/master/graph/badge.svg)](https://codecov.io/gh/jaromilfrossard/permuco4brain?branch=master)
 <!-- badges: end -->
 
-`permuco4brain` provides functions to compute permutation test in brain imagery data. It is specially designed for M-EEG/ERP data. `permuco4brain` is an add-on to `permuco` to computing clustermass tests on spatio-temporal data (eg: full-scalp EEG data).
+`permuco4brain` provides functions to compute permutation test in brain imagery data. It is specially designed for M-EEG/ERP data. `permuco4brain` is an add-on to `permuco` to computing clustermass tests on spatio-temporal data (e.g.: full-scalp EEG data).
 
 ## Installation
 
@@ -50,7 +50,7 @@ You can inspect result using the `summary()` method and visualize them using `im
 
 ## Documentation
 
-Visite https://jaromilfrossard.github.io/permuco4brain or check the vignette:
+Visit https://jaromilfrossard.github.io/permuco4brain or check the vignette:
 
 1. The [permuco4brain-with-eeguana](https://jaromilfrossard.github.io/permuco4brain/articles/permuco4brain-with-eeguana.html) vignette presents how to use `permuco4brain` in combination with `eeguana` :
 

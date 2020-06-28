@@ -61,7 +61,7 @@ edf1 <- read.edf(file.path(temp_edf,paste0("raw_data/",list.files(paste0(temp_ed
 ```
 
 
-We download information on the subject and we only keep the centred measure of "Moderate to Vigorous Physical Activity" (MVPA) as between subjet covariates:
+We download information on the subject and we only keep the centered measure of "Moderate to Vigorous Physical Activity" (MVPA) as between subject covariates:
 
 ```{r beetween, echo=TRUE,eval=FALSE}
 df_bw <- read.csv("https://zenodo.org/record/1169140/files/data_self_report_R_subset_zen.csv",sep=";")

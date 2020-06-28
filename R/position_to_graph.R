@@ -1,13 +1,16 @@
 #' \code{igraph} object from the positions of the channels
 #'
-#' Create an igraph object defining adjacency of the channels. Adjacency is defined when 2 channels have a (EUclidean) distance inferior to delta.
+#' Create an igraph object defining adjacency of the channels. Adjacency is defined when 2 channels have a (Euclidean) distance inferior to delta.
 #'
 #' @param data a data.frame containing the name and position of channels.
 #' @param delta an double defining the maximal distance for adjacency of two channels.
-#' @param name the colomn in the data containing the name of the channels.
-#' @param x the colomn in the data containing the X position of the channels.
-#' @param y the colomn in the data containing the Y position of the channels.
-#' @param z the colomn in the data containing the Z position of the channels.
+#' @param name the column in the data containing the name of the channels.
+#' @param x the column in the data containing the X position of the channels.
+#' @param y the column in the data containing the Y position of the channels.
+#' @param z the column in the data containing the Z position of the channels.
+#'
+#' @return an \code{igraph} object.
+#'
 #' @importFrom stats dist
 #' @family helper functions
 #' @export

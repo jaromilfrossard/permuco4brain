@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="<code>igraph</code> object from the positions of the channels — position_to_graph" />
-<meta property="og:description" content="Create an igraph object defining adjacency of the channels. Adjacency is defined when 2 channels have a (EUclidean) distance inferior to delta." />
+<meta property="og:description" content="Create an igraph object defining adjacency of the channels. Adjacency is defined when 2 channels have a (Euclidean) distance inferior to delta." />
 
 
 
@@ -135,7 +135,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Create an igraph object defining adjacency of the channels. Adjacency is defined when 2 channels have a (EUclidean) distance inferior to delta.</p>
+    <p>Create an igraph object defining adjacency of the channels. Adjacency is defined when 2 channels have a (Euclidean) distance inferior to delta.</p>
     </div>
 
     <pre class="usage"><span class='fu'>position_to_graph</span>(<span class='kw'>data</span>, delta = <span class='fl'>4</span>, name = <span class='st'>"name"</span>, x = <span class='st'>"x"</span>, y = <span class='st'>"y"</span>, z = <span class='st'>"z"</span>)</pre>
@@ -153,22 +153,25 @@
     </tr>
     <tr>
       <th>name</th>
-      <td><p>the colomn in the data containing the name of the channels.</p></td>
+      <td><p>the column in the data containing the name of the channels.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>the colomn in the data containing the X position of the channels.</p></td>
+      <td><p>the column in the data containing the X position of the channels.</p></td>
     </tr>
     <tr>
       <th>y</th>
-      <td><p>the colomn in the data containing the Y position of the channels.</p></td>
+      <td><p>the column in the data containing the Y position of the channels.</p></td>
     </tr>
     <tr>
       <th>z</th>
-      <td><p>the colomn in the data containing the Z position of the channels.</p></td>
+      <td><p>the column in the data containing the Z position of the channels.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>an <code>igraph</code> object.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

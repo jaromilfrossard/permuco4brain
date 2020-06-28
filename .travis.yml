@@ -17,7 +17,7 @@ addons:
 
 os:
   - linux
-#  - osx
+  - osx
 
 r:
   - oldrel
