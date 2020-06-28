@@ -158,7 +158,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>formula</th>
-      <td><p>A formula object defining the design of the model. The left part should be a 3 dimensional array. Its row are the observations (or design), its colomn are the samples (or time-point) and the third dimension are the space (or the nodes of the graph). Each row should correspond to the design in the <code>data</code> argument.</p></td>
+      <td><p>A formula object defining the design of the model. The left part should be a 3 dimensional array. Its row are the observations (or design), its column are the samples (or time-point) and the third dimension are the space (or the nodes of the graph). Each row should correspond to the design in the <code>data</code> argument.</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -166,7 +166,7 @@
     </tr>
     <tr>
       <th>graph</th>
-      <td><p>An igraph object. It specifies the neighborgoods/spatial relationship between the signal/nodes.</p></td>
+      <td><p>An igraph object. It specifies the neighborhoods/spatial relationship between the signal/nodes.</p></td>
     </tr>
     <tr>
       <th>np</th>
@@ -186,7 +186,7 @@
     </tr>
     <tr>
       <th>aggr_FUN</th>
-      <td><p>A function used as mass function. It should aggregate the statistics of a cluster into one scalar. Default is the sum of squares fot t statistic and sum for F statistic.</p></td>
+      <td><p>A function used as mass function. It should aggregate the statistics of a cluster into one scalar. Default is the sum of squares for t statistic and sum for F statistic.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
@@ -211,12 +211,12 @@
     <p>a <code>brainperm</code> object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The random effects model is only avaible with a F statistic.<br /></p>
+    <p>The random effects model is only available with a F statistic.<br /></p>
 <p>Other arguments could be pass in <code>...</code> :<br /> <br />
-<code>P</code> : A matrix containing the permutation of class <code>matrix</code> or <code>Pmat</code>; which is used for the reproductibility of the results. The first column must be the identity. <code>P</code> overwrites <code>np</code> argument.<br /> <br />
-<code>return_distribution = FALSE</code> : return the permutation distribution of the statistics. Warnings : return one high dimentional matrices (number of test times number of permutation) for each test.<br />
-<code>coding_sum = TRUE</code> : a logical defining the coding of the design matrix to <code>contr.sum</code>: set by default to <code>TRUE</code> for ANOVA (when the argument <code>test</code> is <code>"fisher"</code> ) to tests main effects and is set to <code>FALSE</code> when <code>test</code> is <code>"t"</code>.  If <code>coding_sum</code> is set to <code>FALSE</code> the design matrix is computed with the coding defined in the dataframe and the tests of simple effets are possible with a coding of the dataframe set to <code>contr.treatment</code>. <br />
-<code>ncores = detectCores()-1</code> : An integer specifiying the number of cores for parrallel computing. Default is <code>detectCores()-1</code>.</p>
+<code>P</code> : A matrix containing the permutation of class <code>matrix</code> or <code>Pmat</code>; which is used for the reproducibility of the results. The first column must be the identity. <code>P</code> overwrites <code>np</code> argument.<br /> <br />
+<code>return_distribution = FALSE</code> : return the permutation distribution of the statistics. Warnings : return one high dimensional matrices (number of test times number of permutation) for each test.<br />
+<code>coding_sum = TRUE</code> : a logical defining the coding of the design matrix to <code>contr.sum</code>: set by default to <code>TRUE</code> for ANOVA (when the argument <code>test</code> is <code>"fisher"</code> ) to tests main effects and is set to <code>FALSE</code> when <code>test</code> is <code>"t"</code>.  If <code>coding_sum</code> is set to <code>FALSE</code> the design matrix is computed with the coding defined in the dataframe and the tests of simple effects are possible with a coding of the dataframe set to <code>contr.treatment</code>. <br />
+<code>ncores = detectCores()-1</code> : An integer specifying the number of cores for parallel computing. Default is <code>detectCores()-1</code>.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
