@@ -13,7 +13,7 @@
 
 \item{samples}{a vector of integers specifying the samples to plots.}
 
-\item{...}{other arguments including: \code{effect}: an integer specifying the effect to plot, \code{alpha}: argument to pass in par() and argument to pass in plot().}
+\item{...}{other arguments including: \code{alpha}, the type I error rate, \code{alternative}, the alternative hypothesis and \code{rad} the radius of the circles.}
 }
 \value{
 a plot of a graph of the channels.

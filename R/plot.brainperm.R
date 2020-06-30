@@ -5,7 +5,7 @@
 #' @param x brainperm object with a clustermass test.
 #' @param effect an integer specifying which effect to plot.
 #' @param samples a vector of integers specifying the samples to plots.
-#' @param ... other arguments including: \code{effect}: an integer specifying the effect to plot, \code{alpha}: argument to pass in par() and argument to pass in plot().
+#' @param ... other arguments including: \code{alpha}, the type I error rate, \code{alternative}, the alternative hypothesis and \code{rad} the radius of the circles.
 #'
 #' @return a plot of a graph of the channels.
 #'
@@ -23,12 +23,32 @@ plot.brainperm <- function(x, effect = 1, samples,...){
 
   if(is.null(dotargs$alpha)){dotargs$alpha = 0.05}
 
+  ###
+  if (is.null(dotargs$alternative)) {
+    dotargs$alternative = "two.sided"
+  }
+  if(x$test == "fisher"){
+    dotargs$alternative = "two.sided"
+  }
+  dotargs$alternative <- match.arg(dotargs$alternative,choices = c("two.sided","greater","less"),several.ok = F)
+
+  switch(dotargs$alternative,
+         "two.sided" = {multiple_comparison = x$multiple_comparison},
+         "greater" = {multiple_comparison = x$multiple_comparison_greater},
+         "less" = {multiple_comparison = x$multiple_comparison_less})
+  ##
+
   if (is.null(dotargs_par$mar)) {
     dotargs_par$mar = c(0, 0, 2, 0)
   }
   if (is.null(dotargs_par$oma)) {
     dotargs_par$oma = c(4, 4, 4, 1)
   }
+
+
+
+
+
   par(dotargs_par)
 
   #Vertex data
@@ -37,11 +57,13 @@ plot.brainperm <- function(x, effect = 1, samples,...){
   df <- with(df,xyz2polar(name,x,y,z))
 
   #radius of channels
-  if(length(df$x)!=1){
-    rad <- min(dist(cbind(df$x,df$y)),na.rm = T)*(1/4)}
-  else{
-    rad <-0.4
-  }
+  if(is.null(dotargs$rad)){
+    if(length(df$x)!=1){
+      rad <- min(dist(cbind(df$x,df$y)),na.rm = T)*(1/4)} else{
+        rad <-0.4
+      }}else{
+        rad = dotargs$rad
+      }
 
 
   #Edge data
@@ -77,7 +99,7 @@ plot.brainperm <- function(x, effect = 1, samples,...){
   }
 
 
-  title <- names(x$multiple_comparison)[effect]
+  title <- names(multiple_comparison)[effect]
 
 
   par(dotargs_par)
@@ -88,12 +110,14 @@ plot.brainperm <- function(x, effect = 1, samples,...){
     main <- paste0("sample: ",samples[sample_id])
 
   plot(0,type="n",xlim = xlim,ylim = ylim, bty ="n",
-       xaxt = "n",yaxt = "n",xlab = "",ylab = "",main = main,...=...)
+       xaxt = "n",yaxt = "n",xlab = "",ylab = "", main = main)
   with(df_edge,segments(x.from,y.from,x.to,y.to))
-  df_sampi <- left_join(df,subset(x$multiple_comparison[[effect]]$clustermass$data,
+  df_sampi <- left_join(df,subset(multiple_comparison[[effect]][[x$multcomp]]$data,
                             sample==(samples[sample_id])), by = c("name" = "channel"))
+  if(x$test!="clustermass"){df_sampi$cluster_id = as.numeric(df_sampi$pvalue<dotargs$alpha)}
 
   u_cl <- unique(df_sampi$cluster_id)
+
   for(cli in u_cl){
     df_cli = df_sampi[df_sampi$cluster_id == cli,,drop=F]
     if(cli==0){

@@ -1,6 +1,6 @@
 #' @importFrom stats rnorm qt pt
 brainperm_fix <- function(formula, data, method, threshold, np, P, graph, effect, coding_sum, test,type,
-                             aggr_FUN, multcomp, return_distribution,ncores,new_method,rnd_rotation){
+                          aggr_FUN, multcomp, return_distribution,ncores,new_method,rnd_rotation){
 
   ##Method$
   if(is.null(method)){method = "freedman_lane"}
@@ -200,51 +200,53 @@ brainperm_fix <- function(formula, data, method, threshold, np, P, graph, effect
     ##compute distribution
     args$colx <- which(col_ref == colx[i])
 
-  if(method == "huh_jhun"&test =="fisher"){args$P <- P[[i]]}
+    if(method == "huh_jhun"&test =="fisher"){args$P <- P[[i]]}
 
-  distribution <- funP(args = args)
+    distribution <- funP(args = args)
 
-  pvalue <- apply(distribution,2,function(col){
-    permuco:::compute_pvalue(distribution = col)})
-  ##inarray
-  pvalue = matrix(pvalue,nrow = dim_y[2],ncol = dim_y[3])
-  dim(distribution) = c(np,dim_y[2],dim_y[3])
-  #dim(signal) = dim_y
+    pvalue <- apply(distribution,2,function(col){
+      permuco:::compute_pvalue(distribution = col)})
+    ##inarray
+    pvalue = matrix(pvalue,nrow = dim_y[2],ncol = dim_y[3])
+    dim(distribution) = c(np,dim_y[2],dim_y[3])
+    #dim(signal) = dim_y
 
-  multiple_comparison[[i]]=list()
-  multiple_comparison[[i]]$uncorrected = list(statistic = t(distribution[1,,]),pvalue = pvalue,
-                                              test_info = test_info)
-  if(return_distribution){multiple_comparison[[i]]$uncorrected$distribution = distribution}
+    multiple_comparison[[i]]=list()
+    multiple_comparison[[i]]$uncorrected = list(statistic = t(distribution[1,,]),pvalue = pvalue,
+                                                test_info = test_info)
+    if(return_distribution){multiple_comparison[[i]]$uncorrected$distribution = distribution}
 
-  multiple_comparison[[i]][[2]] =
-    funMultComp(distribution = distribution,
-                threshold = threshold[i], aggr_FUN = aggr_FUN, graph = graph, alternative = test_info$alternative)
-  names(multiple_comparison[[i]])[2] = multcomp
-
-  if(test=="t"){
-    test_info$alternative <- "greater"
-    pvalue_para <- pt(distribution[1,,],df = dfi,lower.tail = F)
-    pvalue <- apply(as.matrix(distribution,nrow=np),2,function(col)permuco:::compute_pvalue(distribution = col,alternative = test_info$alternative))
-    pvalue <- matrix(pvalue,nrow = dim_y[2],ncol = dim_y[3])
-
-    multiple_comparison_greater[[i]]$uncorrected <- list(statistic = t(distribution[1,,]),pvalue = pvalue,
-                                                         test_info = test_info)
-    multiple_comparison_greater[[i]]$clustermass =
+    multiple_comparison[[i]][[2]] =
       funMultComp(distribution = distribution,
                   threshold = threshold[i], aggr_FUN = aggr_FUN, graph = graph, alternative = test_info$alternative)
+    names(multiple_comparison[[i]])[2] = multcomp
 
-    test_info$alternative <- "less"
-    pvalue_para <- pt(distribution[1,,],df = dfi,lower.tail = T)
-    pvalue <- apply(as.matrix(distribution,nrow=np),2,function(col)permuco:::compute_pvalue(distribution = col,alternative = test_info$alternative))
-    multiple_comparison_less[[i]]$uncorrected <- list(statistic = t(distribution[1,,]),pvalue = pvalue,
-                                                         test_info = test_info)
-    multiple_comparison_less[[i]]$clustermass =
-      funMultComp(distribution = distribution,
-                  threshold = threshold[i], aggr_FUN = aggr_FUN, graph = graph, alternative = test_info$alternative)
+    if(test=="t"){
+      test_info$alternative <- "greater"
+      pvalue_para <- pt(distribution[1,,],df = dfi,lower.tail = F)
+      pvalue <- apply(as.matrix(distribution,nrow=np),2,function(col)permuco:::compute_pvalue(distribution = col,alternative = test_info$alternative))
+      pvalue <- matrix(pvalue,nrow = dim_y[2],ncol = dim_y[3])
+
+      multiple_comparison_greater[[i]]$uncorrected <- list(statistic = t(distribution[1,,]),pvalue = pvalue,
+                                                           test_info = test_info)
+      multiple_comparison_greater[[i]][[2]] =
+        funMultComp(distribution = distribution,
+                    threshold = threshold[i], aggr_FUN = aggr_FUN, graph = graph, alternative = test_info$alternative)
+      names(multiple_comparison_greater[[i]])[2] = multcomp
+
+      test_info$alternative <- "less"
+      pvalue_para <- pt(distribution[1,,],df = dfi,lower.tail = T)
+      pvalue <- apply(as.matrix(distribution,nrow=np),2,function(col)permuco:::compute_pvalue(distribution = col,alternative = test_info$alternative))
+      multiple_comparison_less[[i]]$uncorrected <- list(statistic = t(distribution[1,,]),pvalue = pvalue,
+                                                        test_info = test_info)
+      multiple_comparison_less[[i]][[2]] =
+        funMultComp(distribution = distribution,
+                    threshold = threshold[i], aggr_FUN = aggr_FUN, graph = graph, alternative = test_info$alternative)
+      names(multiple_comparison_less[[i]])[2] = multcomp
 
 
 
-  }
+    }
 
 
 
@@ -266,6 +268,7 @@ brainperm_fix <- function(formula, data, method, threshold, np, P, graph, effect
   out$data<-mf
   out$method <- method
   out$multcomp <- multcomp
+  out$test <- test
   out$threshold <- threshold
   out$effect <- effect
   out$graph <- graph

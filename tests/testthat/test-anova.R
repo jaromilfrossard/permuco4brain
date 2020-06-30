@@ -1,4 +1,4 @@
-context("Test permutation method")
+context("anova - lm")
 library(permuco4brain)
 library(permuco)
 library(fields)
@@ -8,10 +8,13 @@ library(purrr)
 library(Matrix)
 library(MASS)
 
+set.seed(42)
+
+
 
 ### create fake data
 
-df_channel <- data.frame( channel = c("A","B","C","D"), x = c(0,1,1,1.2),y= c(1,0,1,1.2),z =c(0,0,0,0),stringsAsFactors = F)
+df_channel <- data.frame( channel = c("A","B","C","D"), x = c(0,1,1,1.2),y= c(1,0,1.2,1),z =c(0,0,0,0),stringsAsFactors = F)
 
 df_corr<- expand.grid(channel = c("A","B","C","D"),sample = c(1:100),stringsAsFactors = F)%>%
   left_join(df_channel,by="channel")%>%
@@ -59,21 +62,51 @@ dimnames(signal)[[3]]<-c("A","B","C","D")
 
 gi<- position_to_graph(df_channel,delta=1.2,name="channel")
 
-fl_f <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2, method = "freedman_lane",ncores=1,multcomp = c("clustermass","troendle"))
-m_f <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2, method = "manly",ncores=1,multcomp = c("clustermass","troendle"))
+fl_f_cm <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2,
+                     method = "freedman_lane",ncores=1,multcomp = c("clustermass"))
+m_f_tr <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2,
+                    method = "manly",ncores=1,multcomp = c("troendle"))
 
-fl_t <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2, method = "freedman_lane",ncores=1,multcomp = c("clustermass","troendle"),
-                  test ="t")
-m_t <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2, method = "manly",ncores=1,multcomp = c("clustermass","troendle"),
-                 test = "t")
+fl_t_cm <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2,
+                     method = "freedman_lane",ncores=1,multcomp = c("clustermass"), test ="t")
+
+
+m_t_tr <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2, method = "manly",ncores=1,
+                    multcomp = c("troendle"), test = "t")
+
+
+
+plot(m_f_tr,samples=c(1,2,3))
+plot(m_t_tr,samples=c(1,2,3),alternative ="less")
+
+image(fl_f_cm)
+
 
 
 test_that("Equal statistic freedman_lane and kennedy", {
-
-
-
-  max_diff <- max(abs(unlist(lapply(fl_f$multiple_comparison,function(effi)effi$uncorrected$statistic))-
-    unlist(lapply(m_f$multiple_comparison,function(effi)effi$uncorrected$statistic))))
+  max_diff <- max(abs(unlist(lapply(fl_f_cm$multiple_comparison,function(effi)effi$uncorrected$statistic))-
+    unlist(lapply(m_f_tr$multiple_comparison,function(effi)effi$uncorrected$statistic))))
 
   expect_true(max_diff<1e-12)
 })
+
+
+test_that("Summary-cluster dimension", {
+
+  bpi = fl_f_cm
+  dim_tab <- sapply(summary(bpi),function(tab)nrow(tab))
+  dim_object<- sapply(bpi$multiple_comparison,function(ei)length(ei$clustermass$cluster$clustermass))
+
+  expect_identical( dim_tab,dim_object )
+})
+
+
+test_that("Summary-full dimension", {
+  bpi = m_t_tr
+  dim_tab <- sapply(summary(bpi,table_type = "full"),function(tab)nrow(tab))
+  dim_object<- sapply(bpi$multiple_comparison,function(ei)length(ei$uncorrected$statistic))
+
+  expect_identical( dim_tab,dim_object )
+})
+
+
