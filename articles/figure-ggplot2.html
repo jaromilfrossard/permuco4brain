@@ -38,12 +38,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -91,7 +85,7 @@
       <h1 data-toc-skip>Figure using ggplot2</h1>
                         <h4 class="author">Jaromil Frossard</h4>
             
-            <h4 class="date">2020-06-30</h4>
+            <h4 class="date">2020-12-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/figure-ggplot2.Rmd"><code>vignettes/figure-ggplot2.Rmd</code></a></small>
       <div class="hidden name"><code>figure-ggplot2.Rmd</code></div>
@@ -103,84 +97,75 @@
 <p><code>permuco4brain</code> has currently 2 built-in functions for plotting. The <code><a href="https://rdrr.io/r/graphics/image.html">image()</a></code> function provides a heatmap of the results for 1 effect and the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function draws the adjacency graph for 1 time and 1 effect where the vertices are colored depending and the <span class="math inline">\(p\)</span>-value. These functions are fast but not easy to custom. Hence they are useful for checking results of the test but are may not be useful for publication purpose.</p>
 <p>In this vignette, we show how to extract the results of the test to produce 3 types of graphical representations using <code>ggplot2</code> <span class="citation">(Wickham 2016)</span>. These function may be slower to run but provides plots that can be custom for publication.</p>
 <p>We assume that you have already run the example in the <code>download-example-cheval</code> included in <code>permuco4brain</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">devtools</span>::<span class="fu">install_github</span>(<span class="st">"jaromilfrossard/permuco4brain"</span>, build_vignettes = <span class="fl">TRUE</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span>(<span class="st">"download-example-cheval"</span>,package = <span class="st">"permuco4brain"</span>)
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jaromilfrossard/permuco4brain"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"download-example-cheval"</span>,package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
 <p>In the <code>download-example-cheval</code> vignette, the final step is to perform test on a repeated measures ANCOVA model using <code>signal ~ action*stimuli*mvpa_c + Error(participant/(action*stimuli))</code>. In the following tutorial, we will assume the same data-set but adjusting a slightly simpler model, using the formula: <code>signal ~ action*stimuli + Error(participant/(action*stimuli))</code>.</p>
 <div id="the-heat-map" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-heat-map" class="anchor"></a>The heat-map</h2>
 <p>In this section, we create a similar heat-map than the <code><a href="https://rdrr.io/r/graphics/image.html">image()</a></code> function applied to a <code>brainperm</code> object. We need the following package:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">permuco</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/jaromilfrossard/permuco4brain">permuco4brain</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://igraph.org">igraph</a></span>)
-</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">permuco</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco4brain">permuco4brain</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org">igraph</a></span><span class="op">)</span></code></pre></div>
 <p>Make sure to load the <code>brainperm</code> model:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="st">"model.RData"</span>)
-</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"model.RData"</span><span class="op">)</span></code></pre></div>
 <p>We need first to get the channel’s attributes saved in the <code>igraph</code> object. We need from this object the spatial position of the channels.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">chan_tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/vertex_attr.html">get.vertex.attribute</a></span>(<span class="kw">model</span><span class="op">$</span><span class="kw">graph</span>)<span class="op">%&gt;%</span>
-  <span class="fu">as_tibble</span>()
-</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">chan_tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/vertex_attr.html">get.vertex.attribute</a></span><span class="op">(</span><span class="va">model</span><span class="op">$</span><span class="va">graph</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Next we get the results of the test by specifying the <code>table_type = "full"</code> argument from the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> method. It produces a list with a table per effect/interaction. Here we transform it into a large table:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="co">### test tibble</span>
-<span class="kw">df_gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">model</span>,table_type = <span class="st">"full"</span>)
-<span class="kw">df_gg</span> <span class="op">&lt;-</span>
-  <span class="fu">tibble</span>(effect = <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">df_gg</span>),
-         data = <span class="kw">df_gg</span>)<span class="op">%&gt;%</span>
-  <span class="fu">unnest</span>(<span class="kw">data</span>)
-</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">### test tibble</span>
+<span class="va">df_gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span>,table_type <span class="op">=</span> <span class="st">"full"</span><span class="op">)</span>
+<span class="va">df_gg</span> <span class="op">&lt;-</span>
+  <span class="fu">tibble</span><span class="op">(</span>effect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_gg</span><span class="op">)</span>,
+         data <span class="op">=</span> <span class="va">df_gg</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">unnest</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
 <p>Next we merge the channel’s information to the data-frame with the tests information:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="co">### add channel info</span>
-<span class="kw">df_gg</span> <span class="op">&lt;-</span> <span class="kw">df_gg</span><span class="op">%&gt;%</span>
-  <span class="fu">nest</span>(data=<span class="op">-</span><span class="kw">channel</span>)<span class="op">%&gt;%</span>
-  <span class="fu">left_join</span>(<span class="kw">chan_tbl</span>,by = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"channel"</span>=<span class="st">"name"</span>))
-</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">### add channel info</span>
+<span class="va">df_gg</span> <span class="op">&lt;-</span> <span class="va">df_gg</span><span class="op">%&gt;%</span>
+  <span class="fu">nest</span><span class="op">(</span>data<span class="op">=</span><span class="op">-</span><span class="va">channel</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">chan_tbl</span>,by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"channel"</span><span class="op">=</span><span class="st">"name"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We sort the channels and effects which will be is useful for ordering the panels:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="co">### order channel</span>
-<span class="kw">df_gg</span> <span class="op">&lt;-</span> <span class="kw">df_gg</span><span class="op">%&gt;%</span>
-  <span class="fu">arrange</span>(<span class="kw">y</span>,<span class="fu">desc</span>(<span class="kw">x</span>))<span class="op">%&gt;%</span>
-  <span class="fu">mutate</span>(order = <span class="fl">1</span><span class="op">:</span><span class="fu">n</span>())<span class="op">%&gt;%</span>
-  <span class="fu">mutate</span>(channel = <span class="fu">fct_reorder</span>(<span class="kw">channel</span>,<span class="kw">order</span>,<span class="kw">min</span>))<span class="op">%&gt;%</span>
-  <span class="fu">select</span>(<span class="op">-</span><span class="kw">order</span>)<span class="op">%&gt;%</span>
-  <span class="fu">unnest</span>(<span class="kw">data</span>)<span class="op">%&gt;%</span>
-  <span class="fu">mutate</span>(effect = <span class="fu">fct_relevel</span>(<span class="kw">effect</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"action"</span>,<span class="st">"stimuli"</span>,<span class="st">"action:stimuli"</span>)))
-</pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">### order channel</span>
+<span class="va">df_gg</span> <span class="op">&lt;-</span> <span class="va">df_gg</span><span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="va">y</span>,<span class="fu">desc</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>order <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>channel <span class="op">=</span> <span class="fu">fct_reorder</span><span class="op">(</span><span class="va">channel</span>,<span class="va">order</span>,<span class="va">min</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">order</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">unnest</span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>effect <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">effect</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"action"</span>,<span class="st">"stimuli"</span>,<span class="st">"action:stimuli"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>In the heat-map, we represent the test below the threshold transparent, the non-significant clusters in white and the significant clusters colored accordingly to their <span class="math inline">\(p\)</span>-value:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="kw">df_gg</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span>(data = <span class="kw">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">cluster_id</span> != <span class="fl">0</span>, <span class="kw">pvalue</span> <span class="op">&gt;=</span> <span class="fl">0.05</span>),
-            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">sample</span>, y = <span class="kw">channel</span>), fill = <span class="st">"white"</span>) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span>(data = <span class="kw">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">cluster_id</span> != <span class="fl">0</span>, <span class="kw">pvalue</span> <span class="op">&lt;</span> <span class="fl">0.05</span>),
-            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">sample</span>, y = <span class="kw">channel</span>, fill = <span class="kw">pvalue</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradientn</a></span>(colours = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"red"</span>, <span class="st">"yellow"</span>),
-                       limits = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">0.05</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span>(col = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">effect</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(legend.position = <span class="st">'bottom'</span>)
-</pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_gg</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cluster_id</span> <span class="op">!=</span> <span class="fl">0</span>, <span class="va">pvalue</span> <span class="op">&gt;=</span> <span class="fl">0.05</span><span class="op">)</span>,
+            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sample</span>, y <span class="op">=</span> <span class="va">channel</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cluster_id</span> <span class="op">!=</span> <span class="fl">0</span>, <span class="va">pvalue</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span>,
+            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sample</span>, y <span class="op">=</span> <span class="va">channel</span>, fill <span class="op">=</span> <span class="va">pvalue</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradientn</a></span><span class="op">(</span>colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"yellow"</span><span class="op">)</span>,
+                       limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">effect</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span></code></pre></div>
 <p><img src="figure_ggplot2_heatmap_pval.png"></p>
 <p>We can slight change the coloring by choosing to display the observed statistics of the individual tests. It may provide a good visual information of which time-points or channels drive the effect.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="kw">df_gg</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span>(data = <span class="kw">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">cluster_id</span> != <span class="fl">0</span>, <span class="kw">pvalue</span> <span class="op">&gt;=</span> <span class="fl">0.05</span>),
-            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">sample</span>, y = <span class="kw">channel</span>), fill = <span class="st">"white"</span>) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span>(data = <span class="kw">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">cluster_id</span> != <span class="fl">0</span>, <span class="kw">pvalue</span> <span class="op">&lt;</span> <span class="fl">0.05</span>),
-            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">sample</span>, y = <span class="kw">channel</span>, fill = <span class="kw">statistic</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradientn</a></span>(colours = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"yellow"</span>, <span class="st">"red"</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span>(col = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">effect</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(legend.position = <span class="st">'bottom'</span>)
-</pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_gg</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cluster_id</span> <span class="op">!=</span> <span class="fl">0</span>, <span class="va">pvalue</span> <span class="op">&gt;=</span> <span class="fl">0.05</span><span class="op">)</span>,
+            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sample</span>, y <span class="op">=</span> <span class="va">channel</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cluster_id</span> <span class="op">!=</span> <span class="fl">0</span>, <span class="va">pvalue</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span>,
+            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sample</span>, y <span class="op">=</span> <span class="va">channel</span>, fill <span class="op">=</span> <span class="va">statistic</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradientn</a></span><span class="op">(</span>colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"yellow"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">effect</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span></code></pre></div>
 <p><img src="figure_ggplot2_heatmap_stat.png"></p>
 </div>
 <div id="the-signals-on-grid" class="section level2">
@@ -188,88 +173,81 @@
 <a href="#the-signals-on-grid" class="anchor"></a>The signals on grid</h2>
 <p>In EEG analysis, it is common to plot the ERP of each channel on the representation of the head. This type representation usually displays the data or average per group but we adapt it to display the statistical signal for each effect. We will use the <code>geofacet</code> <span class="citation">(Hafen 2019)</span> package and its web-app to construct the grid.</p>
 <p>We need the following package:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">permuco</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/jaromilfrossard/permuco4brain">permuco4brain</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://igraph.org">igraph</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/hafen/geofacet">geofacet</a></span>)
-</pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">permuco</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco4brain">permuco4brain</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org">igraph</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hafen/geofacet">geofacet</a></span><span class="op">)</span></code></pre></div>
 <p>First we use the <code>table_type = "full"</code> from the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> method to get the result from all the tests (all effects, all time points, all channels) and we store it in a data-frame:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="kw">df_gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">model</span>, table_type = <span class="st">"full"</span>)
-<span class="kw">df_gg</span> <span class="op">&lt;-</span> <span class="fu">tibble</span>(effect = <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">df_gg</span>),
-                data = <span class="kw">df_gg</span>)<span class="op">%&gt;%</span>
-  <span class="fu">unnest</span>(<span class="kw">data</span>)
-</pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span>, table_type <span class="op">=</span> <span class="st">"full"</span><span class="op">)</span>
+<span class="va">df_gg</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>effect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_gg</span><span class="op">)</span>,
+                data <span class="op">=</span> <span class="va">df_gg</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">unnest</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
 <p>We get the position from the channels by getting the attributes of the graph:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="kw">chan_tbl</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/vertex_attr.html">get.vertex.attribute</a></span>(<span class="kw">model</span><span class="op">$</span><span class="kw">graph</span>)<span class="op">%&gt;%</span>
-  <span class="fu">as_tibble</span>()
-</pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">chan_tbl</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/vertex_attr.html">get.vertex.attribute</a></span><span class="op">(</span><span class="va">model</span><span class="op">$</span><span class="va">graph</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Then we use an internal function from <code>eeguana</code> <span class="citation">(Nicenboim 2018)</span> to transform the 3D coordinate system into 2D:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="kw">chan_polar</span> <span class="op">&lt;-</span> <span class="kw">eeguana</span>:::<span class="fu">polar</span>(<span class="kw">chan_tbl</span><span class="op">%&gt;%</span> <span class="fu">pull</span>(<span class="kw">x</span>),
-                              <span class="kw">chan_tbl</span><span class="op">%&gt;%</span> <span class="fu">pull</span>(<span class="kw">y</span>),
-                              <span class="kw">chan_tbl</span><span class="op">%&gt;%</span> <span class="fu">pull</span>(<span class="kw">z</span>))<span class="op">%&gt;%</span>
-  <span class="fu">as_tibble</span>()<span class="op">%&gt;%</span>
-  <span class="fu">rename</span>(x_pol = <span class="st">"x"</span>, 
-         y_pol = <span class="st">"y"</span>)
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">chan_polar</span> <span class="op">&lt;-</span> <span class="fu">eeguana</span><span class="fu">:::</span><span class="fu">polar</span><span class="op">(</span><span class="va">chan_tbl</span><span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,
+                              <span class="va">chan_tbl</span><span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">y</span><span class="op">)</span>,
+                              <span class="va">chan_tbl</span><span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">z</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">rename</span><span class="op">(</span>x_pol <span class="op">=</span> <span class="st">"x"</span>, 
+         y_pol <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span>
 
-<span class="kw">chan_tbl</span> <span class="op">&lt;-</span> <span class="kw">chan_tbl</span><span class="op">%&gt;%</span>
-  <span class="fu">bind_cols</span>(<span class="kw">chan_polar</span>)
-</pre></div>
+<span class="va">chan_tbl</span> <span class="op">&lt;-</span> <span class="va">chan_tbl</span><span class="op">%&gt;%</span>
+  <span class="fu">bind_cols</span><span class="op">(</span><span class="va">chan_polar</span><span class="op">)</span></code></pre></div>
 <p>Next we transform the position of the channel in order to simplify the creation of the grid as we need positive and integer values:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="kw">df_grid</span> <span class="op">=</span> <span class="kw">chan_tbl</span><span class="op">%&gt;%</span>
-  <span class="fu">select</span>(<span class="kw">name</span>, <span class="kw">x_pol</span>, <span class="kw">y_pol</span>)<span class="op">%&gt;%</span>
-  <span class="fu">transmute</span>(name=<span class="kw">name</span>,
-            code=<span class="kw">name</span>,
-            row=<span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw">y_pol</span><span class="op">*</span><span class="fl">5</span>)),
-            col=<span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw">x_pol</span><span class="op">*</span><span class="fl">5</span>)))<span class="op">%&gt;%</span>
-  <span class="fu">mutate</span>(row=<span class="kw">row</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="kw">row</span>),
-         row = <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="kw">row</span>)<span class="op">-</span><span class="kw">row</span><span class="op">+</span><span class="fl">1</span>,
-         col=<span class="kw">col</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="kw">col</span>)<span class="op">+</span><span class="fl">1</span>)
-</pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_grid</span> <span class="op">=</span> <span class="va">chan_tbl</span><span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="va">name</span>, <span class="va">x_pol</span>, <span class="va">y_pol</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">transmute</span><span class="op">(</span>name<span class="op">=</span><span class="va">name</span>,
+            code<span class="op">=</span><span class="va">name</span>,
+            row<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">y_pol</span><span class="op">*</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>,
+            col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">x_pol</span><span class="op">*</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>row<span class="op">=</span><span class="va">row</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">row</span><span class="op">)</span>,
+         row <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">row</span><span class="op">)</span><span class="op">-</span><span class="va">row</span><span class="op">+</span><span class="fl">1</span>,
+         col<span class="op">=</span><span class="va">col</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">col</span><span class="op">)</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p>Then, running the function <code><a href="https://rdrr.io/pkg/geofacet/man/grid_design.html">grid_design()</a></code> launches the web-app from <code>geofacet</code> on your browser. It allows to fine-tune the position of each channel and copy-paste the resulting data-frame.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="co"># grid_design(data= df_grid)</span>
-<span class="kw">df_grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(
-  name = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Fp2"</span>, <span class="st">"Fp1"</span>, <span class="st">"Fpz"</span>, <span class="st">"AF4"</span>, <span class="st">"AF3"</span>, <span class="st">"AFz"</span>, <span class="st">"AF8"</span>, <span class="st">"AF7"</span>, <span class="st">"Fz"</span>, <span class="st">"F2"</span>, <span class="st">"F1"</span>, <span class="st">"F3"</span>, 
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># grid_design(data= df_grid)</span>
+<span class="va">df_grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+  name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Fp2"</span>, <span class="st">"Fp1"</span>, <span class="st">"Fpz"</span>, <span class="st">"AF4"</span>, <span class="st">"AF3"</span>, <span class="st">"AFz"</span>, <span class="st">"AF8"</span>, <span class="st">"AF7"</span>, <span class="st">"Fz"</span>, <span class="st">"F2"</span>, <span class="st">"F1"</span>, <span class="st">"F3"</span>, 
            <span class="st">"F4"</span>, <span class="st">"F6"</span>, <span class="st">"F5"</span>, <span class="st">"F8"</span>, <span class="st">"F7"</span>, <span class="st">"FT8"</span>, <span class="st">"FT7"</span>, <span class="st">"FC5"</span>, <span class="st">"FC3"</span>, <span class="st">"FC1"</span>, <span class="st">"FCz"</span>, <span class="st">"FC2"</span>, 
            <span class="st">"FC4"</span>, <span class="st">"FC6"</span>, <span class="st">"T7"</span>, <span class="st">"C5"</span>, <span class="st">"C3"</span>, <span class="st">"C1"</span>, <span class="st">"Cz"</span>, <span class="st">"C2"</span>, <span class="st">"C4"</span>, <span class="st">"C6"</span>, <span class="st">"T8"</span>, <span class="st">"CP3"</span>, <span class="st">"CP1"</span>, 
            <span class="st">"CPz"</span>, <span class="st">"CP2"</span>, <span class="st">"CP4"</span>, <span class="st">"CP6"</span>, <span class="st">"CP5"</span>, <span class="st">"TP8"</span>, <span class="st">"TP7"</span>, <span class="st">"P7"</span>, <span class="st">"P5"</span>, <span class="st">"P3"</span>, <span class="st">"P1"</span>, <span class="st">"Pz"</span>, 
            <span class="st">"P2"</span>, <span class="st">"P4"</span>, <span class="st">"P6"</span>, <span class="st">"P8"</span>, <span class="st">"P10"</span>, <span class="st">"P9"</span>, <span class="st">"PO7"</span>, <span class="st">"PO3"</span>, <span class="st">"POz"</span>, <span class="st">"PO4"</span>, <span class="st">"PO8"</span>, <span class="st">"O1"</span>, 
-           <span class="st">"Oz"</span>, <span class="st">"O2"</span>, <span class="st">"Iz"</span>),
-  code = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Fp2"</span>, <span class="st">"Fp1"</span>, <span class="st">"Fpz"</span>, <span class="st">"AF4"</span>, <span class="st">"AF3"</span>, <span class="st">"AFz"</span>, <span class="st">"AF8"</span>, <span class="st">"AF7"</span>, <span class="st">"Fz"</span>, <span class="st">"F2"</span>, <span class="st">"F1"</span>, <span class="st">"F3"</span>, 
+           <span class="st">"Oz"</span>, <span class="st">"O2"</span>, <span class="st">"Iz"</span><span class="op">)</span>,
+  code <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Fp2"</span>, <span class="st">"Fp1"</span>, <span class="st">"Fpz"</span>, <span class="st">"AF4"</span>, <span class="st">"AF3"</span>, <span class="st">"AFz"</span>, <span class="st">"AF8"</span>, <span class="st">"AF7"</span>, <span class="st">"Fz"</span>, <span class="st">"F2"</span>, <span class="st">"F1"</span>, <span class="st">"F3"</span>, 
            <span class="st">"F4"</span>, <span class="st">"F6"</span>, <span class="st">"F5"</span>, <span class="st">"F8"</span>, <span class="st">"F7"</span>, <span class="st">"FT8"</span>, <span class="st">"FT7"</span>, <span class="st">"FC5"</span>, <span class="st">"FC3"</span>, <span class="st">"FC1"</span>, <span class="st">"FCz"</span>, <span class="st">"FC2"</span>, 
            <span class="st">"FC4"</span>, <span class="st">"FC6"</span>, <span class="st">"T7"</span>, <span class="st">"C5"</span>, <span class="st">"C3"</span>, <span class="st">"C1"</span>, <span class="st">"Cz"</span>, <span class="st">"C2"</span>, <span class="st">"C4"</span>, <span class="st">"C6"</span>, <span class="st">"T8"</span>, <span class="st">"CP3"</span>, <span class="st">"CP1"</span>, 
            <span class="st">"CPz"</span>, <span class="st">"CP2"</span>, <span class="st">"CP4"</span>, <span class="st">"CP6"</span>, <span class="st">"CP5"</span>, <span class="st">"TP8"</span>, <span class="st">"TP7"</span>, <span class="st">"P7"</span>, <span class="st">"P5"</span>, <span class="st">"P3"</span>, <span class="st">"P1"</span>, <span class="st">"Pz"</span>, <span class="st">"P2"</span>, 
            <span class="st">"P4"</span>, <span class="st">"P6"</span>, <span class="st">"P8"</span>, <span class="st">"P10"</span>, <span class="st">"P9"</span>, <span class="st">"PO7"</span>, <span class="st">"PO3"</span>, <span class="st">"POz"</span>, <span class="st">"PO4"</span>, <span class="st">"PO8"</span>, <span class="st">"O1"</span>, <span class="st">"Oz"</span>, <span class="st">"O2"</span>, 
-           <span class="st">"Iz"</span>),
-  row = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">5</span>, 
+           <span class="st">"Iz"</span><span class="op">)</span>,
+  row <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">5</span>, 
           <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">6</span>, <span class="fl">6</span>, <span class="fl">6</span>, <span class="fl">6</span>, <span class="fl">6</span>, <span class="fl">6</span>, <span class="fl">6</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">7</span>, <span class="fl">7</span>, <span class="fl">7</span>, <span class="fl">7</span>, <span class="fl">7</span>, <span class="fl">7</span>, <span class="fl">7</span>, <span class="fl">7</span>, <span class="fl">7</span>, <span class="fl">7</span>, <span class="fl">8</span>, 
-          <span class="fl">8</span>, <span class="fl">8</span>, <span class="fl">8</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">9</span>, <span class="fl">9</span>, <span class="fl">10</span>),
-  col = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">7</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">10</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">3</span>, <span class="fl">10</span>, <span class="fl">2</span>, <span class="fl">10</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">2</span>, 
+          <span class="fl">8</span>, <span class="fl">8</span>, <span class="fl">8</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">9</span>, <span class="fl">9</span>, <span class="fl">10</span><span class="op">)</span>,
+  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">10</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">3</span>, <span class="fl">10</span>, <span class="fl">2</span>, <span class="fl">10</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">2</span>, 
           <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">10</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">3</span>, <span class="fl">10</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">10</span>, <span class="fl">11</span>, 
-          <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">6</span>),
-  stringsAsFactors = <span class="fl">FALSE</span>)
-</pre></div>
+          <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">6</span><span class="op">)</span>,
+  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>The final plot is created by using the grid and highlighting the time-points in significant clusters. Here is the example for the interaction:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="kw">df_gg</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">effect</span> <span class="op">==</span> <span class="st">"action:stimuli"</span>)<span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>()<span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span>(data=<span class="kw">.</span><span class="op">%&gt;%</span>
-                <span class="fu">mutate</span>(statistic = <span class="fu">if_else</span>(<span class="kw">pvalue</span><span class="op">&lt;</span><span class="fl">0.05</span>, <span class="kw">statistic</span>,<span class="fl">NA_real_</span>)),
-              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">sample</span>,ymin=<span class="fl">0</span>, ymax= <span class="kw">statistic</span>),fill= <span class="st">"red"</span>)<span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">sample</span>, y = <span class="kw">statistic</span>))<span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(x=<span class="st">""</span>,y=<span class="st">""</span>)<span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/geofacet/man/facet_geo.html">facet_geo</a></span>(<span class="op">~</span><span class="kw">channel</span>,grid=<span class="kw">df_grid</span>)<span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(axis.title = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-        axis.text.x = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(angle = <span class="fl">90</span>))
-</pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_gg</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">effect</span> <span class="op">==</span> <span class="st">"action:stimuli"</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">.</span><span class="op">%&gt;%</span>
+                <span class="fu">mutate</span><span class="op">(</span>statistic <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">pvalue</span><span class="op">&lt;</span><span class="fl">0.05</span>, <span class="va">statistic</span>,<span class="cn">NA_real_</span><span class="op">)</span><span class="op">)</span>,
+              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sample</span>,ymin<span class="op">=</span><span class="fl">0</span>, ymax<span class="op">=</span> <span class="va">statistic</span><span class="op">)</span>,fill<span class="op">=</span> <span class="st">"red"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sample</span>, y <span class="op">=</span> <span class="va">statistic</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">""</span>,y<span class="op">=</span><span class="st">""</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/geofacet/man/facet_geo.html">facet_geo</a></span><span class="op">(</span><span class="op">~</span><span class="va">channel</span>,grid<span class="op">=</span><span class="va">df_grid</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="figure_ggplot2_signal_grid.png"></p>
 </div>
 <div id="the-graph-of-the-channels" class="section level2">
@@ -277,125 +255,115 @@
 <a href="#the-graph-of-the-channels" class="anchor"></a>The graph of the channels</h2>
 <p>In the following section, we plot the graph of adjacency of the channel for 1 sample by highlighting the channels belonging to significant clusters. It produces an accurate representation the clusters at a precise time-point.</p>
 <p>In addition to the usual package we need <code>ggforce</code> <span class="citation">(Pedersen 2019)</span> as it facilitates the representation of the channels (using <code><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html">geom_circle()</a></code>).</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">permuco</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/jaromilfrossard/permuco4brain">permuco4brain</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://igraph.org">igraph</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://ggforce.data-imaginist.com">ggforce</a></span>)
-</pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">permuco</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco4brain">permuco4brain</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org">igraph</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com">ggforce</a></span><span class="op">)</span></code></pre></div>
 <p>As previously, we get the channels position data:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="kw">chan_tbl</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/vertex_attr.html">get.vertex.attribute</a></span>(<span class="kw">model</span><span class="op">$</span><span class="kw">graph</span>)<span class="op">%&gt;%</span>
-  <span class="fu">as_tibble</span>()
-</pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">chan_tbl</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/vertex_attr.html">get.vertex.attribute</a></span><span class="op">(</span><span class="va">model</span><span class="op">$</span><span class="va">graph</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>We compute their 2D projection using the hidden function from <code>eeguana</code>:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="kw">chan_polar</span> <span class="op">&lt;-</span> <span class="kw">eeguana</span>:::<span class="fu">polar</span>(<span class="kw">chan_tbl</span><span class="op">%&gt;%</span> <span class="fu">pull</span>(<span class="kw">x</span>),
-                              <span class="kw">chan_tbl</span><span class="op">%&gt;%</span> <span class="fu">pull</span>(<span class="kw">y</span>),
-                              <span class="kw">chan_tbl</span><span class="op">%&gt;%</span> <span class="fu">pull</span>(<span class="kw">z</span>))<span class="op">%&gt;%</span>
-  <span class="fu">as_tibble</span>()<span class="op">%&gt;%</span>
-  <span class="fu">rename</span>(x_pol = <span class="st">"x"</span>,y_pol = <span class="st">"y"</span>)
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">chan_polar</span> <span class="op">&lt;-</span> <span class="fu">eeguana</span><span class="fu">:::</span><span class="fu">polar</span><span class="op">(</span><span class="va">chan_tbl</span><span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,
+                              <span class="va">chan_tbl</span><span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">y</span><span class="op">)</span>,
+                              <span class="va">chan_tbl</span><span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">z</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">rename</span><span class="op">(</span>x_pol <span class="op">=</span> <span class="st">"x"</span>,y_pol <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span>
 
-<span class="kw">chan_tbl</span> <span class="op">&lt;-</span> <span class="kw">chan_tbl</span><span class="op">%&gt;%</span>
-  <span class="fu">bind_cols</span>(<span class="kw">chan_polar</span>)
-</pre></div>
+<span class="va">chan_tbl</span> <span class="op">&lt;-</span> <span class="va">chan_tbl</span><span class="op">%&gt;%</span>
+  <span class="fu">bind_cols</span><span class="op">(</span><span class="va">chan_polar</span><span class="op">)</span></code></pre></div>
 <p>We store the data from the test in a data-frame:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="kw">df_gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">model</span>, table_type = <span class="st">"full"</span>)
-<span class="kw">df_gg</span> <span class="op">&lt;-</span>
-  <span class="fu">tibble</span>(effect = <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">df_gg</span>),
-         data = <span class="kw">df_gg</span>)<span class="op">%&gt;%</span>
-  <span class="fu">unnest</span>(<span class="kw">data</span>)
-</pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span>, table_type <span class="op">=</span> <span class="st">"full"</span><span class="op">)</span>
+<span class="va">df_gg</span> <span class="op">&lt;-</span>
+  <span class="fu">tibble</span><span class="op">(</span>effect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_gg</span><span class="op">)</span>,
+         data <span class="op">=</span> <span class="va">df_gg</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">unnest</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
 <p>And we merge data from test and the channel position:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="kw">df_gg</span> <span class="op">&lt;-</span> <span class="kw">df_gg</span><span class="op">%&gt;%</span>
-  <span class="fu">nest</span>(data =<span class="op">-</span> <span class="kw">channel</span>)<span class="op">%&gt;%</span>
-  <span class="fu">left_join</span>(<span class="kw">chan_tbl</span>,by = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"channel"</span>=<span class="st">"name"</span>))<span class="op">%&gt;%</span>
-  <span class="fu">unnest</span>(<span class="kw">data</span>)<span class="op">%&gt;%</span>
-  <span class="fu">mutate</span>(effect = <span class="fu">fct_relevel</span>(<span class="kw">effect</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"action"</span>,<span class="st">"stimuli"</span>,<span class="st">"action:stimuli"</span>)))
-</pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_gg</span> <span class="op">&lt;-</span> <span class="va">df_gg</span><span class="op">%&gt;%</span>
+  <span class="fu">nest</span><span class="op">(</span>data <span class="op">=</span><span class="op">-</span> <span class="va">channel</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">chan_tbl</span>,by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"channel"</span><span class="op">=</span><span class="st">"name"</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">unnest</span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>effect <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">effect</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"action"</span>,<span class="st">"stimuli"</span>,<span class="st">"action:stimuli"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Next we use the channel position to compute the size of the channel. Here the radius of the circles will be the <span class="math inline">\(1/5\)</span> of the minimal distance between 2 channels.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="kw">rad</span> <span class="op">&lt;-</span> 
-  (<span class="kw">chan_tbl</span><span class="op">%&gt;%</span>
-  <span class="fu">select</span>(<span class="kw">x_pol</span>,<span class="kw">y_pol</span>)<span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span>()<span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>())<span class="op">/</span><span class="fl">5</span>
-</pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rad</span> <span class="op">&lt;-</span> 
+  <span class="op">(</span><span class="va">chan_tbl</span><span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="va">x_pol</span>,<span class="va">y_pol</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span><span class="op">(</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">5</span></code></pre></div>
 <p>We get the data of the edges of the adjacency graph:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="kw">df_chan_pos</span> <span class="op">&lt;-</span> 
-  <span class="kw">chan_tbl</span><span class="op">%&gt;%</span>
-  <span class="fu">select</span>(channel = <span class="kw">name</span>, <span class="kw">x_pol</span>, <span class="kw">y_pol</span>)
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_chan_pos</span> <span class="op">&lt;-</span> 
+  <span class="va">chan_tbl</span><span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span>channel <span class="op">=</span> <span class="va">name</span>, <span class="va">x_pol</span>, <span class="va">y_pol</span><span class="op">)</span>
 
-<span class="kw">edge_tbl</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html">as_data_frame</a></span>(<span class="kw">model</span><span class="op">$</span><span class="kw">graph</span>, what = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"edges"</span>))<span class="op">%&gt;%</span>
-  <span class="fu">as_tibble</span>()<span class="op">%&gt;%</span>
-  <span class="fu">left_join</span>(<span class="kw">df_chan_pos</span>,by = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"from"</span>=<span class="st">"channel"</span>))<span class="op">%&gt;%</span>
-  <span class="fu">rename</span>(x_from = <span class="kw">x_pol</span>,y_from = <span class="kw">y_pol</span>)<span class="op">%&gt;%</span>
-  <span class="fu">left_join</span>(<span class="kw">df_chan_pos</span>,by = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"to"</span>=<span class="st">"channel"</span>))<span class="op">%&gt;%</span>
-  <span class="fu">rename</span>(x_to = <span class="kw">x_pol</span>,y_to = <span class="kw">y_pol</span>)
-</pre></div>
+<span class="va">edge_tbl</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html">as_data_frame</a></span><span class="op">(</span><span class="va">model</span><span class="op">$</span><span class="va">graph</span>, what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"edges"</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">df_chan_pos</span>,by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"from"</span><span class="op">=</span><span class="st">"channel"</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">rename</span><span class="op">(</span>x_from <span class="op">=</span> <span class="va">x_pol</span>,y_from <span class="op">=</span> <span class="va">y_pol</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">df_chan_pos</span>,by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"to"</span><span class="op">=</span><span class="st">"channel"</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">rename</span><span class="op">(</span>x_to <span class="op">=</span> <span class="va">x_pol</span>,y_to <span class="op">=</span> <span class="va">y_pol</span><span class="op">)</span></code></pre></div>
 <p>In order to have a representation of the edges that fits nicely with the size of the circles, we reduce the length of each segment using simple triangle geometry formula:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="kw">edge_tbl</span><span class="op">&lt;-</span> 
-  <span class="kw">edge_tbl</span><span class="op">%&gt;%</span>
-  <span class="fu">mutate</span>(slope = (<span class="kw">y_from</span><span class="op">-</span><span class="kw">y_to</span>)<span class="op">/</span>(<span class="kw">x_from</span><span class="op">-</span><span class="kw">x_to</span>),
-         dy = <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="kw">rad</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span>(<span class="fl">1</span><span class="op">+</span><span class="fl">1</span><span class="op">/</span><span class="kw">slope</span><span class="op">^</span><span class="fl">2</span>)),
-         dx = <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="kw">rad</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span>(<span class="fl">1</span><span class="op">+</span><span class="kw">slope</span><span class="op">^</span><span class="fl">2</span>)))<span class="op">%&gt;%</span>
-  <span class="fu">transmute</span>(from = <span class="kw">from</span>,to = <span class="kw">to</span>,
-            x_from=<span class="fu">if_else</span>(<span class="kw">x_from</span> <span class="op">&lt;</span> <span class="kw">x_to</span>, <span class="kw">x_from</span><span class="op">+</span><span class="kw">dx</span>,<span class="kw">x_from</span><span class="op">-</span><span class="kw">dx</span>),
-            x_to = <span class="fu">if_else</span>(<span class="kw">x_from</span> <span class="op">&lt;</span> <span class="kw">x_to</span>, <span class="kw">x_to</span><span class="op">-</span> <span class="kw">dx</span>,<span class="kw">x_to</span><span class="op">+</span><span class="kw">dx</span>),
-            y_from = <span class="fu">if_else</span>(<span class="kw">y_from</span> <span class="op">&lt;</span> <span class="kw">y_to</span>, <span class="kw">y_from</span><span class="op">+</span><span class="kw">dy</span>,<span class="kw">y_from</span><span class="op">-</span><span class="kw">dy</span>),
-            y_to = <span class="fu">if_else</span>(<span class="kw">y_from</span> <span class="op">&lt;</span> <span class="kw">y_to</span>, <span class="kw">y_to</span><span class="op">-</span><span class="kw">dy</span>,<span class="kw">y_to</span><span class="op">+</span><span class="kw">dy</span>))
-</pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">edge_tbl</span><span class="op">&lt;-</span> 
+  <span class="va">edge_tbl</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>slope <span class="op">=</span> <span class="op">(</span><span class="va">y_from</span><span class="op">-</span><span class="va">y_to</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="va">x_from</span><span class="op">-</span><span class="va">x_to</span><span class="op">)</span>,
+         dy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">rad</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="fl">1</span><span class="op">/</span><span class="va">slope</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,
+         dx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">rad</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="va">slope</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">transmute</span><span class="op">(</span>from <span class="op">=</span> <span class="va">from</span>,to <span class="op">=</span> <span class="va">to</span>,
+            x_from<span class="op">=</span><span class="fu">if_else</span><span class="op">(</span><span class="va">x_from</span> <span class="op">&lt;</span> <span class="va">x_to</span>, <span class="va">x_from</span><span class="op">+</span><span class="va">dx</span>,<span class="va">x_from</span><span class="op">-</span><span class="va">dx</span><span class="op">)</span>,
+            x_to <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">x_from</span> <span class="op">&lt;</span> <span class="va">x_to</span>, <span class="va">x_to</span><span class="op">-</span> <span class="va">dx</span>,<span class="va">x_to</span><span class="op">+</span><span class="va">dx</span><span class="op">)</span>,
+            y_from <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">y_from</span> <span class="op">&lt;</span> <span class="va">y_to</span>, <span class="va">y_from</span><span class="op">+</span><span class="va">dy</span>,<span class="va">y_from</span><span class="op">-</span><span class="va">dy</span><span class="op">)</span>,
+            y_to <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">y_from</span> <span class="op">&lt;</span> <span class="va">y_to</span>, <span class="va">y_to</span><span class="op">-</span><span class="va">dy</span>,<span class="va">y_to</span><span class="op">+</span><span class="va">dy</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Finally, the plot the result for 1 time-frame:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit">
-<span class="kw">df_gg</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">sample</span><span class="op">%in%</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">80</span>))<span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>()<span class="op">+</span>
-  <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html">geom_circle</a></span>(data=<span class="kw">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">cluster_id</span><span class="op">==</span><span class="fl">0</span>),
-              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x0 = <span class="kw">x_pol</span>, y0 = <span class="kw">y_pol</span>,r=<span class="kw">rad</span>), fill=<span class="st">"#00000000"</span>)<span class="op">+</span>
-  <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html">geom_circle</a></span>(data=<span class="kw">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">cluster_id</span>!=<span class="fl">0</span><span class="op">&amp;</span><span class="kw">pvalue</span><span class="op">&gt;</span><span class="fl">0.05</span>),
-              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x0 = <span class="kw">x_pol</span>, y0 = <span class="kw">y_pol</span>,r=<span class="kw">rad</span>), fill=<span class="st">"white"</span>)<span class="op">+</span>
-  <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html">geom_circle</a></span>(data=<span class="kw">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">pvalue</span><span class="op">&lt;</span><span class="fl">0.05</span>),
-              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x0 = <span class="kw">x_pol</span>, y0 = <span class="kw">y_pol</span>,r=<span class="kw">rad</span>,fill=<span class="kw">pvalue</span>))<span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradientn</a></span>(colours = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"red"</span>,<span class="st">"yellow"</span>),
-                       limits = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">0.05</span>))<span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span>(data=<span class="kw">edge_tbl</span>, mapping=<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x=<span class="kw">x_from</span>,y=<span class="kw">y_from</span>,xend=<span class="kw">x_to</span>,yend=<span class="kw">y_to</span>),
-             inherit.aes =<span class="kw">F</span>,col=<span class="st">"grey20"</span>)<span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">x_pol</span>, y = <span class="kw">y_pol</span><span class="op">+</span><span class="fl">2.4</span><span class="op">*</span><span class="kw">rad</span>,label = <span class="kw">channel</span>))<span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span>()<span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span>(<span class="kw">sample</span><span class="op">~</span><span class="kw">effect</span>)<span class="op">+</span>  
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(axis.title = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-        axis.ticks = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-        axis.text = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-        legend.position = <span class="st">'bottom'</span>)
-</pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_gg</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">sample</span><span class="op">%in%</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">80</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html">geom_circle</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cluster_id</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span>,
+              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x0 <span class="op">=</span> <span class="va">x_pol</span>, y0 <span class="op">=</span> <span class="va">y_pol</span>,r<span class="op">=</span><span class="va">rad</span><span class="op">)</span>, fill<span class="op">=</span><span class="st">"#00000000"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html">geom_circle</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cluster_id</span><span class="op">!=</span><span class="fl">0</span><span class="op">&amp;</span><span class="va">pvalue</span><span class="op">&gt;</span><span class="fl">0.05</span><span class="op">)</span>,
+              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x0 <span class="op">=</span> <span class="va">x_pol</span>, y0 <span class="op">=</span> <span class="va">y_pol</span>,r<span class="op">=</span><span class="va">rad</span><span class="op">)</span>, fill<span class="op">=</span><span class="st">"white"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html">geom_circle</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">pvalue</span><span class="op">&lt;</span><span class="fl">0.05</span><span class="op">)</span>,
+              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x0 <span class="op">=</span> <span class="va">x_pol</span>, y0 <span class="op">=</span> <span class="va">y_pol</span>,r<span class="op">=</span><span class="va">rad</span>,fill<span class="op">=</span><span class="va">pvalue</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradientn</a></span><span class="op">(</span>colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>,<span class="st">"yellow"</span><span class="op">)</span>,
+                       limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">edge_tbl</span>, mapping<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">x_from</span>,y<span class="op">=</span><span class="va">y_from</span>,xend<span class="op">=</span><span class="va">x_to</span>,yend<span class="op">=</span><span class="va">y_to</span><span class="op">)</span>,
+             inherit.aes <span class="op">=</span><span class="cn">F</span>,col<span class="op">=</span><span class="st">"grey20"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_pol</span>, y <span class="op">=</span> <span class="va">y_pol</span><span class="op">+</span><span class="fl">2.4</span><span class="op">*</span><span class="va">rad</span>,label <span class="op">=</span> <span class="va">channel</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">sample</span><span class="op">~</span><span class="va">effect</span><span class="op">)</span><span class="op">+</span>  
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+        axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+        axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+        legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span></code></pre></div>
 <p><img src="figure_ggplot2_graph_80.png"></p>
 <p>Or several time-frames of 1 effect (here the interaction). We deleted the names of the channels not to overload the representation.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="kw">df_gg</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">sample</span><span class="op">%in%</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span><span class="op">:</span><span class="fl">13</span>)<span class="op">*</span><span class="fl">10</span>),<span class="kw">effect</span><span class="op">==</span><span class="st">"action:stimuli"</span>)<span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>()<span class="op">+</span>
-  <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html">geom_circle</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x0 = <span class="kw">x_pol</span>, y0 = <span class="kw">y_pol</span>,r=<span class="kw">rad</span>), fill=<span class="st">"#00000000"</span>)<span class="op">+</span>
-  <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html">geom_circle</a></span>(data=<span class="kw">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">cluster_id</span>!=<span class="fl">0</span>),
-              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x0 = <span class="kw">x_pol</span>, y0 = <span class="kw">y_pol</span>,r=<span class="kw">rad</span>), fill=<span class="st">"white"</span>)<span class="op">+</span>
-  <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html">geom_circle</a></span>(data=<span class="kw">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">pvalue</span><span class="op">&lt;</span><span class="fl">0.05</span>),
-              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x0 = <span class="kw">x_pol</span>, y0 = <span class="kw">y_pol</span>,r=<span class="kw">rad</span>,fill=<span class="kw">pvalue</span>))<span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradientn</a></span>(colours = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"red"</span>,<span class="st">"yellow"</span>),
-                       limits = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">0.05</span>))<span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span>(data=<span class="kw">edge_tbl</span>, mapping=<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x=<span class="kw">x_from</span>,y=<span class="kw">y_from</span>,xend=<span class="kw">x_to</span>,yend=<span class="kw">y_to</span>),
-             inherit.aes =<span class="kw">F</span>,col=<span class="st">"grey20"</span>)<span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span>()<span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="kw">sample</span>,ncol=<span class="fl">3</span>)<span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(axis.title = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-        axis.ticks = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-        axis.text = <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-        legend.position = <span class="st">'bottom'</span>)
-</pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_gg</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">sample</span><span class="op">%in%</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">13</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span>,<span class="va">effect</span><span class="op">==</span><span class="st">"action:stimuli"</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html">geom_circle</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x0 <span class="op">=</span> <span class="va">x_pol</span>, y0 <span class="op">=</span> <span class="va">y_pol</span>,r<span class="op">=</span><span class="va">rad</span><span class="op">)</span>, fill<span class="op">=</span><span class="st">"#00000000"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html">geom_circle</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">cluster_id</span><span class="op">!=</span><span class="fl">0</span><span class="op">)</span>,
+              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x0 <span class="op">=</span> <span class="va">x_pol</span>, y0 <span class="op">=</span> <span class="va">y_pol</span>,r<span class="op">=</span><span class="va">rad</span><span class="op">)</span>, fill<span class="op">=</span><span class="st">"white"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html">geom_circle</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">.</span><span class="op">%&gt;%</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">pvalue</span><span class="op">&lt;</span><span class="fl">0.05</span><span class="op">)</span>,
+              <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x0 <span class="op">=</span> <span class="va">x_pol</span>, y0 <span class="op">=</span> <span class="va">y_pol</span>,r<span class="op">=</span><span class="va">rad</span>,fill<span class="op">=</span><span class="va">pvalue</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradientn</a></span><span class="op">(</span>colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>,<span class="st">"yellow"</span><span class="op">)</span>,
+                       limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">edge_tbl</span>, mapping<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">x_from</span>,y<span class="op">=</span><span class="va">y_from</span>,xend<span class="op">=</span><span class="va">x_to</span>,yend<span class="op">=</span><span class="va">y_to</span><span class="op">)</span>,
+             inherit.aes <span class="op">=</span><span class="cn">F</span>,col<span class="op">=</span><span class="st">"grey20"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">sample</span>,ncol<span class="op">=</span><span class="fl">3</span><span class="op">)</span><span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+        axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+        axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+        legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span></code></pre></div>
 <p><img src="figure_ggplot2_graph_all.png"></p>
 </div>
 <div id="reference" class="section level1 unnumbered">
@@ -433,7 +401,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

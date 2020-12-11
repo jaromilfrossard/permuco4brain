@@ -38,12 +38,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -97,13 +91,11 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p><code>permuco4brain</code> currently works with <code>permuco</code> 1.1.1 (github). Download it using:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">devtools</span>::<span class="fu">install_github</span>(<span class="st">"jaromilfrossard/permuco"</span>, build_vignettes = <span class="fl">TRUE</span>)
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jaromilfrossard/permuco"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><code>permuco4brain</code> is still under development and you can expect changes. Make sure to install <code>permuco4brain</code> with its full documentation:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">devtools</span>::<span class="fu">install_github</span>(<span class="st">"jaromilfrossard/permuco4brain"</span>, build_vignettes = <span class="fl">TRUE</span>)
-</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jaromilfrossard/permuco4brain"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="functionality" class="section level2">
 <h2 class="hasAnchor">
@@ -126,23 +118,20 @@
 <ol>
 <li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/permuco4brain-with-eeguana.html">permuco4brain-with-eeguana</a> vignette presents how to use <code>permuco4brain</code> in combination with <code>eeguana</code> :</li>
 </ol>
-<!-- end list --><div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span>(<span class="st">"permuco4brain-with-eeguana"</span>, package = <span class="st">"permuco4brain"</span>)
-</pre></div>
+<!-- end list --><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"permuco4brain-with-eeguana"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
 <p>You will find information how to extract the 3D array, the design data-frame and the graph from an <code>eeg_lst</code> object of the <code>eeguana</code> package. Check the <code>eeguana</code> package for pre-processing EEG data within <code>R</code> (<a href="https://github.com/bnicenboim/eeguana" class="uri">https://github.com/bnicenboim/eeguana</a>).</p>
 <ol>
 <li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/download-example-cheval.html">download-example-cheval</a> vignette presents how to use <code>permuco4brain</code> with signals stored in <code>edf</code> files:</li>
 </ol>
-<!-- end list --><div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span>(<span class="st">"download-example-cheval"</span>, package = <span class="st">"permuco4brain"</span>)
-</pre></div>
+<!-- end list --><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"download-example-cheval"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
 <p>In this tutorial, you learn how to download EEG data from <code>zenodo</code> and analyze them using <code>permuco4brain</code>.</p>
 <ol>
 <li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html">figure-ggplot2</a> vignette presents how to use <code>ggplot2</code> to produce graphical representation for publication:</li>
 </ol>
-<!-- end list --><div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span>(<span class="st">"figure-ggplot2"</span>, package = <span class="st">"permuco4brain"</span>)
-</pre></div>
+<!-- end list --><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"figure-ggplot2"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
 <p>In this tutorial, you find 3 different types of plot that present the results of a clustermass test. All of them use the <code>ggplot2</code> package and may easily be customized for publication.</p>
 </div>
 </div>
@@ -189,7 +178,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

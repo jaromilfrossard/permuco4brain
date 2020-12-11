@@ -38,12 +38,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -91,7 +85,7 @@
       <h1 data-toc-skip>Download example of full scalp EEG data</h1>
                         <h4 class="author">Jaromil Frossard</h4>
             
-            <h4 class="date">2020-06-30</h4>
+            <h4 class="date">2020-12-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/download-example-cheval.Rmd"><code>vignettes/download-example-cheval.Rmd</code></a></small>
       <div class="hidden name"><code>download-example-cheval.Rmd</code></div>
@@ -100,149 +94,133 @@
 
     
     
-<p>In the following tutorial, we download EEG data analysed in <span class="citation">Cheval et al. (2018)</span>. This data-set is stored in the <a href="https://zenodo.org/record/1169140">zenodo repository</a> as “edf” files.</p>
+<p>In the following tutorial, we download EEG data and reanalyze the data in <span class="citation">Cheval et al. (2018)</span>. This dataset is stored in the <a href="https://zenodo.org/record/1169140">zenodo repository</a> as <code>.edf</code> files.</p>
 <div id="installing-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installing-packages" class="anchor"></a>Installing packages</h2>
 <p>We need several packages including <code>tidyverse</code> <span class="citation">(Wickham et al. 2019)</span>, <code>edf</code> <span class="citation">(Henelius 2016)</span>, <code>abind</code> <span class="citation">(Plate and Heiberger 2016)</span>, <code>xlsx</code> <span class="citation">(Dragulescu and Arendt 2018)</span> and <code>permuco4brain</code> <span class="citation">(Frossard and Renaud 2020)</span>:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">edf</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">abind</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">xlsx</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/jaromilfrossard/permuco4brain">permuco4brain</a></span>)
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">edf</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">abind</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">xlsx</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco4brain">permuco4brain</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="downloading-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#downloading-data" class="anchor"></a>Downloading data</h2>
-<p>We download the data in a temporary files and we also unzip the <code>.edf</code> files in a temporary file.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">temp_zip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span>()
-<span class="kw">temp_edf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span>()
-<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span>(<span class="st">"https://zenodo.org/record/1169140/files/ERP_by_subject_by_condition_data.zip"</span>,<span class="kw">temp_zip</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(zipfile = <span class="kw">temp_zip</span>, exdir = <span class="kw">temp_edf</span>)
-</pre></div>
+<p>We download the data in a temporary files before unzippin the <code>.edf</code> files.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">temp_zip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">temp_edf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://zenodo.org/record/1169140/files/ERP_by_subject_by_condition_data.zip"</span>,<span class="va">temp_zip</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span><span class="op">(</span>zipfile <span class="op">=</span> <span class="va">temp_zip</span>, exdir <span class="op">=</span> <span class="va">temp_edf</span><span class="op">)</span></code></pre></div>
 <p>Then, we store the names of the files in a data frame using:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(filename = <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw">temp_edf</span>,<span class="st">"/raw_data/"</span>)),
-                 stringsAsFactors = <span class="kw">F</span>)
-</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">temp_edf</span>,<span class="st">"/raw_data/"</span><span class="op">)</span><span class="op">)</span>,
+                 stringsAsFactors <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
 <p>If your are not familiar with EEG <code>.edf</code> files, you can explore the first one using:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">edf1</span> <span class="op">&lt;-</span> <span class="fu">read.edf</span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw">temp_edf</span>,<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"raw_data/"</span>,<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw">temp_edf</span>,<span class="st">"/raw_data/"</span>))[<span class="fl">1</span>])))
-</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">edf1</span> <span class="op">&lt;-</span> <span class="fu">read.edf</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp_edf</span>,<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"raw_data/"</span>,<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">temp_edf</span>,<span class="st">"/raw_data/"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We download information on the subject and we only keep the centered measure of “Moderate to Vigorous Physical Activity” (MVPA) as between subject covariates:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="kw">df_bw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="st">"https://zenodo.org/record/1169140/files/data_self_report_R_subset_zen.csv"</span>,sep=<span class="st">";"</span>)
-<span class="kw">df_bw</span> <span class="op">&lt;-</span> <span class="kw">df_bw</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span>(subject = <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"S"</span>,<span class="kw">subject</span>),
-         mvpa_c = <span class="kw">MVPA</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="kw">MVPA</span>))<span class="op">%&gt;%</span>
-  <span class="fu">select</span>(<span class="kw">subject</span>,<span class="kw">mvpa_c</span>)
-</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_bw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"https://zenodo.org/record/1169140/files/data_self_report_R_subset_zen.csv"</span>,sep<span class="op">=</span><span class="st">";"</span><span class="op">)</span>
+<span class="va">df_bw</span> <span class="op">&lt;-</span> <span class="va">df_bw</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>subject <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"S"</span>,<span class="va">subject</span><span class="op">)</span>,
+         mvpa_c <span class="op">=</span> <span class="va">MVPA</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">MVPA</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="va">subject</span>,<span class="va">mvpa_c</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="reshaping-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#reshaping-data" class="anchor"></a>Reshaping data</h2>
-<p>We create the design from the filenames and we join the “between”-subject data. Moreover, we keep only the <code>"Round"</code> stimuli as neutral shapes.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw">df</span><span class="op">&lt;-</span> 
-  <span class="kw">df</span><span class="op">%&gt;%</span>
-  <span class="fu">group_by</span>(<span class="kw">filename</span>)<span class="op">%&gt;%</span>
-  <span class="fu">separate</span>(<span class="kw">filename</span>,into = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"participant"</span>,<span class="st">"neutral_stim"</span>,<span class="st">"av"</span>,<span class="st">"action"</span>,<span class="st">"shape"</span>,<span class="st">"edf"</span>),remove = <span class="kw">F</span>)<span class="op">%&gt;%</span>
-  <span class="fu">select</span>(<span class="op">-</span><span class="kw">edf</span>,<span class="op">-</span><span class="kw">av</span>)<span class="op">%&gt;%</span>
-  <span class="fu">left_join</span>(<span class="kw">df_bw</span>,by=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"participant"</span>=<span class="st">"subject"</span>))<span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="op">!</span><span class="kw">shape</span><span class="op">%in%</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Carre"</span>,<span class="st">"Neutre"</span>))
-</pre></div>
+<p>We create the design from the filenames and we join the “between”-subject variables. Moreover, we keep only the <code>"Round"</code> stimuli as neutral shapes.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span><span class="op">&lt;-</span> 
+  <span class="va">df</span><span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">separate</span><span class="op">(</span><span class="va">filename</span>,into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"participant"</span>,<span class="st">"neutral_stim"</span>,<span class="st">"av"</span>,<span class="st">"action"</span>,<span class="st">"shape"</span>,<span class="st">"edf"</span><span class="op">)</span>,remove <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">edf</span>,<span class="op">-</span><span class="va">av</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">df_bw</span>,by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"participant"</span><span class="op">=</span><span class="st">"subject"</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">shape</span><span class="op">%in%</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Carre"</span>,<span class="st">"Neutre"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We import the <code>.edf</code> files and retrieve only the signals:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="kw">df</span><span class="op">&lt;-</span>
-  <span class="kw">df</span><span class="op">%&gt;%</span>
-  <span class="fu">mutate</span>(edf = <span class="fu">map</span> (<span class="kw">filename</span>,<span class="fu">function</span>(<span class="kw">ii</span>){
-    <span class="kw">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw">temp_edf</span>,<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"raw_data/"</span>,<span class="kw">ii</span>))
-    <span class="fu">read.edf</span>(<span class="kw">path</span>)
-  }))<span class="op">%&gt;%</span>
-  <span class="fu">mutate</span>(signal = <span class="fu">map</span>(<span class="kw">edf</span>,<span class="fu">function</span>(<span class="kw">listi</span>){
-    <span class="kw">listi</span><span class="op">$</span><span class="kw">signal</span><span class="op">%&gt;%</span>
-      <span class="fu">map</span>(<span class="fu">function</span>(<span class="kw">channel</span>)<span class="kw">channel</span><span class="op">$</span><span class="kw">data</span>)<span class="op">%&gt;%</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>()<span class="op">%&gt;%</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>()
-  }))<span class="op">%&gt;%</span>
-  <span class="fu">ungroup</span>()
-</pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span><span class="op">&lt;-</span>
+  <span class="va">df</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>edf <span class="op">=</span> <span class="fu">map</span> <span class="op">(</span><span class="va">filename</span>,<span class="kw">function</span><span class="op">(</span><span class="va">ii</span><span class="op">)</span><span class="op">{</span>
+    <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp_edf</span>,<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"raw_data/"</span>,<span class="va">ii</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu">read.edf</span><span class="op">(</span><span class="va">path</span><span class="op">)</span>
+  <span class="op">}</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>signal <span class="op">=</span> <span class="fu">map</span><span class="op">(</span><span class="va">edf</span>,<span class="kw">function</span><span class="op">(</span><span class="va">listi</span><span class="op">)</span><span class="op">{</span>
+    <span class="va">listi</span><span class="op">$</span><span class="va">signal</span><span class="op">%&gt;%</span>
+      <span class="fu">map</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">channel</span><span class="op">)</span><span class="va">channel</span><span class="op">$</span><span class="va">data</span><span class="op">)</span><span class="op">%&gt;%</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">%&gt;%</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="op">}</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>We compute the signals relative to the neutral <code>"Round"</code> shapes within each participant:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="kw">df</span><span class="op">&lt;-</span>
-  <span class="kw">df</span><span class="op">%&gt;%</span>
-  <span class="fu">select</span>(<span class="kw">participant</span>,<span class="kw">shape</span>,<span class="kw">action</span>,<span class="kw">mvpa_c</span>,<span class="kw">signal</span>)<span class="op">%&gt;%</span>
-  <span class="fu">pivot_wider</span>(names_from = <span class="kw">shape</span>,values_from = <span class="kw">signal</span>)<span class="op">%&gt;%</span>
-  <span class="fu">mutate</span>(PA_rel = <span class="fu">map2</span>(<span class="kw">AP</span>,<span class="kw">Rond</span>,<span class="kw">`-`</span>),
-         Sed_rel = <span class="fu">map2</span>(<span class="kw">SED</span>,<span class="kw">Rond</span>,<span class="kw">`-`</span>))<span class="op">%&gt;%</span>
-  <span class="fu">select</span>(<span class="op">-</span><span class="kw">AP</span>,<span class="op">-</span><span class="kw">Rond</span>,<span class="op">-</span><span class="kw">SED</span>)<span class="op">%&gt;%</span>
-  <span class="fu">pivot_longer</span>(<span class="kw">PA_rel</span><span class="op">:</span><span class="kw">Sed_rel</span>,names_to = <span class="st">"stimuli"</span>, values_to = <span class="st">"signal"</span>)
-</pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span><span class="op">&lt;-</span>
+  <span class="va">df</span><span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="va">participant</span>,<span class="va">shape</span>,<span class="va">action</span>,<span class="va">mvpa_c</span>,<span class="va">signal</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">shape</span>,values_from <span class="op">=</span> <span class="va">signal</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>PA_rel <span class="op">=</span> <span class="fu">map2</span><span class="op">(</span><span class="va">AP</span>,<span class="va">Rond</span>,<span class="va">`-`</span><span class="op">)</span>,
+         Sed_rel <span class="op">=</span> <span class="fu">map2</span><span class="op">(</span><span class="va">SED</span>,<span class="va">Rond</span>,<span class="va">`-`</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">AP</span>,<span class="op">-</span><span class="va">Rond</span>,<span class="op">-</span><span class="va">SED</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">pivot_longer</span><span class="op">(</span><span class="va">PA_rel</span><span class="op">:</span><span class="va">Sed_rel</span>,names_to <span class="op">=</span> <span class="st">"stimuli"</span>, values_to <span class="op">=</span> <span class="st">"signal"</span><span class="op">)</span></code></pre></div>
 <p>We <code><a href="https://rdrr.io/r/base/unlink.html">unlink()</a></code> the temporary files:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/unlink.html">unlink</a></span>(<span class="kw">temp_zip</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/unlink.html">unlink</a></span>(<span class="kw">temp_edf</span>)
-</pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unlink.html">unlink</a></span><span class="op">(</span><span class="va">temp_zip</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/unlink.html">unlink</a></span><span class="op">(</span><span class="va">temp_edf</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="extracting-the-signal-the-design-and-the-graph" class="section level2">
 <h2 class="hasAnchor">
 <a href="#extracting-the-signal-the-design-and-the-graph" class="anchor"></a>Extracting the signal, the design and the graph</h2>
 <p>We create the 3D array that stores the signals:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="kw">signal</span><span class="op">&lt;-</span> 
-  (<span class="kw">df</span><span class="op">%&gt;%</span>
-  <span class="fu">pull</span>(<span class="kw">signal</span>)<span class="op">%&gt;%</span>
-  <span class="fu">invoke</span>(<span class="kw">abind</span>::<span class="kw">abind</span>,<span class="kw">.</span>,along = <span class="fl">3</span>)<span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/aperm.html">aperm</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">2</span>)))[,<span class="fl">102</span><span class="op">:</span><span class="fl">512</span>,]
-</pre></div>
-<p>We create the data-frame that stores the design:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="kw">design</span><span class="op">&lt;-</span>
-  <span class="kw">df</span><span class="op">%&gt;%</span>
-  <span class="fu">select</span>(<span class="kw">participant</span>, <span class="kw">action</span>, <span class="kw">stimuli</span>,<span class="kw">mvpa_c</span>)<span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>()
-</pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">signal</span><span class="op">&lt;-</span> 
+  <span class="op">(</span><span class="va">df</span><span class="op">%&gt;%</span>
+  <span class="fu">pull</span><span class="op">(</span><span class="va">signal</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">invoke</span><span class="op">(</span><span class="fu">abind</span><span class="fu">::</span><span class="va">abind</span>,<span class="va">.</span>,along <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/aperm.html">aperm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fl">102</span><span class="op">:</span><span class="fl">512</span>,<span class="op">]</span></code></pre></div>
+<p>We create the dataframe that stores the design:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">design</span><span class="op">&lt;-</span>
+  <span class="va">df</span><span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="va">participant</span>, <span class="va">action</span>, <span class="va">stimuli</span>,<span class="va">mvpa_c</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>We download the position of the channels from <a href="www.biosemi.com">biosemi</a>:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="kw">temp_xl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span>()
-<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span>(<span class="st">"https://www.biosemi.com/download/Cap_coords_all.xls"</span>,<span class="kw">temp_xl</span>,mode=<span class="st">"wb"</span>)
-<span class="kw">coord</span> <span class="op">&lt;-</span>  <span class="fu">read.xlsx</span>(file=<span class="kw">temp_xl</span>, sheetIndex = <span class="fl">3</span>, header =<span class="kw">T</span>,startRow=<span class="fl">34</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/unlink.html">unlink</a></span>(<span class="kw">temp_xl</span>)
-</pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">temp_xl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://www.biosemi.com/download/Cap_coords_all.xls"</span>,<span class="va">temp_xl</span>,mode<span class="op">=</span><span class="st">"wb"</span><span class="op">)</span>
+<span class="va">coord</span> <span class="op">&lt;-</span>  <span class="fu">read.xlsx</span><span class="op">(</span>file<span class="op">=</span><span class="va">temp_xl</span>, sheetIndex <span class="op">=</span> <span class="fl">3</span>, header <span class="op">=</span><span class="cn">T</span>,startRow<span class="op">=</span><span class="fl">34</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/unlink.html">unlink</a></span><span class="op">(</span><span class="va">temp_xl</span><span class="op">)</span></code></pre></div>
 <p>We clean the data from biosemi and sort it accordingly to the third dimension of the signal array:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="kw">coord</span><span class="op">&lt;-</span> 
-  <span class="kw">coord</span><span class="op">%&gt;%</span>
-  <span class="fu">select</span>(channel = <span class="kw">Electrode</span>, x= <span class="st">"x...r.sinÎ..cosÏ."</span>,
-         y = <span class="st">"y...r.sinÎ..sinÏ."</span>, z = <span class="st">"z...r.cosÎ."</span>)<span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="kw">x</span>),<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="kw">y</span>),<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="kw">z</span>))<span class="op">%&gt;%</span>
-  <span class="fu">mutate</span>(channel = <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw">channel</span>))<span class="op">%&gt;%</span>
-  <span class="fu">mutate</span>(channel = <span class="fu">if_else</span>(<span class="kw">channel</span><span class="op">==</span><span class="st">"Iz (inion)"</span>,<span class="st">"Iz"</span>,<span class="kw">channel</span>),
-         channel = <span class="fu">if_else</span>(<span class="kw">channel</span><span class="op">==</span><span class="st">"T7 (T3)"</span>,<span class="st">"T7"</span>,<span class="kw">channel</span>),
-         channel = <span class="fu">if_else</span>(<span class="kw">channel</span><span class="op">==</span><span class="st">"T8 (T4)"</span>,<span class="st">"T8"</span>,<span class="kw">channel</span>),
-         channel = <span class="fu">if_else</span>(<span class="kw">channel</span><span class="op">==</span><span class="st">"Afz"</span>,<span class="st">"AFz"</span>,<span class="kw">channel</span>))<span class="op">%&gt;%</span>
-  <span class="fu">arrange</span>(<span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span>(<span class="kw">channel</span>,<span class="fu"><a href="https://rdrr.io/r/base/dimnames.html">dimnames</a></span>(<span class="kw">signal</span>)[<span class="fl">3</span>]))
-</pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">coord</span><span class="op">&lt;-</span> 
+  <span class="va">coord</span><span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span>channel <span class="op">=</span> <span class="va">Electrode</span>, x<span class="op">=</span> <span class="st">"x...r.sinÎ..cosÏ."</span>,
+         y <span class="op">=</span> <span class="st">"y...r.sinÎ..sinÏ."</span>, z <span class="op">=</span> <span class="st">"z...r.cosÎ."</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>channel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">channel</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>channel <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">channel</span><span class="op">==</span><span class="st">"Iz (inion)"</span>,<span class="st">"Iz"</span>,<span class="va">channel</span><span class="op">)</span>,
+         channel <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">channel</span><span class="op">==</span><span class="st">"T7 (T3)"</span>,<span class="st">"T7"</span>,<span class="va">channel</span><span class="op">)</span>,
+         channel <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">channel</span><span class="op">==</span><span class="st">"T8 (T4)"</span>,<span class="st">"T8"</span>,<span class="va">channel</span><span class="op">)</span>,
+         channel <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">channel</span><span class="op">==</span><span class="st">"Afz"</span>,<span class="st">"AFz"</span>,<span class="va">channel</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="va">channel</span>,<span class="fu"><a href="https://rdrr.io/r/base/dimnames.html">dimnames</a></span><span class="op">(</span><span class="va">signal</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The graph is computed using <span class="math inline">\(\delta=35\)</span> as the maximal distance defining adjacency:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="kw">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/position_to_graph.html">position_to_graph</a></span>(<span class="kw">coord</span>,delta = <span class="fl">35</span>, name=<span class="st">"channel"</span>)
-</pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/position_to_graph.html">position_to_graph</a></span><span class="op">(</span><span class="va">coord</span>,delta <span class="op">=</span> <span class="fl">35</span>, name<span class="op">=</span><span class="st">"channel"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="final-step" class="section level2">
 <h2 class="hasAnchor">
 <a href="#final-step" class="anchor"></a>Final step</h2>
-<p>The 3 objects <code>signal</code>, <code>design</code>, <code>graph</code> are saved for future uses:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="co"># save(signal,design,graph,file = "signal_design_graph.RData")</span>
-</pre></div>
+<p>We may want to save the 3 objects: <code>signal</code>, <code>design</code> and <code>graph</code>.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># save(signal,design,graph,file = "signal_design_graph.RData")</span></code></pre></div>
 <p>Or we simply run the permutation tests:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="kw">clustermass</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainperm.html">brainperm</a></span>(<span class="kw">signal</span> <span class="op">~</span> <span class="kw">action</span><span class="op">*</span><span class="kw">stimuli</span><span class="op">*</span><span class="kw">mvpa_c</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">Error</a></span>(<span class="kw">participant</span><span class="op">/</span>(<span class="kw">action</span><span class="op">*</span><span class="kw">stimuli</span>)),
-                         data = <span class="kw">design</span>, graph = <span class="kw">graph</span>)
-</pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">clustermass</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainperm.html">brainperm</a></span><span class="op">(</span><span class="va">signal</span> <span class="op">~</span> <span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">*</span><span class="va">mvpa_c</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">Error</a></span><span class="op">(</span><span class="va">participant</span><span class="op">/</span><span class="op">(</span><span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">)</span><span class="op">)</span>,
+                         data <span class="op">=</span> <span class="va">design</span>, graph <span class="op">=</span> <span class="va">graph</span><span class="op">)</span></code></pre></div>
 <!-- We vizualise the result with a heatmap for the effect of the stimuli: -->
 <!-- ```{r echo=F,eval=T} -->
 <!-- library(permuco4brain) -->
@@ -298,7 +276,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
