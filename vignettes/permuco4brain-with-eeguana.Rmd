@@ -21,13 +21,13 @@ knitr::opts_chunk$set(
 
 ### Extracting 3D array using eeguana
 
-The `eeguana` package [@nicenboim_eeguana_2020] provides tools for the pre-processing of EEG data. Once the pre-processing done with eeguana the 3D matrix can be easily extracted to be pass in the `brainperm()` function.
+The `eeguana` package [@nicenboim_eeguana_2020] provides tools for the pre-processing of EEG data. Once the pre-processing is done with `eeguana`, the 3D matrix/array of the signals should be extracted from the `eeguana`. To perform the cluster-mass test, this 3D matrix/array is the left part of the formula of the `brainperm()` function.
 
-The EEG data [@nicenboim_eeg_2019] available on an Open Science Framework repository was analysed using the `eeguana` package by @nicenboim2019words. We use the same data-set for the following tutorial.
+The EEG data [@nicenboim_eeg_2019] available on the Open Science Framework repository was analyzed using the `eeguana` package by @nicenboim2019words. We use the same data-set in the following tutorial.
 
 ### Downloading data from OSF
 
-From the [EEG data](https://osf.io/ut7xq/) repository we found the "03_data_summarization.Rmd" file which provides functions to easily download the data-set. It is large (more than 20GB) so we only download the pre-processed data using ICA. Following the first chunk of the "03_data_summarization.Rmd" file you should have (at least):
+From the [EEG data](https://osf.io/ut7xq/) repository we found the "03_data_summarization.Rmd" file which provides functions to easily download the EE data. It is a large dataset (more than 20GB) so we only download the pre-processed signals performed using [ICA](https://en.wikipedia.org/wiki/Independent_component_analysis). Following the first chunk of the "03_data_summarization.Rmd" file you should have (at least):
 
 1. A folder `data/` containing 5 csv files, 2 tsv files and 2 folders. 
 2. The folder `data/preproc_ica/` contains 120 RDA files (1 for each subject). Each file contains an `eeg_lst` object from eeguana with pre-processed EEG data.
@@ -49,9 +49,7 @@ library(igraph)
 
 ## Computing the ERPs
 
-First, we compute ERP following the design of the experiment and save them in the folder `data_erp/`. To reduce the number of sample (and the computing time), we delete samples (or time-point) before the event and down-sample to 256Hz. Finally the ERPs are computed by taking the average for each sample, each channel and each experimental condition, which are the interaction between the `within` participant factors `region` and `cond`.
-
-
+First, we compute ERPs following the design of the experiment and save them in the folder `data_erp/`. To reduce the number of samples (and the computing time), we delete samples (or time-point) before the event and downsample to 256Hz. Finally, the ERPs are computed by taking the average for each sample, each channel and each experimental condition, which are the interaction between the `within` participant factors `region` and `cond`.
 
 
 
@@ -66,7 +64,7 @@ for(i in 1:length(lf)){
   
   erp <- eeg%>%
     filter(.sample>=0)%>%
-    eeg_downsample(q=2)%>%
+    eeg_downsample(.q=2)%>%
     group_by(.recording,.sample,region,cond)%>%
     summarize_at(channel_names(.), mean, na.rm = TRUE)
   saveRDS(erp, file = paste0("data_erp/",lf[i]))
@@ -92,7 +90,7 @@ for(i in 1:length(lf)){
 erps <- do.call("bind",erps)
 ```
 
-Now, the `erps` object contains the ERP for all participants. Its class is `eeg_lst` which means that it can be manipulate using the functions of `eeguana`.
+Now, the `erps` object contains the ERPs for all participants. It is  `eeg_lst` object which can be manipulated using the functions from `eeguana`.
 
 ## Adding the `between`-participant variables
 
@@ -112,7 +110,7 @@ df_subj <- bind_rows(read_csv("data/students.csv") %>%
 ```
 
 
-The data-set does not contain the `between`-participants variables for all participants, so we choose to delete 8 participants from our analysis. 
+The `.csv` data does not contain the `between`-participants variables for all participants, so we choose to delete 8 participants from our analysis. 
 
 
 ```{r remove, echo=TRUE,eval=FALSE}
@@ -127,7 +125,7 @@ df_subj <-
   filter(!(subject_nr%in%subject_to_rm))
 ```
 
-Finally we merge the `between`-participants variables to the `erps` object and remove the uninteresting channels from our analysis.
+Finally, we merge the `between`-participants variables to the `erps` object and also remove the signals from the ocular and reference channels the `erps` object.
 
 ```{r merge, echo=TRUE,eval=FALSE}
 erps <- 
@@ -142,7 +140,7 @@ erps <-
 
 ## Extracting the 3D matrix
 
-We extract the 3D matrix using the following script. The dimensions are design $\times$ sample $\times$ channel.
+We extract the 3D matrix using the following script. The dimensions are the design $\times$ the samples $\times$ the channels.
 
 ```{r array, echo=TRUE,eval=FALSE}
 signal <- 
@@ -156,7 +154,7 @@ signal <-
   aperm(c(3,1,2))
 ```
 
-The design which contains both the between and within variables is simply extracted using the `segments_tbl()` function. Moreover, we center the covariate as it makes more sense for the test.
+The design which contains both the between and within variables is simply extracted using the `segments_tbl()` function. Moreover, we center the covariate as it will make more sense for the test.
 
 ```{r design, echo=TRUE,eval=FALSE}
 design <- 
@@ -166,19 +164,18 @@ design <-
 ```
 
 
-Finally the graph of adjacency is computed using the 32 channels layout data in `eeguana` and the `position_to_graph()` function from `permuco4brain`. Note that, as previously we deleted some channels. Moreover, we can check the adjacency graph using the `plot()` function from `igraph`.
+Finally the graph of adjacency is computed using the 32 channels layout data in `eeguana` and the `position_to_graph()` function from `permuco4brain`. Moreover, we can check the adjacency graph using the `plot()` function from `igraph`.
 
 ```{r graph, echo=TRUE,eval=FALSE}
 layout <- 
-  channels_tbl(erps)%>%
-  filter(!(.channel%in%c(chan_to_rm)))
+  channels_tbl(erps)
 
 graph <- position_to_graph(layout, delta = .75,name = .channel,
                           x = .x, y = .y, z = .z)
 ```
 
 You can use `igraph::rglplot(graph)` to have a 3D representation of the adjacency between channels.
-Now, we have the 3 object we need to run a clustermass test, the 3D array containing the signals, a data-frame containing the design and a graph defining the spatial adjacency of the channels. We can save these object before running the analysis.
+Before running the clustermass test, you may want to save the 3 objects: the 3D array containing the signals, the dataframe containing the design and the graph defining the spatial adjacency of the channels.
 
 ```{r save, echo=TRUE,eval=FALSE}
 # save(signal = signal,

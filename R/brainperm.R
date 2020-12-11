@@ -1,14 +1,14 @@
-#'Computer clustermass test based on multiple signal
+#' Clustermass test based for multiple signals
 #'
-#'@description Compute permutation test with FWER correction of on multiple signals spatially distributed.
+#'@description Compute permutation test with FWER correction on multiple signals spatially distributed.
 #'
-#'@param formula A formula object defining the design of the model. The left part should be a 3 dimensional array. Its row are the observations (or design), its column are the samples (or time-point) and the third dimension are the space (or the nodes of the graph). Each row should correspond to the design in the \code{data} argument.
+#'@param formula A formula defining the design of the model. The left part should be a 3 dimensional array. Its rows are the observations (or design), its column are the samples (or time-point) and the third dimension are the space (or the nodes of the graph). Each row should correspond to the design in the \code{data} argument.
 #'@param data A dataframe containing the design.
-#'@param graph An igraph object. It specifies the neighborhoods/spatial relationship between the signal/nodes.
+#'@param graph An igraph object. It specifies the neighborhoods/spatial relationship between the signals/nodes.
 #'@param np A scalar indicating the number of permutations. It will be overwrite if \code{P} is manually specified.
-#'@param type A character string to specify the type of re-sampling transformation. Default is \code{"permutation"} and \code{"signflip"} is also available. Is overridden if P is given. See help from \code{Pmat} in \code{permuco}.
+#'@param type A character string to specify the type of re-sampling transformation. Default is \code{"permutation"} and \code{"signflip"} is also available. Is overridden if \code{P} is specified. See help from \code{Pmat} in \code{permuco}.
 #'@param test A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.
-#'@param method A character string specifying the re-sampling method. See \code{permuco} for details on permutation methods.
+#'@param method A character string to specify the re-sampling method. See \code{permuco} for details on permutation methods.
 #'@param threshold See \code{clusterlm} in \code{permuco}.
 #'@param aggr_FUN A function used as mass function. It should aggregate the statistics of a cluster into one scalar. Default is the sum of squares for t statistic and sum for F statistic.
 #'@param multcomp The multiple comparison procedure only \code{"clustermass"} (default) and \code{"troendle"}is available.
