@@ -12,7 +12,7 @@ License: GPL (>= 2)
 Imports: permuco,stats,Matrix,igraph,tidyr,dplyr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Depends: 
   R (>= 3.5.0)
 Suggests: 

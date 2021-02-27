@@ -2,7 +2,7 @@
 % Please edit documentation in R/brainperm.R
 \name{brainperm}
 \alias{brainperm}
-\title{Computer clustermass test based on multiple signal}
+\title{Clustermass test based for multiple signals}
 \usage{
 brainperm(
   formula,
@@ -20,17 +20,17 @@ brainperm(
 )
 }
 \arguments{
-\item{formula}{A formula object defining the design of the model. The left part should be a 3 dimensional array. Its row are the observations (or design), its column are the samples (or time-point) and the third dimension are the space (or the nodes of the graph). Each row should correspond to the design in the \code{data} argument.}
+\item{formula}{A formula defining the design of the model. The left part should be a 3 dimensional array. Its rows are the observations (or design), its column are the samples (or time-point) and the third dimension are the space (or the nodes of the graph). Each row should correspond to the design in the \code{data} argument.}
 
 \item{data}{A dataframe containing the design.}
 
-\item{graph}{An igraph object. It specifies the neighborhoods/spatial relationship between the signal/nodes.}
+\item{graph}{An igraph object. It specifies the neighborhoods/spatial relationship between the signals/nodes.}
 
 \item{np}{A scalar indicating the number of permutations. It will be overwrite if \code{P} is manually specified.}
 
-\item{method}{A character string specifying the re-sampling method. See \code{permuco} for details on permutation methods.}
+\item{method}{A character string to specify the re-sampling method. See \code{permuco} for details on permutation methods.}
 
-\item{type}{A character string to specify the type of re-sampling transformation. Default is \code{"permutation"} and \code{"signflip"} is also available. Is overridden if P is given. See help from \code{Pmat} in \code{permuco}.}
+\item{type}{A character string to specify the type of re-sampling transformation. Default is \code{"permutation"} and \code{"signflip"} is also available. Is overridden if \code{P} is specified. See help from \code{Pmat} in \code{permuco}.}
 
 \item{test}{A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.}
 
@@ -48,7 +48,7 @@ brainperm(
 a \code{brainperm} object.
 }
 \description{
-Compute permutation test with FWER correction of on multiple signals spatially distributed.
+Compute permutation test with FWER correction on multiple signals spatially distributed.
 }
 \details{
 The random effects model is only available with a F statistic.\cr

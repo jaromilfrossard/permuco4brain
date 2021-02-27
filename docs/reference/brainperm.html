@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Computer clustermass test based on multiple signal — brainperm • permuco4brain</title>
+<title>Clustermass test based for multiple signals — brainperm • permuco4brain</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Computer clustermass test based on multiple signal — brainperm" />
-<meta property="og:description" content="Compute permutation test with FWER correction of on multiple signals spatially distributed." />
+<meta property="og:title" content="Clustermass test based for multiple signals — brainperm" />
+<meta property="og:description" content="Compute permutation test with FWER correction on multiple signals spatially distributed." />
 
 
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -112,7 +112,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jaromilfrossard/permuco4brain/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -129,13 +129,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Computer clustermass test based on multiple signal</h1>
+    <h1>Clustermass test based for multiple signals</h1>
     <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco4brain/blob/master/R/brainperm.R'><code>R/brainperm.R</code></a></small>
     <div class="hidden name"><code>brainperm.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute permutation test with FWER correction of on multiple signals spatially distributed.</p>
+    <p>Compute permutation test with FWER correction on multiple signals spatially distributed.</p>
     </div>
 
     <pre class="usage"><span class='fu'>brainperm</span><span class='op'>(</span>
@@ -158,7 +158,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>formula</th>
-      <td><p>A formula object defining the design of the model. The left part should be a 3 dimensional array. Its row are the observations (or design), its column are the samples (or time-point) and the third dimension are the space (or the nodes of the graph). Each row should correspond to the design in the <code>data</code> argument.</p></td>
+      <td><p>A formula defining the design of the model. The left part should be a 3 dimensional array. Its rows are the observations (or design), its column are the samples (or time-point) and the third dimension are the space (or the nodes of the graph). Each row should correspond to the design in the <code>data</code> argument.</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -166,7 +166,7 @@
     </tr>
     <tr>
       <th>graph</th>
-      <td><p>An igraph object. It specifies the neighborhoods/spatial relationship between the signal/nodes.</p></td>
+      <td><p>An igraph object. It specifies the neighborhoods/spatial relationship between the signals/nodes.</p></td>
     </tr>
     <tr>
       <th>np</th>
@@ -174,11 +174,11 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>A character string specifying the re-sampling method. See <code>permuco</code> for details on permutation methods.</p></td>
+      <td><p>A character string to specify the re-sampling method. See <code>permuco</code> for details on permutation methods.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>A character string to specify the type of re-sampling transformation. Default is <code>"permutation"</code> and <code>"signflip"</code> is also available. Is overridden if P is given. See help from <code>Pmat</code> in <code>permuco</code>.</p></td>
+      <td><p>A character string to specify the type of re-sampling transformation. Default is <code>"permutation"</code> and <code>"signflip"</code> is also available. Is overridden if <code>P</code> is specified. See help from <code>Pmat</code> in <code>permuco</code>.</p></td>
     </tr>
     <tr>
       <th>test</th>

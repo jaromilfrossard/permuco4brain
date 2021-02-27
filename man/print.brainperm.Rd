@@ -12,10 +12,10 @@
 \item{...}{others arguments pass to code{summary.brainperm}.}
 }
 \value{
-print a summary object
+print the summary of the object
 }
 \description{
-Display the results of the \code{brainperm} object.
+Show the results of the \code{brainperm} object.
 }
 \seealso{
 summary.brainperm
