@@ -5,20 +5,22 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clustermass Test On Several Signals In Space • permuco4brain</title>
+<title>Massively Univariate Tests On Several Signals In Space • permuco4brain</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Clustermass Test On Several Signals In Space">
-<meta property="og:description" content="Compute the clustermass test using permutation procedure. The package is especially designed for M-EEG data.">
+<script src="pkgdown.js"></script><meta property="og:title" content="Massively Univariate Tests On Several Signals In Space">
+<meta property="og:description" content="Compute the clustermass test,TFCE and Troendle using permutation tests. The package is especially designed for M-EEG data.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">permuco4brain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -65,7 +67,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/jaromilfrossard/permuco4brain/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -101,7 +103,7 @@
 <h2 class="hasAnchor">
 <a href="#functionality" class="anchor"></a>Functionality</h2>
 <p>The main function of <code>permuco4brain</code> is <code><a href="reference/brainperm.html">brainperm()</a></code> and it needs:</p>
-<ol>
+<ol style="list-style-type: decimal">
 <li>
 <code>formula</code>: a formula object defining the design (right side) and a 3D array containing the signals (left side). The signal is a 3D array visible in the global environment. Its dimension is the design X samples X channels. Each “rows” of the 3D array should be related to the corresponding row of the design (<code>data</code> argument).</li>
 <li>
@@ -109,29 +111,29 @@
 <li>
 <code>graph</code>: an <code>igraph</code> object defining spatial adjacency of the channels (third dimension of the signal). The names of the vertices should correspond to the names of the 3rd dimension of signal.</li>
 </ol>
-<p>You can inspect result using the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> method and visualize them using <code><a href="https://rdrr.io/r/graphics/image.html">image()</a></code>.</p>
+<p>You can inspect result using the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method and visualize them using <code><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image()</a></code>.</p>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#documentation" class="anchor"></a>Documentation</h2>
-<p>Visit <a href="https://jaromilfrossard.github.io/permuco4brain" class="uri">https://jaromilfrossard.github.io/permuco4brain</a> or check the vignette:</p>
-<ol>
-<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/permuco4brain-with-eeguana.html">permuco4brain-with-eeguana</a> vignette presents how to use <code>permuco4brain</code> in combination with <code>eeguana</code> :</li>
+<p>Visit <a href="https://jaromilfrossard.github.io/permuco4brain" class="external-link uri">https://jaromilfrossard.github.io/permuco4brain</a> or check the vignette:</p>
+<ol style="list-style-type: decimal">
+<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/permuco4brain-with-eeguana.html" class="external-link">permuco4brain-with-eeguana</a> vignette presents how to use <code>permuco4brain</code> in combination with <code>eeguana</code> :</li>
 </ol>
 <!-- end list --><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"permuco4brain-with-eeguana"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
-<p>You will find information how to extract the 3D array, the design data-frame and the graph from an <code>eeg_lst</code> object of the <code>eeguana</code> package. Check the <code>eeguana</code> package for pre-processing EEG data within <code>R</code> (<a href="https://github.com/bnicenboim/eeguana" class="uri">https://github.com/bnicenboim/eeguana</a>).</p>
-<ol>
-<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/download-example-cheval.html">download-example-cheval</a> vignette presents how to use <code>permuco4brain</code> with signals stored in <code>edf</code> files:</li>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"permuco4brain-with-eeguana"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
+<p>You will find information how to extract the 3D array, the design data-frame and the graph from an <code>eeg_lst</code> object of the <code>eeguana</code> package. Check the <code>eeguana</code> package for pre-processing EEG data within <code>R</code> (<a href="https://github.com/bnicenboim/eeguana" class="external-link uri">https://github.com/bnicenboim/eeguana</a>).</p>
+<ol start="2" style="list-style-type: decimal">
+<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/download-example-cheval.html" class="external-link">download-example-cheval</a> vignette presents how to use <code>permuco4brain</code> with signals stored in <code>edf</code> files:</li>
 </ol>
 <!-- end list --><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"download-example-cheval"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"download-example-cheval"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
 <p>In this tutorial, you learn how to download EEG data from <code>zenodo</code> and analyze them using <code>permuco4brain</code>.</p>
-<ol>
-<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html">figure-ggplot2</a> vignette presents how to use <code>ggplot2</code> to produce graphical representation for publication:</li>
+<ol start="3" style="list-style-type: decimal">
+<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html" class="external-link">figure-ggplot2</a> vignette presents how to use <code>ggplot2</code> to produce graphical representation for publication:</li>
 </ol>
 <!-- end list --><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"figure-ggplot2"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"figure-ggplot2"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
 <p>In this tutorial, you find 3 different types of plot that present the results of a clustermass test. All of them use the <code>ggplot2</code> package and may easily be customized for publication.</p>
 </div>
 </div>
@@ -139,7 +141,7 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li>Browse source code at <br><a href="https://github.com/jaromilfrossard/permuco4brain/">https://​github.com/​jaromilfrossard/​permuco4brain/​</a>
 </li>
@@ -147,38 +149,44 @@
 </li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;= 2)</li>
 </ul>
 </div>
+
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Jaromil Frossard <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Olivier Renaud <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/jaromilfrossard/permuco4brain"><img src="https://travis-ci.org/jaromilfrossard/permuco4brain.svg?branch=master" alt="Travis build status"></a></li>
-<li><a href="https://github.com/jaromilfrossard/permuco4brain/actions"><img src="https://github.com/jaromilfrossard/permuco4brain/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://codecov.io/gh/jaromilfrossard/permuco4brain?branch=master"><img src="https://codecov.io/gh/jaromilfrossard/permuco4brain/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://travis-ci.org/jaromilfrossard/permuco4brain" class="external-link"><img src="https://travis-ci.org/jaromilfrossard/permuco4brain.svg?branch=master" alt="Travis build status"></a></li>
+<li><a href="https://github.com/jaromilfrossard/permuco4brain/actions" class="external-link"><img src="https://github.com/jaromilfrossard/permuco4brain/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://codecov.io/gh/jaromilfrossard/permuco4brain?branch=master" class="external-link"><img src="https://codecov.io/gh/jaromilfrossard/permuco4brain/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Jaromil Frossard, Olivier Renaud.</p>
+  <p></p>
+<p>Developed by Jaromil Frossard, Olivier Renaud.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -186,6 +194,8 @@
 
   
 
+
+  
 
   </body>
 </html>

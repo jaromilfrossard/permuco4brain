@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permuco4brain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -64,8 +66,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jaromilfrossard/permuco4brain/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/jaromilfrossard/permuco4brain/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -83,51 +85,52 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Download example of full scalp EEG data</h1>
-                        <h4 class="author">Jaromil Frossard</h4>
+                        <h4 data-toc-skip class="author">Jaromil Frossard</h4>
             
-            <h4 class="date">2020-12-11</h4>
+            <h4 data-toc-skip class="date">2021-03-25</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/download-example-cheval.Rmd"><code>vignettes/download-example-cheval.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/download-example-cheval.Rmd" class="external-link"><code>vignettes/download-example-cheval.Rmd</code></a></small>
       <div class="hidden name"><code>download-example-cheval.Rmd</code></div>
 
     </div>
 
     
     
-<p>In the following tutorial, we download EEG data and reanalyze the data in <span class="citation">Cheval et al. (2018)</span>. This dataset is stored in the <a href="https://zenodo.org/record/1169140">zenodo repository</a> as <code>.edf</code> files.</p>
+<p>In the following tutorial, we download EEG data and reanalyze the data in <span class="citation">Cheval et al. (2018)</span>. This dataset is stored in the <a href="https://zenodo.org/record/1169140" class="external-link">zenodo repository</a> as <code>.edf</code> files.</p>
 <div id="installing-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installing-packages" class="anchor"></a>Installing packages</h2>
-<p>We need several packages including <code>tidyverse</code> <span class="citation">(Wickham et al. 2019)</span>, <code>edf</code> <span class="citation">(Henelius 2016)</span>, <code>abind</code> <span class="citation">(Plate and Heiberger 2016)</span>, <code>xlsx</code> <span class="citation">(Dragulescu and Arendt 2018)</span> and <code>permuco4brain</code> <span class="citation">(Frossard and Renaud 2020)</span>:</p>
+<p>We need several packages including <code>tidyverse</code> <span class="citation">(Wickham et al. 2019)</span>, <code>edf</code> <span class="citation">(Henelius 2016)</span>, <code>abind</code> <span class="citation">(Plate and Heiberger 2016)</span>, <code>readxl</code> <span class="citation">(Wickham and Bryan 2019)</span>, <code>permuco4brain</code> <span class="citation">(Frossard and Renaud 2020)</span> and <code>future</code> <span class="citation">(Bengtsson 2020)</span>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">edf</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">abind</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">xlsx</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco4brain">permuco4brain</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">edf</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">abind</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org" class="external-link">readxl</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HenrikBengtsson/future" class="external-link">future</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco4brain" class="external-link">permuco4brain</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="downloading-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#downloading-data" class="anchor"></a>Downloading data</h2>
-<p>We download the data in a temporary files before unzippin the <code>.edf</code> files.</p>
+<p>We download the data in a temporary files before unzipping the <code>.edf</code> files.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">temp_zip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">temp_edf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://zenodo.org/record/1169140/files/ERP_by_subject_by_condition_data.zip"</span>,<span class="va">temp_zip</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span><span class="op">(</span>zipfile <span class="op">=</span> <span class="va">temp_zip</span>, exdir <span class="op">=</span> <span class="va">temp_edf</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">temp_zip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">temp_edf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"https://zenodo.org/record/1169140/files/ERP_by_subject_by_condition_data.zip"</span>,<span class="va">temp_zip</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span>zipfile <span class="op">=</span> <span class="va">temp_zip</span>, exdir <span class="op">=</span> <span class="va">temp_edf</span><span class="op">)</span></code></pre></div>
 <p>Then, we store the names of the files in a data frame using:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">temp_edf</span>,<span class="st">"/raw_data/"</span><span class="op">)</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">temp_edf</span>,<span class="st">"/raw_data/"</span><span class="op">)</span><span class="op">)</span>,
                  stringsAsFactors <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
 <p>If your are not familiar with EEG <code>.edf</code> files, you can explore the first one using:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">edf1</span> <span class="op">&lt;-</span> <span class="fu">read.edf</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp_edf</span>,<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"raw_data/"</span>,<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">temp_edf</span>,<span class="st">"/raw_data/"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">edf1</span> <span class="op">&lt;-</span> <span class="fu">read.edf</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_edf</span>,<span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"raw_data/"</span>,<span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">temp_edf</span>,<span class="st">"/raw_data/"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We download information on the subject and we only keep the centered measure of “Moderate to Vigorous Physical Activity” (MVPA) as between subject covariates:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df_bw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"https://zenodo.org/record/1169140/files/data_self_report_R_subset_zen.csv"</span>,sep<span class="op">=</span><span class="st">";"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">df_bw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"https://zenodo.org/record/1169140/files/data_self_report_R_subset_zen.csv"</span>,sep<span class="op">=</span><span class="st">";"</span><span class="op">)</span>
 <span class="va">df_bw</span> <span class="op">&lt;-</span> <span class="va">df_bw</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>subject <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"S"</span>,<span class="va">subject</span><span class="op">)</span>,
-         mvpa_c <span class="op">=</span> <span class="va">MVPA</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">MVPA</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>subject <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"S"</span>,<span class="va">subject</span><span class="op">)</span>,
+         mvpa_c <span class="op">=</span> <span class="va">MVPA</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">MVPA</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
   <span class="fu">select</span><span class="op">(</span><span class="va">subject</span>,<span class="va">mvpa_c</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="reshaping-data" class="section level2">
@@ -138,23 +141,23 @@
 <code class="sourceCode R"><span class="va">df</span><span class="op">&lt;-</span> 
   <span class="va">df</span><span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu">separate</span><span class="op">(</span><span class="va">filename</span>,into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"participant"</span>,<span class="st">"neutral_stim"</span>,<span class="st">"av"</span>,<span class="st">"action"</span>,<span class="st">"shape"</span>,<span class="st">"edf"</span><span class="op">)</span>,remove <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">separate</span><span class="op">(</span><span class="va">filename</span>,into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"participant"</span>,<span class="st">"neutral_stim"</span>,<span class="st">"av"</span>,<span class="st">"action"</span>,<span class="st">"shape"</span>,<span class="st">"edf"</span><span class="op">)</span>,remove <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">%&gt;%</span>
   <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">edf</span>,<span class="op">-</span><span class="va">av</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu">left_join</span><span class="op">(</span><span class="va">df_bw</span>,by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"participant"</span><span class="op">=</span><span class="st">"subject"</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">shape</span><span class="op">%in%</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Carre"</span>,<span class="st">"Neutre"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">df_bw</span>,by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"participant"</span><span class="op">=</span><span class="st">"subject"</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">shape</span><span class="op">%in%</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Carre"</span>,<span class="st">"Neutre"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We import the <code>.edf</code> files and retrieve only the signals:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span><span class="op">&lt;-</span>
   <span class="va">df</span><span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>edf <span class="op">=</span> <span class="fu">map</span> <span class="op">(</span><span class="va">filename</span>,<span class="kw">function</span><span class="op">(</span><span class="va">ii</span><span class="op">)</span><span class="op">{</span>
-    <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp_edf</span>,<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"raw_data/"</span>,<span class="va">ii</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">temp_edf</span>,<span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"raw_data/"</span>,<span class="va">ii</span><span class="op">)</span><span class="op">)</span>
     <span class="fu">read.edf</span><span class="op">(</span><span class="va">path</span><span class="op">)</span>
   <span class="op">}</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>signal <span class="op">=</span> <span class="fu">map</span><span class="op">(</span><span class="va">edf</span>,<span class="kw">function</span><span class="op">(</span><span class="va">listi</span><span class="op">)</span><span class="op">{</span>
     <span class="va">listi</span><span class="op">$</span><span class="va">signal</span><span class="op">%&gt;%</span>
       <span class="fu">map</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">channel</span><span class="op">)</span><span class="va">channel</span><span class="op">$</span><span class="va">data</span><span class="op">)</span><span class="op">%&gt;%</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">%&gt;%</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="op">)</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">%&gt;%</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="op">)</span>
   <span class="op">}</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
   <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>We compute the signals relative to the neutral <code>"Round"</code> shapes within each participant:</p>
@@ -167,10 +170,10 @@
          Sed_rel <span class="op">=</span> <span class="fu">map2</span><span class="op">(</span><span class="va">SED</span>,<span class="va">Rond</span>,<span class="va">`-`</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
   <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">AP</span>,<span class="op">-</span><span class="va">Rond</span>,<span class="op">-</span><span class="va">SED</span><span class="op">)</span><span class="op">%&gt;%</span>
   <span class="fu">pivot_longer</span><span class="op">(</span><span class="va">PA_rel</span><span class="op">:</span><span class="va">Sed_rel</span>,names_to <span class="op">=</span> <span class="st">"stimuli"</span>, values_to <span class="op">=</span> <span class="st">"signal"</span><span class="op">)</span></code></pre></div>
-<p>We <code><a href="https://rdrr.io/r/base/unlink.html">unlink()</a></code> the temporary files:</p>
+<p>We <code><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink()</a></code> the temporary files:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unlink.html">unlink</a></span><span class="op">(</span><span class="va">temp_zip</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/unlink.html">unlink</a></span><span class="op">(</span><span class="va">temp_edf</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">temp_zip</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">temp_edf</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="extracting-the-signal-the-design-and-the-graph" class="section level2">
 <h2 class="hasAnchor">
@@ -180,36 +183,36 @@
 <code class="sourceCode R"><span class="va">signal</span><span class="op">&lt;-</span> 
   <span class="op">(</span><span class="va">df</span><span class="op">%&gt;%</span>
   <span class="fu">pull</span><span class="op">(</span><span class="va">signal</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu">invoke</span><span class="op">(</span><span class="fu">abind</span><span class="fu">::</span><span class="va">abind</span>,<span class="va">.</span>,along <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/aperm.html">aperm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fl">102</span><span class="op">:</span><span class="fl">512</span>,<span class="op">]</span></code></pre></div>
+  <span class="fu">invoke</span><span class="op">(</span><span class="fu">abind</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/abind/man/abind.html" class="external-link">abind</a></span>,<span class="va">.</span>,along <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/aperm.html" class="external-link">aperm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fl">102</span><span class="op">:</span><span class="fl">512</span>,<span class="op">]</span></code></pre></div>
 <p>We create the dataframe that stores the design:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">design</span><span class="op">&lt;-</span>
   <span class="va">df</span><span class="op">%&gt;%</span>
   <span class="fu">select</span><span class="op">(</span><span class="va">participant</span>, <span class="va">action</span>, <span class="va">stimuli</span>,<span class="va">mvpa_c</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>We download the position of the channels from <a href="www.biosemi.com">biosemi</a>:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">temp_xl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">"https://www.biosemi.com/download/Cap_coords_all.xls"</span>,<span class="va">temp_xl</span>,mode<span class="op">=</span><span class="st">"wb"</span><span class="op">)</span>
-<span class="va">coord</span> <span class="op">&lt;-</span>  <span class="fu">read.xlsx</span><span class="op">(</span>file<span class="op">=</span><span class="va">temp_xl</span>, sheetIndex <span class="op">=</span> <span class="fl">3</span>, header <span class="op">=</span><span class="cn">T</span>,startRow<span class="op">=</span><span class="fl">34</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/unlink.html">unlink</a></span><span class="op">(</span><span class="va">temp_xl</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">temp_xl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"https://www.biosemi.com/download/Cap_coords_all.xls"</span>,<span class="va">temp_xl</span>,mode<span class="op">=</span><span class="st">"wb"</span><span class="op">)</span>
+<span class="va">coord</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_xls</a></span><span class="op">(</span>path<span class="op">=</span><span class="va">temp_xl</span>, sheet <span class="op">=</span> <span class="fl">3</span>,skip <span class="op">=</span> <span class="fl">33</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">temp_xl</span><span class="op">)</span></code></pre></div>
 <p>We clean the data from biosemi and sort it accordingly to the third dimension of the signal array:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">coord</span><span class="op">&lt;-</span> 
   <span class="va">coord</span><span class="op">%&gt;%</span>
-  <span class="fu">select</span><span class="op">(</span>channel <span class="op">=</span> <span class="va">Electrode</span>, x<span class="op">=</span> <span class="st">"x...r.sinÎ..cosÏ."</span>,
-         y <span class="op">=</span> <span class="st">"y...r.sinÎ..sinÏ."</span>, z <span class="op">=</span> <span class="st">"z...r.cosÎ."</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>channel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">channel</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span>channel <span class="op">=</span> <span class="va">Electrode</span>, x<span class="op">=</span> <span class="va">`x = r sin&lt;U+03B8&gt; cosf`</span>,
+         y <span class="op">=</span> <span class="va">`y = r sin&lt;U+03B8&gt; sinf`</span>, z <span class="op">=</span> <span class="va">`z = r cos&lt;U+03B8&gt;`</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>channel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">channel</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>channel <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">channel</span><span class="op">==</span><span class="st">"Iz (inion)"</span>,<span class="st">"Iz"</span>,<span class="va">channel</span><span class="op">)</span>,
          channel <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">channel</span><span class="op">==</span><span class="st">"T7 (T3)"</span>,<span class="st">"T7"</span>,<span class="va">channel</span><span class="op">)</span>,
          channel <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">channel</span><span class="op">==</span><span class="st">"T8 (T4)"</span>,<span class="st">"T8"</span>,<span class="va">channel</span><span class="op">)</span>,
          channel <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">channel</span><span class="op">==</span><span class="st">"Afz"</span>,<span class="st">"AFz"</span>,<span class="va">channel</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu">arrange</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="va">channel</span>,<span class="fu"><a href="https://rdrr.io/r/base/dimnames.html">dimnames</a></span><span class="op">(</span><span class="va">signal</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>The graph is computed using <span class="math inline">\(\delta=35\)</span> as the maximal distance defining adjacency:</p>
+  <span class="fu">arrange</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="va">channel</span>,<span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">signal</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>The graph is computed using <span class="math inline">\(\delta =35\)</span> as the maximal distance defining adjacency:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/position_to_graph.html">position_to_graph</a></span><span class="op">(</span><span class="va">coord</span>,delta <span class="op">=</span> <span class="fl">35</span>, name<span class="op">=</span><span class="st">"channel"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/position_to_graph.html">position_to_graph</a></span><span class="op">(</span><span class="va">coord</span>, delta <span class="op">=</span> <span class="fl">35</span>, name <span class="op">=</span> <span class="st">"channel"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="final-step" class="section level2">
 <h2 class="hasAnchor">
@@ -217,9 +220,10 @@
 <p>We may want to save the 3 objects: <code>signal</code>, <code>design</code> and <code>graph</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># save(signal,design,graph,file = "signal_design_graph.RData")</span></code></pre></div>
-<p>Or we simply run the permutation tests:</p>
+<p>To use multi-cores processing, we use the <code><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan()</a></code> function from the <a href="https://github.com/HenrikBengtsson/future" class="external-link"><code>future</code> package</a>. Finally, we run the permutation tests using:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">clustermass</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainperm.html">brainperm</a></span><span class="op">(</span><span class="va">signal</span> <span class="op">~</span> <span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">*</span><span class="va">mvpa_c</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">Error</a></span><span class="op">(</span><span class="va">participant</span><span class="op">/</span><span class="op">(</span><span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">)</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span>
+<span class="va">clustermass</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainperm.html">brainperm</a></span><span class="op">(</span><span class="va">signal</span> <span class="op">~</span> <span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">*</span><span class="va">mvpa_c</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">Error</a></span><span class="op">(</span><span class="va">participant</span><span class="op">/</span><span class="op">(</span><span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">)</span><span class="op">)</span>,
                          data <span class="op">=</span> <span class="va">design</span>, graph <span class="op">=</span> <span class="va">graph</span><span class="op">)</span></code></pre></div>
 <!-- We vizualise the result with a heatmap for the effect of the stimuli: -->
 <!-- ```{r echo=F,eval=T} -->
@@ -239,23 +243,26 @@
 <h1 class="hasAnchor">
 <a href="#reference" class="anchor"></a>Reference</h1>
 <div id="refs" class="references">
-<div id="ref-cheval">
-<p>Cheval, Boris, Eda Tipura, Nicolas Burra, Jaromil Frossard, Julien Chanal, Dan Orsholits, Remi Radel, and Matthieu P. Boisgontier. 2018. “Avoiding Sedentary Behaviors Requires More Cortical Resources Than Avoiding Physical Activity: An EEG Study.” <em>Neuropsychologia</em> 119: 68–80. <a href="https://doi.org/10.1016/j.neuropsychologia">https://doi.org/10.1016/j.neuropsychologia</a>.</p>
+<div id="ref-future">
+<p>Bengtsson, Henrik. 2020. <em>A Unifying Framework for Parallel and Distributed Processing in R Using Futures</em>. <a href="https://arxiv.org/abs/2008.00553" class="external-link">https://arxiv.org/abs/2008.00553</a>.</p>
 </div>
-<div id="ref-xlsx">
-<p>Dragulescu, Adrian A., and Cole Arendt. 2018. <em>Xlsx: Read, Write, Format Excel 2007 and Excel 97/2000/Xp/2003 Files</em>. <a href="https://CRAN.R-project.org/package=xlsx">https://CRAN.R-project.org/package=xlsx</a>.</p>
+<div id="ref-cheval">
+<p>Cheval, Boris, Eda Tipura, Nicolas Burra, Jaromil Frossard, Julien Chanal, Dan Orsholits, Remi Radel, and Matthieu P. Boisgontier. 2018. “Avoiding Sedentary Behaviors Requires More Cortical Resources Than Avoiding Physical Activity: An EEG Study.” <em>Neuropsychologia</em> 119: 68–80. <a href="https://doi.org/10.1016/j.neuropsychologia" class="external-link">https://doi.org/10.1016/j.neuropsychologia</a>.</p>
 </div>
 <div id="ref-frossard_permuco4brain">
-<p>Frossard, Jaromil, and Olivier Renaud. 2020. <em>Permuco4brain: Extension of Permuco on Time-Space Data, Like Full Scalp Eeg</em>. <a href="https://github.com/jaromilfrossard/permuco4brain">https://github.com/jaromilfrossard/permuco4brain</a>.</p>
+<p>Frossard, Jaromil, and Olivier Renaud. 2020. <em>Permuco4brain: Extension of Permuco on Time-Space Data, Like Full Scalp Eeg</em>. <a href="https://github.com/jaromilfrossard/permuco4brain" class="external-link">https://github.com/jaromilfrossard/permuco4brain</a>.</p>
 </div>
 <div id="ref-edf">
 <p>Henelius, Andreas. 2016. <em>Edf: Read Data from European Data Format (EDF and EDF+) Files</em>.</p>
 </div>
 <div id="ref-abind">
-<p>Plate, Tony, and Richard Heiberger. 2016. <em>Abind: Combine Multidimensional Arrays</em>. <a href="https://CRAN.R-project.org/package=abind">https://CRAN.R-project.org/package=abind</a>.</p>
+<p>Plate, Tony, and Richard Heiberger. 2016. <em>Abind: Combine Multidimensional Arrays</em>. <a href="https://CRAN.R-project.org/package=abind" class="external-link">https://CRAN.R-project.org/package=abind</a>.</p>
 </div>
 <div id="ref-tidyverse">
-<p>Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. “Welcome to the tidyverse.” <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.</p>
+<p>Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. “Welcome to the tidyverse.” <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686" class="external-link">https://doi.org/10.21105/joss.01686</a>.</p>
+</div>
+<div id="ref-readxl">
+<p>Wickham, Hadley, and Jennifer Bryan. 2019. <em>Readxl: Read Excel Files</em>. <a href="https://CRAN.R-project.org/package=readxl" class="external-link">https://CRAN.R-project.org/package=readxl</a>.</p>
 </div>
 </div>
 </div>
@@ -272,11 +279,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Jaromil Frossard, Olivier Renaud.</p>
+  <p></p>
+<p>Developed by Jaromil Frossard, Olivier Renaud.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -284,6 +293,8 @@
 
   
 
+
+  
 
   </body>
 </html>

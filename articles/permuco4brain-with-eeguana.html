@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permuco4brain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -64,8 +66,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jaromilfrossard/permuco4brain/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/jaromilfrossard/permuco4brain/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -84,11 +86,11 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using <code>permuco4brain</code> with <code>eeguana</code>
 </h1>
-                        <h4 class="author">Jaromil Frossard</h4>
+                        <h4 data-toc-skip class="author">Jaromil Frossard</h4>
             
-            <h4 class="date">2020-12-11</h4>
+            <h4 data-toc-skip class="date">2021-03-25</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/permuco4brain-with-eeguana.Rmd"><code>vignettes/permuco4brain-with-eeguana.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/permuco4brain-with-eeguana.Rmd" class="external-link"><code>vignettes/permuco4brain-with-eeguana.Rmd</code></a></small>
       <div class="hidden name"><code>permuco4brain-with-eeguana.Rmd</code></div>
 
     </div>
@@ -104,7 +106,7 @@
 <div id="downloading-data-from-osf" class="section level3">
 <h3 class="hasAnchor">
 <a href="#downloading-data-from-osf" class="anchor"></a>Downloading data from OSF</h3>
-<p>From the <a href="https://osf.io/ut7xq/">EEG data</a> repository we found the “03_data_summarization.Rmd” file which provides functions to easily download the EE data. It is a large dataset (more than 20GB) so we only download the pre-processed signals performed using <a href="https://en.wikipedia.org/wiki/Independent_component_analysis">ICA</a>. Following the first chunk of the “03_data_summarization.Rmd” file you should have (at least):</p>
+<p>From the <a href="https://osf.io/ut7xq/" class="external-link">EEG data</a> repository we found the “03_data_summarization.Rmd” file which provides functions to easily download the EE data. It is a large dataset (more than 20GB) so we only download the pre-processed signals performed using <a href="https://en.wikipedia.org/wiki/Independent_component_analysis" class="external-link">ICA</a>. Following the first chunk of the “03_data_summarization.Rmd” file you should have (at least):</p>
 <ol style="list-style-type: decimal">
 <li>A folder <code>data/</code> containing 5 csv files, 2 tsv files and 2 folders.</li>
 <li>The folder <code>data/preproc_ica/</code> contains 120 RDA files (1 for each subject). Each file contains an <code>eeg_lst</code> object from eeguana with pre-processed EEG data.</li>
@@ -116,11 +118,11 @@
 <a href="#r-package" class="anchor"></a>R package</h2>
 <p>In the following analysis, we will mainly use functions from the <code>tidyverse</code> <span class="citation">(Wickham et al. 2019)</span>, from <code>eeguana</code> <span class="citation">(Nicenboim 2018)</span>, from <code>permuco</code> <span class="citation">(Frossard and Renaud 2020b)</span>, from <code>permuco4brain</code> <span class="citation">(Frossard and Renaud 2020a)</span> and from <code>igraph</code> <span class="citation">(Csardi and Nepusz 2006)</span>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">eeguana</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">permuco</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco4brain">permuco4brain</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org">igraph</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">eeguana</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco" class="external-link">permuco</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco4brain" class="external-link">permuco4brain</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org" class="external-link">igraph</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="computing-the-erps" class="section level2">
 <h2 class="hasAnchor">
@@ -129,34 +131,34 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">datadir</span> <span class="op">&lt;-</span> <span class="st">"data/preproc_ica/"</span>
 
-<span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">datadir</span><span class="op">)</span>
+<span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">datadir</span><span class="op">)</span>
 
-<span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">lf</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span>
-  <span class="va">eeg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">datadir</span>,<span class="va">lf</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+<span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lf</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span>
+  <span class="va">eeg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">datadir</span>,<span class="va">lf</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
   
   <span class="va">erp</span> <span class="op">&lt;-</span> <span class="va">eeg</span><span class="op">%&gt;%</span>
-    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">.sample</span><span class="op">&gt;=</span><span class="fl">0</span><span class="op">)</span><span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.sample</span><span class="op">&gt;=</span><span class="fl">0</span><span class="op">)</span><span class="op">%&gt;%</span>
     <span class="fu">eeg_downsample</span><span class="op">(</span>.q<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">%&gt;%</span>
     <span class="fu">group_by</span><span class="op">(</span><span class="va">.recording</span>,<span class="va">.sample</span>,<span class="va">region</span>,<span class="va">cond</span><span class="op">)</span><span class="op">%&gt;%</span>
     <span class="fu">summarize_at</span><span class="op">(</span><span class="fu">channel_names</span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, <span class="va">mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">erp</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"data_erp/"</span>,<span class="va">lf</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">erp</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"data_erp/"</span>,<span class="va">lf</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>The previous script should produce 120 files in the folder <code>data_erp/</code>, one for each participant.</p>
 <p>The ERP can be combine into 1 <code>eeg_lst</code> object by running:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">datadir</span> <span class="op">&lt;-</span> <span class="st">"data_erp/"</span>
-<span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">datadir</span><span class="op">)</span>
+<span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">datadir</span><span class="op">)</span>
 
-<span class="va">erps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">erps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">lf</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span>
-  <span class="va">erps</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">datadir</span>,<span class="va">lf</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
-    <span class="fu">mutate</span><span class="op">(</span>subject_nr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="va">.recording</span>,<span class="st">"[._]"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+<span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lf</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span>
+  <span class="va">erps</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">datadir</span>,<span class="va">lf</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+    <span class="fu">mutate</span><span class="op">(</span>subject_nr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">.recording</span>,<span class="st">"[._]"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span>
 
-<span class="va">erps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="st">"bind"</span>,<span class="va">erps</span><span class="op">)</span></code></pre></div>
+<span class="va">erps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"bind"</span>,<span class="va">erps</span><span class="op">)</span></code></pre></div>
 <p>Now, the <code>erps</code> object contains the ERPs for all participants. It is <code>eeg_lst</code> object which can be manipulated using the functions from <code>eeguana</code>.</p>
 </div>
 <div id="adding-the-between-participant-variables" class="section level2">
@@ -176,22 +178,22 @@
          occupation <span class="op">=</span> <span class="va">student</span><span class="op">)</span></code></pre></div>
 <p>The <code>.csv</code> data does not contain the <code>between</code>-participants variables for all participants, so we choose to delete 8 participants from our analysis.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">subject_to_rm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">21</span>,<span class="fl">35</span>,<span class="fl">316</span>,<span class="fl">111</span>,<span class="fl">222</span>,<span class="fl">322</span>,<span class="fl">98</span>,<span class="fl">245</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">subject_to_rm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">21</span>,<span class="fl">35</span>,<span class="fl">316</span>,<span class="fl">111</span>,<span class="fl">222</span>,<span class="fl">322</span>,<span class="fl">98</span>,<span class="fl">245</span><span class="op">)</span>
 
 <span class="va">erps</span> <span class="op">&lt;-</span> 
   <span class="va">erps</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">subject_nr</span><span class="op">%in%</span><span class="va">subject_to_rm</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">subject_nr</span><span class="op">%in%</span><span class="va">subject_to_rm</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">df_subj</span> <span class="op">&lt;-</span> 
   <span class="va">df_subj</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">subject_nr</span><span class="op">%in%</span><span class="va">subject_to_rm</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">subject_nr</span><span class="op">%in%</span><span class="va">subject_to_rm</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Finally, we merge the <code>between</code>-participants variables to the <code>erps</code> object and also remove the signals from the ocular and reference channels the <code>erps</code> object.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">erps</span> <span class="op">&lt;-</span> 
   <span class="va">erps</span><span class="op">%&gt;%</span>
-  <span class="fu">left_join</span><span class="op">(</span><span class="va">df_subj</span> ,by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"subject_nr"</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">df_subj</span> ,by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"subject_nr"</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">chan_to_rm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"M1"</span>,<span class="st">"M2"</span>,<span class="st">"HEOG"</span>,<span class="st">"VEOG"</span><span class="op">)</span>
+<span class="va">chan_to_rm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M1"</span>,<span class="st">"M2"</span>,<span class="st">"HEOG"</span>,<span class="st">"VEOG"</span><span class="op">)</span>
 <span class="va">erps</span> <span class="op">&lt;-</span> 
   <span class="va">erps</span><span class="op">%&gt;%</span>
   <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="fu">one_of</span><span class="op">(</span><span class="va">chan_to_rm</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -206,47 +208,47 @@
   <span class="fu">signal_tbl</span><span class="op">(</span><span class="op">)</span><span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">.id</span><span class="op">)</span><span class="op">%&gt;%</span>
   <span class="fu">nest</span><span class="op">(</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>data <span class="op">=</span> <span class="fu">map</span><span class="op">(</span><span class="va">data</span>,<span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">.x</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>data <span class="op">=</span> <span class="fu">map</span><span class="op">(</span><span class="va">data</span>,<span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">.x</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">%&gt;%</span>
   <span class="fu">pull</span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu">invoke</span><span class="op">(</span><span class="fu">abind</span><span class="fu">::</span><span class="va">abind</span>,<span class="va">.</span>,along <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/aperm.html">aperm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu">invoke</span><span class="op">(</span><span class="fu">abind</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/abind/man/abind.html" class="external-link">abind</a></span>,<span class="va">.</span>,along <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/aperm.html" class="external-link">aperm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The design which contains both the between and within variables is simply extracted using the <code>segments_tbl()</code> function. Moreover, we center the covariate as it will make more sense for the test.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">design</span> <span class="op">&lt;-</span> 
   <span class="fu">segments_tbl</span><span class="op">(</span><span class="va">erps</span><span class="op">)</span><span class="op">%&gt;%</span>
   <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span><span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>age_c <span class="op">=</span> <span class="va">age</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>Finally the graph of adjacency is computed using the 32 channels layout data in <code>eeguana</code> and the <code><a href="../reference/position_to_graph.html">position_to_graph()</a></code> function from <code>permuco4brain</code>. Moreover, we can check the adjacency graph using the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function from <code>igraph</code>.</p>
+  <span class="fu">mutate</span><span class="op">(</span>age_c <span class="op">=</span> <span class="va">age</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>Finally the graph of adjacency is computed using the 32 channels layout data in <code>eeguana</code> and the <code><a href="../reference/position_to_graph.html">position_to_graph()</a></code> function from <code>permuco4brain</code>. Moreover, we can check the adjacency graph using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function from <code>igraph</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">layout</span> <span class="op">&lt;-</span> 
   <span class="fu">channels_tbl</span><span class="op">(</span><span class="va">erps</span><span class="op">)</span>
 
 <span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/position_to_graph.html">position_to_graph</a></span><span class="op">(</span><span class="va">layout</span>, delta <span class="op">=</span> <span class="fl">.75</span>,name <span class="op">=</span> <span class="va">.channel</span>,
                           x <span class="op">=</span> <span class="va">.x</span>, y <span class="op">=</span> <span class="va">.y</span>, z <span class="op">=</span> <span class="va">.z</span><span class="op">)</span></code></pre></div>
-<p>You can use <code><a href="https://rdrr.io/pkg/igraph/man/rglplot.html">igraph::rglplot(graph)</a></code> to have a 3D representation of the adjacency between channels. Before running the clustermass test, you may want to save the 3 objects: the 3D array containing the signals, the dataframe containing the design and the graph defining the spatial adjacency of the channels.</p>
+<p>You can use <code><a href="https://rdrr.io/pkg/igraph/man/rglplot.html" class="external-link">igraph::rglplot(graph)</a></code> to have a 3D representation of the adjacency between channels. Before running the clustermass test, you may want to save the 3 objects: the 3D array containing the signals, the dataframe containing the design and the graph defining the spatial adjacency of the channels.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># save(signal = signal,</span>
 <span class="co">#      design = design,</span>
 <span class="co">#      graph = graph,file = "signal_design_graph.RData")</span></code></pre></div>
 <p>Finally, we use <code>permuco4brain</code> for testing the difference between experimental conditions. We have a repeated measures ANCOVA, with 1 covariate (the centered age), 1 between-participants factors (the occupation) and 2 within-participants factors (region and condition). The permutation tests is computed for all samples, all channels while controlling for the family-wise error rate (FWER).</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">formula</span> <span class="op">&lt;-</span> <span class="va">signal</span> <span class="op">~</span> <span class="va">age_c</span><span class="op">*</span><span class="va">occupation</span><span class="op">*</span><span class="va">region</span><span class="op">*</span><span class="va">cond</span> <span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">Error</a></span><span class="op">(</span><span class="va">.recording</span><span class="op">/</span><span class="op">(</span><span class="va">region</span><span class="op">*</span><span class="va">cond</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">formula</span> <span class="op">&lt;-</span> <span class="va">signal</span> <span class="op">~</span> <span class="va">age_c</span><span class="op">*</span><span class="va">occupation</span><span class="op">*</span><span class="va">region</span><span class="op">*</span><span class="va">cond</span> <span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">Error</a></span><span class="op">(</span><span class="va">.recording</span><span class="op">/</span><span class="op">(</span><span class="va">region</span><span class="op">*</span><span class="va">cond</span><span class="op">)</span><span class="op">)</span>
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainperm.html">brainperm</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">formula</span>, data <span class="op">=</span> <span class="va">design</span>, graph <span class="op">=</span> <span class="va">graph</span><span class="op">)</span></code></pre></div>
 <div id="bibliography" class="section level3 unnumbered">
 <h3 class="hasAnchor">
 <a href="#bibliography" class="anchor"></a>Bibliography</h3>
 <div id="refs" class="references">
 <div id="ref-csardi_igraph">
-<p>Csardi, Gabor, and Tamas Nepusz. 2006. “The Igraph Software Package for Complex Network Research.” <em>InterJournal</em> Complex Systems: 1695. <a href="http://igraph.org">http://igraph.org</a>.</p>
+<p>Csardi, Gabor, and Tamas Nepusz. 2006. “The Igraph Software Package for Complex Network Research.” <em>InterJournal</em> Complex Systems: 1695. <a href="http://igraph.org" class="external-link">http://igraph.org</a>.</p>
 </div>
 <div id="ref-frossard_permuco4brain">
-<p>Frossard, Jaromil, and Olivier Renaud. 2020a. <em>Permuco4brain: Extension of Permuco on Time-Space Data, Like Full Scalp Eeg</em>. <a href="https://github.com/jaromilfrossard/permuco4brain">https://github.com/jaromilfrossard/permuco4brain</a>.</p>
+<p>Frossard, Jaromil, and Olivier Renaud. 2020a. <em>Permuco4brain: Extension of Permuco on Time-Space Data, Like Full Scalp Eeg</em>. <a href="https://github.com/jaromilfrossard/permuco4brain" class="external-link">https://github.com/jaromilfrossard/permuco4brain</a>.</p>
 </div>
 <div id="ref-frossard_permuco">
 <p>———. 2020b. <em>Permuco: Permutation Tests for Regression, (Repeated Measures) Anova/Ancova and Comparison of Signals</em>.</p>
 </div>
 <div id="ref-nicenboim_eeguana_2020">
-<p>Nicenboim, Bruno. 2018. <em>eeguana: A Package for Manipulating EEG Data in R</em>. <a href="https://doi.org/10.5281/zenodo.2533138">https://doi.org/10.5281/zenodo.2533138</a>.</p>
+<p>Nicenboim, Bruno. 2018. <em>eeguana: A Package for Manipulating EEG Data in R</em>. <a href="https://doi.org/10.5281/zenodo.2533138" class="external-link">https://doi.org/10.5281/zenodo.2533138</a>.</p>
 </div>
 <div id="ref-nicenboim_eeg_2019">
 <p>———. 2019. “EEG Data.” <a href="osf.io/ut7xq">osf.io/ut7xq</a>.</p>
@@ -255,7 +257,7 @@
 <p>Nicenboim, Bruno, Shravan Vasishth, and Frank Rösler. 2019. “Are Words Pre-Activated Probabilistically During Sentence Comprehension? Evidence from New Data and a Bayesian Random-Effects Meta-Analysis Using Publicly Available Data.”</p>
 </div>
 <div id="ref-tidyverse">
-<p>Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. “Welcome to the tidyverse.” <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.</p>
+<p>Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. “Welcome to the tidyverse.” <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686" class="external-link">https://doi.org/10.21105/joss.01686</a>.</p>
 </div>
 </div>
 </div>
@@ -273,11 +275,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Jaromil Frossard, Olivier Renaud.</p>
+  <p></p>
+<p>Developed by Jaromil Frossard, Olivier Renaud.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -285,6 +289,8 @@
 
   
 
+
+  
 
   </body>
 </html>

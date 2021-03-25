@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Computer clustermass test based on multiple signal — brainperm • permuco4brain</title>
+<title>Clustermass test based for multiple signals — brainperm • permuco4brain</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Computer clustermass test based on multiple signal — brainperm" />
-<meta property="og:description" content="Compute permutation test with FWER correction of on multiple signals spatially distributed." />
+<meta property="og:title" content="Clustermass test based for multiple signals — brainperm" />
+<meta property="og:description" content="Compute permutation test with FWER correction on multiple signals spatially distributed." />
+
+
 
 
 
@@ -56,9 +58,16 @@
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -72,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permuco4brain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -106,7 +115,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jaromilfrossard/permuco4brain/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -123,13 +132,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Computer clustermass test based on multiple signal</h1>
+    <h1>Clustermass test based for multiple signals</h1>
     <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco4brain/blob/master/R/brainperm.R'><code>R/brainperm.R</code></a></small>
     <div class="hidden name"><code>brainperm.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute permutation test with FWER correction of on multiple signals spatially distributed.</p>
+    <p>Compute permutation test with FWER correction on multiple signals spatially distributed.</p>
     </div>
 
     <pre class="usage"><span class='fu'>brainperm</span><span class='op'>(</span>
@@ -152,7 +161,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>formula</th>
-      <td><p>A formula object defining the design of the model. The left part should be a 3 dimensional array. Its row are the observations (or design), its column are the samples (or time-point) and the third dimension are the space (or the nodes of the graph). Each row should correspond to the design in the <code>data</code> argument.</p></td>
+      <td><p>A formula defining the design of the model. The left part should be a 3 dimensional array. Its rows are the observations (or design), its column are the samples (or time-point) and the third dimension are the space (or the nodes of the graph). Each row should correspond to the design in the <code>data</code> argument.</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -160,7 +169,7 @@
     </tr>
     <tr>
       <th>graph</th>
-      <td><p>An igraph object. It specifies the neighborhoods/spatial relationship between the signal/nodes.</p></td>
+      <td><p>An igraph object. It specifies the neighborhoods/spatial relationship between the signals/nodes.</p></td>
     </tr>
     <tr>
       <th>np</th>
@@ -168,11 +177,11 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>A character string specifying the re-sampling method. See <code>permuco</code> for details on permutation methods.</p></td>
+      <td><p>A character string to specify the re-sampling method. See <code>permuco</code> for details on permutation methods.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>A character string to specify the type of re-sampling transformation. Default is <code>"permutation"</code> and <code>"signflip"</code> is also available. Is overridden if P is given. See help from <code>Pmat</code> in <code>permuco</code>.</p></td>
+      <td><p>A character string to specify the type of re-sampling transformation. Default is <code>"permutation"</code> and <code>"signflip"</code> is also available. Is overridden if <code>P</code> is specified. See help from <code>Pmat</code> in <code>permuco</code>.</p></td>
     </tr>
     <tr>
       <th>test</th>
@@ -188,7 +197,7 @@
     </tr>
     <tr>
       <th>multcomp</th>
-      <td><p>The multiple comparison procedure only <code>"clustermass"</code> (default) and <code>"troendle"</code>is available.</p></td>
+      <td><p>The multiple comparison procedure only <code>"clustermass"</code> (default), <code>"tfce"</code>, <code>"troendle"</code>is available.</p></td>
     </tr>
     <tr>
       <th>effect</th>
@@ -209,8 +218,7 @@
 <p>Other arguments could be pass in <code>...</code> :<br /> <br />
 <code>P</code> : A matrix containing the permutation of class <code>matrix</code> or <code>Pmat</code>; which is used for the reproducibility of the results. The first column must be the identity. <code>P</code> overwrites <code>np</code> argument.<br /> <br />
 <code>return_distribution = FALSE</code> : return the permutation distribution of the statistics. Warnings : return one high dimensional matrices (number of test times number of permutation) for each test.<br />
-<code>coding_sum = TRUE</code> : a logical defining the coding of the design matrix to <code>contr.sum</code>: set by default to <code>TRUE</code> for ANOVA (when the argument <code>test</code> is <code>"fisher"</code> ) to tests main effects and is set to <code>FALSE</code> when <code>test</code> is <code>"t"</code>.  If <code>coding_sum</code> is set to <code>FALSE</code> the design matrix is computed with the coding defined in the dataframe and the tests of simple effects are possible with a coding of the dataframe set to <code>contr.treatment</code>. <br />
-<code>ncores = detectCores()-1</code> : An integer specifying the number of cores for parallel computing. Default is <code>detectCores()-1</code>.</p>
+<code>coding_sum = TRUE</code> : a logical defining the coding of the design matrix to <code>contr.sum</code>: set by default to <code>TRUE</code> for ANOVA (when the argument <code>test</code> is <code>"fisher"</code> ) to tests main effects and is set to <code>FALSE</code> when <code>test</code> is <code>"t"</code>.  If <code>coding_sum</code> is set to <code>FALSE</code> the design matrix is computed with the coding defined in the dataframe and the tests of simple effects are possible with a coding of the dataframe set to <code>contr.treatment</code>. <br /></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -223,11 +231,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jaromil Frossard, Olivier Renaud.</p>
+  <p><p>Developed by Jaromil Frossard, Olivier Renaud.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -235,6 +243,8 @@
 
   
 
+
+  
 
   </body>
 </html>

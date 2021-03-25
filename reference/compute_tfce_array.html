@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • permuco4brain</title>
+<title>Threshold-free cluster-enhancement — compute_tfce_array • permuco4brain</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Threshold-free cluster-enhancement — compute_tfce_array" />
+<meta property="og:description" content="Compute the TFCE statistics and p-value" />
 
 
 
@@ -67,7 +68,7 @@
   <body data-spy="scroll" data-target="#toc">
     
 
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -129,142 +130,70 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Threshold-free cluster-enhancement</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco4brain/blob/master/R/compute_tfce_array.R'><code>R/compute_tfce_array.R</code></a></small>
+    <div class="hidden name"><code>compute_tfce_array.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Compute the TFCE statistics and p-value</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>compute_tfce_array</span><span class='op'>(</span>
+  <span class='va'>distribution</span>,
+  <span class='va'>graph</span>,
+  <span class='va'>alternative</span>,
+  <span class='va'>E</span>,
+  <span class='va'>H</span>,
+  <span class='va'>ndh</span>,
+  progress <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-main-function" class="hasAnchor"><a href="#section-main-function" class="anchor"></a>Main Function</h2>
-          <p class="section-desc"><p>Run the permutation test on the signals</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="brainperm.html">brainperm()</a></code> </p>
-        </td>
-        <td><p>Clustermass test based for multiple signals</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-multiples-comparisons-procedure" class="hasAnchor"><a href="#section-multiples-comparisons-procedure" class="anchor"></a>Multiples Comparisons Procedure</h2>
-          <p class="section-desc"><p>Multiples comparisons procedure for tests distributed in space-time</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="compute_clustermass_array.html">compute_clustermass_array()</a></code> </p>
-        </td>
-        <td><p>Cluster-mass test</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="compute_tfce_array.html">compute_tfce_array()</a></code> </p>
-        </td>
-        <td><p>Threshold-free cluster-enhancement</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="compute_troendle_array.html">compute_troendle_array()</a></code> </p>
-        </td>
-        <td><p>Troendle multiple comparison procedure</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-summary-functions" class="hasAnchor"><a href="#section-summary-functions" class="anchor"></a>Summary Functions</h2>
-          <p class="section-desc"><p>Display a summary/table of the results</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="print.brainperm.html">print(<i>&lt;brainperm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print method for <code>brainperm</code> object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="summary.brainperm.html">summary(<i>&lt;brainperm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Summary method for <code>brainperm</code> object</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-vizualisation-functions" class="hasAnchor"><a href="#section-vizualisation-functions" class="anchor"></a>Vizualisation Functions</h2>
-          <p class="section-desc"><p>Display fast vizualisation of the results</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="image.brainperm.html">image(<i>&lt;brainperm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Heatmap (time-space) of the tests.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot.brainperm.html">plot(<i>&lt;brainperm&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Plot a graph of the channels for 1 sample/time-point</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-helper-functions" class="hasAnchor"><a href="#section-helper-functions" class="anchor"></a>Helper Functions</h2>
-          <p class="section-desc"><p>Help reshaping the data in the appropriate format</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="position_to_graph.html">position_to_graph()</a></code> </p>
-        </td>
-        <td><p><code>igraph</code> object from the positions of the channels</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>distribution</th>
+      <td><p>An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.</p></td>
+    </tr>
+    <tr>
+      <th>graph</th>
+      <td><p>A igraph object representing the adjacency of the channels.</p></td>
+    </tr>
+    <tr>
+      <th>alternative</th>
+      <td><p>a character string indicating the alternative hypothesis. Either "greater","less" or "two.sided".</p></td>
+    </tr>
+    <tr>
+      <th>E</th>
+      <td><p>a numeric indicating the parameter associated to the cluster extend. Suggestion `E = 0.5`.</p></td>
+    </tr>
+    <tr>
+      <th>H</th>
+      <td><p>a numeric indicating the parameter associated to the cluster height. Suggestion for t statistic: `H = 1`, for F statistic: `H = 2` .</p></td>
+    </tr>
+    <tr>
+      <th>ndh</th>
+      <td><p>a numeric indicating the number of step for the approximation of the integral. Suggestion `ndh = 500`.</p></td>
+    </tr>
+    <tr>
+      <th>progress</th>
+      <td><p>a logical indicating if the progress should be displayed.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>graph a list containing an igraph and a data.frame, with the results for each sample, channel.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other MCP: 
+<code><a href='compute_clustermass_array.html'>compute_clustermass_array</a>()</code>,
+<code><a href='compute_troendle_array.html'>compute_troendle_array</a>()</code></p></div>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

@@ -40,7 +40,9 @@
 
 
 <meta property="og:title" content="Summary method for brainperm object — summary.brainperm" />
-<meta property="og:description" content="Display the results of the brainperm object." />
+<meta property="og:description" content="List per effect of the results of the brainperm object." />
+
+
 
 
 
@@ -56,9 +58,16 @@
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -72,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permuco4brain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -106,7 +115,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jaromilfrossard/permuco4brain/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -129,7 +138,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Display the results of the <code>brainperm</code> object.</p>
+    <p>List per effect of the results of the <code>brainperm</code> object.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for brainperm</span>
@@ -150,7 +159,7 @@
     </tr>
     <tr>
       <th>multcomp</th>
-      <td><p>a character string indicating the multiple comparison procedure to display. Use if several multiple comparison procedures is computed in the <code>brainperm</code> object.</p></td>
+      <td><p>a character string indicating the multiple comparison procedure to display. Only relevant if several multiple comparison procedures are computed in the <code>brainperm</code> object.</p></td>
     </tr>
     <tr>
       <th>table_type</th>
@@ -158,7 +167,7 @@
     </tr>
     <tr>
       <th>alternative</th>
-      <td><p>a character string indicating the alternative hypothesis for t-test. Default value <code>"two.sided"</code>. <code>"less"</code> and <code>"greater"</code> is also available.</p></td>
+      <td><p>a character string indicating the alternative hypothesis for t-test. The default value if <code>"two.sided"</code>. <code>"less"</code> and <code>"greater"</code> are also available.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -185,11 +194,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jaromil Frossard, Olivier Renaud.</p>
+  <p><p>Developed by Jaromil Frossard, Olivier Renaud.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -197,6 +206,8 @@
 
   
 
+
+  
 
   </body>
 </html>
