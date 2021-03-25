@@ -5,8 +5,6 @@
 
 <!-- badges: start -->
 
-[![R build
-status](https://github.com/jaromilfrossard/permuco4brain/workflows/R-CMD-check/badge.svg)](https://github.com/jaromilfrossard/permuco4brain/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/jaromilfrossard/permuco4brain/branch/master/graph/badge.svg)](https://codecov.io/gh/jaromilfrossard/permuco4brain?branch=master)
 [![R-CMD-check](https://github.com/jaromilfrossard/permuco4brain/workflows/R-CMD-check/badge.svg)](https://github.com/jaromilfrossard/permuco4brain/actions)
