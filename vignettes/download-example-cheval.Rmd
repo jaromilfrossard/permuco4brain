@@ -187,7 +187,7 @@ We may want to save the 3 objects: `signal`, `design` and `graph`.
 # save(signal,design,graph,file = "signal_design_graph.RData")
 ```
 
-To use multi-cores processing, we use the `plan()` function from the [`future` package](https://github.com/HenrikBengtsson/future). Finally, we run the permutation tests using: 
+The `plan()` function from the [`future` package](https://github.com/HenrikBengtsson/future) handles multi-cores computing. Finally, we run the permutation tests using: 
 
 ```{r brainperm, echo=TRUE,eval=FALSE}
 plan(multisession)

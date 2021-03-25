@@ -36,7 +36,7 @@ From the [EEG data](https://osf.io/ut7xq/) repository we found the "03_data_summ
 
 ## R package
 
-In the following analysis, we will mainly use functions from the `tidyverse` [@tidyverse], from `eeguana` [@nicenboim_eeguana_2020], from `permuco` [@frossard_permuco], from `permuco4brain` [@frossard_permuco4brain] and from `igraph` [@csardi_igraph]:
+In the following analysis, we will mainly use functions from the `tidyverse` [@tidyverse], from `eeguana` [@nicenboim_eeguana_2020], from `permuco` [@frossard_permuco], from `permuco4brain` [@frossard_permuco4brain], from `future` [@future] and from `igraph` [@csardi_igraph]:
 
 ```{r package, echo=TRUE,eval=FALSE}
 library(tidyverse)
@@ -44,6 +44,7 @@ library(eeguana)
 library(permuco)
 library(permuco4brain)
 library(igraph)
+library(future)
 ```
 
 
@@ -185,9 +186,12 @@ Before running the clustermass test, you may want to save the 3 objects: the 3D 
 
 Finally, we use `permuco4brain` for testing the difference between experimental conditions. We have a repeated measures ANCOVA, with 1 covariate (the centered age), 1 between-participants factors (the occupation) and 2 within-participants factors (region and condition). The permutation tests is computed for all samples, all channels while controlling for the family-wise error rate (FWER).
 
+The `plan()` function from the [`future` package](https://github.com/HenrikBengtsson/future) handles multi-cores computing
+
 
 ```{r model, echo=TRUE,eval=FALSE}
 formula <- signal ~ age_c*occupation*region*cond +Error(.recording/(region*cond))
+plan(multisession)
 model <- brainperm(formula = formula, data = design, graph = graph)
 ```
 
