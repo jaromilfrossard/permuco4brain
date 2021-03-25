@@ -5,23 +5,22 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.org/jaromilfrossard/permuco4brain.svg?branch=master)](https://travis-ci.org/jaromilfrossard/permuco4brain)
 [![R build
 status](https://github.com/jaromilfrossard/permuco4brain/workflows/R-CMD-check/badge.svg)](https://github.com/jaromilfrossard/permuco4brain/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/jaromilfrossard/permuco4brain/branch/master/graph/badge.svg)](https://codecov.io/gh/jaromilfrossard/permuco4brain?branch=master)
+[![R-CMD-check](https://github.com/jaromilfrossard/permuco4brain/workflows/R-CMD-check/badge.svg)](https://github.com/jaromilfrossard/permuco4brain/actions)
 <!-- badges: end -->
 
 `permuco4brain` provides functions to compute permutation test in brain
-imagery data. It is specially designed for M-EEG/ERP data.
-`permuco4brain` is an add-on to `permuco` to computing clustermass tests
-on spatio-temporal data (e.g.: full-scalp EEG data).
+imagery data. It is designed for M-EEG/ERP data. `permuco4brain` is an
+add-on to `permuco` to computing clustermass tests on spatio-temporal
+data (e.g.: full-scalp EEG data).
 
 ## Installation
 
-`permuco4brain` currently works with `permuco` 1.1.1 (github). Download
-it using:
+`permuco4brain` currently works jointly with `permuco` 1.1.1 (github).
+Download it using:
 
 ``` r
 devtools::install_github("jaromilfrossard/permuco", build_vignettes = TRUE)
@@ -43,7 +42,7 @@ The main function of `permuco4brain` is `brainperm()` and it needs:
     array visible in the global environment. Its dimension is the design
     X samples X channels. Each “rows” of the 3D array should be related
     to the corresponding row of the design (`data` argument).
-2.  `data`: a data-frame containing the variables of the design.
+2.  `data`: a dataframe containing the variables of the design.
 3.  `graph`: an `igraph` object defining spatial adjacency of the
     channels (third dimension of the signal). The names of the vertices
     should correspond to the names of the 3rd dimension of signal.
@@ -89,7 +88,7 @@ analyze them using `permuco4brain`.
 3.  The
     [figure-ggplot2](https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html)
     vignette presents how to use `ggplot2` to produce graphical
-    representation for publication:
+    representation of the results for publication:
 
 <!-- end list -->
 
