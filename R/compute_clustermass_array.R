@@ -1,13 +1,17 @@
-# Compute the Maris Oostenveld pvalue correction
-#
-# @description Compute the Maris Oostenveld pvalue correction for an array
-# @param distribution An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.
-# @param threshold The threshold used to compute the clusters.
-# @param aggr_FUN The function that aggregate the cluster into a scalar (cluster mass).
-# @param graph A igraph object representing the adjacency of electrod in a scalp.
-# @return graph A igraph object with vertices attributes statistic and pvalue. data, A data frame containing the vraible elecrod, time, statistic, pvalue. cluster the result of the connected componant search on the observed graph enhanced with the mass and pvalue of the cluster. Distribution the cluster mass null distribution.
+#' Cluster-mass test
+#'
+#' @description Compute the cluster-mass test with adjacency define by a graph.
+#' @param distribution An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.
+#' @param threshold The threshold used to compute the clusters.
+#' @param aggr_FUN The function that aggregate the cluster into a scalar (cluster mass).
+#' @param graph A igraph object representing the adjacency of the channels.
+#' @param alternative a character string indicating the alternative hypothesis. Either "greater","less" or "two.sided".
+#' @return graph A list containing a igraph object, a data frame containing the channels, time, statistic, cluster-mass and p-values,
 #' @importFrom igraph set_vertex_attr delete_vertices clusters vertex_attr V set.vertex.attribute
+#' @family MCP
+#' @export
 compute_clustermass_array = function(distribution, threshold, aggr_FUN, graph, alternative){
+  alternative <- match.arg(alternative, c("greater","less","two.sided"))
   switch(alternative,
          "greater" = {
     threshold <- abs(threshold)

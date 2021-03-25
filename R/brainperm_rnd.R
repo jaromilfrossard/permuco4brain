@@ -20,7 +20,7 @@
 #'@importFrom igraph permute.vertices
 # #'@export
 brainperm_rnd <- function(formula, data, method, threshold, np, P, graph, effect, coding_sum, test,type,
-                               aggr_FUN, multcomp, return_distribution,ncores,new_method){
+                               aggr_FUN, multcomp, return_distribution, new_method, E, H, ndh){
 
 
 ##Method$
@@ -57,11 +57,14 @@ brainperm_rnd <- function(formula, data, method, threshold, np, P, graph, effect
     ###FUN multcomp
   switch(multcomp,
          "clustermass" = {
-           funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative){
+           funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh){
              compute_clustermass_array(distribution = distribution,threshold = threshold,
                                        alternative = alternative, aggr_FUN = aggr_FUN,graph = graph)}},
-         "troendle" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative){
+         "troendle" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh){
            compute_troendle_array(distribution = distribution,graph = graph, alternative = alternative)
+         }},
+         "tfce" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh){
+           compute_tfce_array(distribution = distribution,graph = graph, alternative = alternative,E = E, H = H, ndh = ndh)
          }})
 
 
@@ -133,7 +136,7 @@ brainperm_rnd <- function(formula, data, method, threshold, np, P, graph, effect
     np = permuco:::np.Pmat(P)
 
     ##distribution
-    args <- list(mm = mm_f, mm_id = mm_id, link = link, P = P, y = signal, ncores = ncores)
+    args <- list(mm = mm_f, mm_id = mm_id, link = link, P = P, y = signal)
 
     if(is.null(effect)){effect = 1:max(attr(mm_f,"assign"))}
 
@@ -196,7 +199,8 @@ brainperm_rnd <- function(formula, data, method, threshold, np, P, graph, effect
 
       multiple_comparison[[i]][[2]] =
         funMultComp(distribution = distribution,
-                                       threshold = threshold[i], aggr_FUN = aggr_FUN, graph = graph, alternative = test_info$alternative)
+                    threshold = threshold[i], aggr_FUN = aggr_FUN, graph = graph,
+                    alternative = test_info$alternative, E = E, H = H, ndh = ndh)
       names(multiple_comparison[[i]])[2] = multcomp
     }
 

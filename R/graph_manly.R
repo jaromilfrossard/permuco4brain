@@ -1,3 +1,4 @@
+#' @importFrom future.apply future_apply
 graph_manly <- function (args) {
   switch(args$test, fisher = {
     funT = function(qr_rdx, qr_mm, py) {
@@ -20,10 +21,9 @@ graph_manly <- function (args) {
   r1y <- qr.resid(qr_1, args$y)
   h1y <- qr.fitted(qr_1, args$y)
   type = attr(args$P, "type")
-  cl <- makeCluster(args$ncores)
-  out = t(parApply(cl = cl,permuco:::as.matrix.Pmat(args$P),2,function(pi){
+
+  out = t(future_apply(permuco:::as.matrix.Pmat(args$P),2,function(pi){
     funT(qr_rdx = qr_rdx, qr_mm = qr_mm, py = permuco::Pmat_product(x = r1y,
                                                            P = pi, type = type) + h1y)}))
-    stopCluster(cl)
     return(out)
 }

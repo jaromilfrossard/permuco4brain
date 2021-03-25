@@ -38,7 +38,7 @@ brainperm(
 
 \item{threshold}{See \code{clusterlm} in \code{permuco}.}
 
-\item{multcomp}{The multiple comparison procedure only \code{"clustermass"} (default) and \code{"troendle"}is available.}
+\item{multcomp}{The multiple comparison procedure only \code{"clustermass"} (default), \code{"tfce"}, \code{"troendle"}is available.}
 
 \item{effect}{An integer indicating the effect to test. It refers to the \code{assign} attribute of the \code{model.matrix} object. The default (\code{effect = NULL}) compute all effects.}
 
@@ -57,6 +57,5 @@ Other arguments could be pass in \code{...} :\cr \cr
 \code{P} : A matrix containing the permutation of class \code{matrix} or \code{Pmat}; which is used for the reproducibility of the results. The first column must be the identity. \code{P} overwrites \code{np} argument.\cr \cr
 \code{return_distribution = FALSE} : return the permutation distribution of the statistics. Warnings : return one high dimensional matrices (number of test times number of permutation) for each test.\cr
 \code{coding_sum = TRUE} : a logical defining the coding of the design matrix to \code{contr.sum}: set by default to \code{TRUE} for ANOVA (when the argument \code{test} is \code{"fisher"} ) to tests main effects and is set to \code{FALSE} when \code{test} is \code{"t"}.  If \code{coding_sum} is set to \code{FALSE} the design matrix is computed with the coding defined in the dataframe and the tests of simple effects are possible with a coding of the dataframe set to \code{contr.treatment}. \cr
-\code{ncores = detectCores()-1} : An integer specifying the number of cores for parallel computing. Default is \code{detectCores()-1}.
 }
 \concept{main functions}

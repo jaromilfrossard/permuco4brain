@@ -39,9 +39,12 @@ summary.brainperm = function(object, multcomp = NULL, table_type = "cluster",
 
     if(multcomp == "clustermass"){
       out[[i]] <- brainperm_cluster_table(multiple_comparison[[i]],effect_name = names(multiple_comparison)[i])}
-    else if(multcomp == "troendle"){
+           else if(multcomp == "troendle"){
       out[[i]] <- brainperm_pseudocluster_table(multiple_comparison[[i]],effect_name = names(multiple_comparison)[i],
                                                     multcomp = "troendle",... = ...)}
+           else if(multcomp == "tfce"){
+             out[[i]] <- brainperm_pseudocluster_table(multiple_comparison[[i]],effect_name = names(multiple_comparison)[i],
+                                                       multcomp = "tfce",... = ...)}
   },
   "full" = {
     out[[i]] <- brainperm_full_table(multiple_comparison[[i]],effect_name = names(multiple_comparison)[i],

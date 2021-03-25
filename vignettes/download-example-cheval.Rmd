@@ -24,19 +24,20 @@ In the following tutorial, we download EEG data and reanalyze the data in @cheva
 
 ## Installing packages
 
-We need several packages including `tidyverse`  [@tidyverse], `edf` [@edf], `abind` [@abind], `xlsx` [@xlsx] and `permuco4brain` [@frossard_permuco4brain]:
+We need several packages including `tidyverse`  [@tidyverse], `edf` [@edf], `abind` [@abind], `readxl` [@readxl], `permuco4brain` [@frossard_permuco4brain] and `future` [@future]:
 
 ```{r package, echo=TRUE,eval=FALSE}
 library(tidyverse)
 library(edf)
 library(abind)
-library(xlsx)
+library(readxl)
+library(future)
 library(permuco4brain)
 ```
 
 ## Downloading data
 
-We download the data in a temporary files before unzippin the `.edf` files.
+We download the data in a temporary files before unzipping the `.edf` files.
 
 ```{r download, echo=TRUE,eval=FALSE}
 temp_zip <- tempfile()
@@ -151,7 +152,7 @@ We download the position of the channels from [biosemi](www.biosemi.com):
 ```{r biosemi, echo=TRUE,eval=FALSE}
 temp_xl <- tempfile()
 download.file("https://www.biosemi.com/download/Cap_coords_all.xls",temp_xl,mode="wb")
-coord <-  read.xlsx(file=temp_xl, sheetIndex = 3, header =T,startRow=34)
+coord <-  read_xls(path=temp_xl, sheet = 3,skip = 33)
 unlink(temp_xl)
 ```
 
@@ -160,8 +161,8 @@ We clean the data from biosemi and sort it accordingly to the third dimension of
 ```{r coord, echo=TRUE,eval=FALSE}
 coord<- 
   coord%>%
-  select(channel = Electrode, x= "x...r.sinÎ..cosÏ.",
-         y = "y...r.sinÎ..sinÏ.", z = "z...r.cosÎ.")%>%
+  select(channel = Electrode, x= `x = r sin<U+03B8> cosf`,
+         y = `y = r sin<U+03B8> sinf`, z = `z = r cos<U+03B8>`)%>%
   filter(!is.na(x),!is.na(y),!is.na(z))%>%
   mutate(channel = as.character(channel))%>%
   mutate(channel = if_else(channel=="Iz (inion)","Iz",channel),
@@ -171,10 +172,10 @@ coord<-
   arrange(match(channel,dimnames(signal)[3]))
 ```
 
-The graph is computed using $\delta=35$ as the maximal distance defining adjacency:
+The graph is computed using $\delta =35$ as the maximal distance defining adjacency:
 
 ```{r graph, echo=TRUE,eval=FALSE}
-graph <- position_to_graph(coord,delta = 35, name="channel")
+graph <- position_to_graph(coord, delta = 35, name = "channel")
 ```
 
 
@@ -186,9 +187,10 @@ We may want to save the 3 objects: `signal`, `design` and `graph`.
 # save(signal,design,graph,file = "signal_design_graph.RData")
 ```
 
-Or we simply run the permutation tests:
+To use multi-cores processing, we use the `plan()` function from the [`future` package](https://github.com/HenrikBengtsson/future). Finally, we run the permutation tests using: 
 
 ```{r brainperm, echo=TRUE,eval=FALSE}
+plan(multisession)
 clustermass <- brainperm(signal ~ action*stimuli*mvpa_c + Error(participant/(action*stimuli)),
                          data = design, graph = graph)
 ```

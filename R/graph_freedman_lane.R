@@ -1,3 +1,4 @@
+#' @importFrom future.apply future_apply
 graph_freedman_lane <- function(args){
   #select x
   ##test selection
@@ -20,10 +21,9 @@ graph_freedman_lane <- function(args){
   rdy <- qr.resid(qr_d, args$y)
 
   #####permutation
-  cl <- makeCluster(args$ncores)
-  out = t(parApply(cl = cl,permuco:::as.matrix.Pmat(args$P),2,function(pi){
+  out = t(future_apply(permuco:::as.matrix.Pmat(args$P),2,function(pi){
     funT(qr_rdx = qr_rdx, qr_mm = qr_mm,
          prdy = permuco::Pmat_product(x = rdy, P =pi,type= attr(args$P,"type")))}))
-  stopCluster(cl)
+
   return(out)
 }

@@ -1,30 +1,40 @@
-# Compute the troendle multiple comparison procedre
-#
-#
-# @description Compute the Maris Oostenveld pvalue correction for an array
-# @param distribution An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.
-# @param graph A igraph object representing the adjacency of channels in a scalp.
-# @return graph A igraph object with vertices attributes statistic and pvalue. data,A data frame containing the vraible elecrod, sample, statistic, pvalue. cluster the result of the connected componant search on the observed graph enhanced with the mass and pvalue of the cluster. Distribution the cluster mass null distribution.
-#' @importFrom utils txtProgressBar setTxtProgressBar
-#' @importFrom grDevices gray
+#' Troendle multiple comparison procedure
+#'
+#' @description Compute the Troendle multiple comparison procedure
+#' @param distribution An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.
+#' @param graph A igraph object representing the adjacency of the channels.
+#' @param alternative a character string indicating the alternative hypothesis. Either "greater","less" or "two.sided".
+#' @return graph a list containing an igraph and a data.frame, with the results for each sample, channel.
+#' @family MCP
+#' @export
 compute_troendle_array = function(distribution,alternative, graph){
+  alternative <- match.arg(alternative, c("greater","less","two.sided"))
+
+  switch(alternative,
+         "greater" = {
+
+         }, "less" = {
+           distribution <- -distribution
+         }, "two.sided" = {
+           distribution <- abs(distribution)
+         })
 
 
 
 
-  tr = permuco::compute_troendle(matrix(distribution,nrow=dim(distribution)[1],
+  tr <- permuco::compute_troendle(matrix(distribution,nrow=dim(distribution)[1],
                                         ncol=prod(dim(distribution)[-1])),alternative = alternative)
 
-  graph = full_graph(graph, t = dim(distribution)[2])
+  graph <- full_graph(graph, t = dim(distribution)[2])
 
-  graph = set_vertex_attr(graph, name = "statistic",
+  graph <- set_vertex_attr(graph, name = "statistic",
                           value = as.numeric(t(distribution[1, , ])))
 
-  graph = set_vertex_attr(graph, name = "pvalue",
+  graph <- set_vertex_attr(graph, name = "pvalue",
                           value = as.numeric(tr$main[,2]))
 
 
-  df = data.frame(channel = vertex_attr(graph, name = c("channel")),
+  df <- data.frame(channel = vertex_attr(graph, name = c("channel")),
                   sample = as.numeric(vertex_attr(graph, name = c("sample"))),
                   statistic = as.numeric(vertex_attr(graph, name = c("statistic"))),
                   pvalue = as.numeric(vertex_attr(graph, name = c("pvalue"))),

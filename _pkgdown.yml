@@ -6,6 +6,11 @@ reference:
    Run the permutation test on the signals
   contents:
    - has_concept("main functions")
+- title: Multiples Comparisons Procedure
+  desc: >
+   Multiples comparisons procedure for tests distributed in space-time
+  contents:
+   - has_concept("MCP")
 - title: Summary Functions
   desc: >
    Display a summary/table of the results
