@@ -141,15 +141,7 @@
     <p>Compute the TFCE statistics and p-value</p>
     </div>
 
-    <pre class="usage"><span class='fu'>compute_tfce_array</span><span class='op'>(</span>
-  <span class='va'>distribution</span>,
-  <span class='va'>graph</span>,
-  <span class='va'>alternative</span>,
-  <span class='va'>E</span>,
-  <span class='va'>H</span>,
-  <span class='va'>ndh</span>,
-  progress <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>compute_tfce_array</span><span class='op'>(</span><span class='va'>distribution</span>, <span class='va'>graph</span>, <span class='va'>alternative</span>, <span class='va'>E</span>, <span class='va'>H</span>, <span class='va'>ndh</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,23 +156,19 @@
     </tr>
     <tr>
       <th>alternative</th>
-      <td><p>a character string indicating the alternative hypothesis. Either "greater","less" or "two.sided".</p></td>
+      <td><p>a character string indicating the alternative hypothesis. Either <code>"greater"</code>, <code>"less"</code> or <code>"two.sided"</code>.</p></td>
     </tr>
     <tr>
       <th>E</th>
-      <td><p>a numeric indicating the parameter associated to the cluster extend. Suggestion `E = 0.5`.</p></td>
+      <td><p>a numeric indicating the parameter associated to the cluster extend. Suggestion <code>E = 0.5</code>.</p></td>
     </tr>
     <tr>
       <th>H</th>
-      <td><p>a numeric indicating the parameter associated to the cluster height. Suggestion for t statistic: `H = 1`, for F statistic: `H = 2` .</p></td>
+      <td><p>a numeric indicating the parameter associated to the cluster height. Suggestion for t statistic: <code>H = 1</code>, for F statistic: <code>H = 2</code>.</p></td>
     </tr>
     <tr>
       <th>ndh</th>
-      <td><p>a numeric indicating the number of step for the approximation of the integral. Suggestion `ndh = 500`.</p></td>
-    </tr>
-    <tr>
-      <th>progress</th>
-      <td><p>a logical indicating if the progress should be displayed.</p></td>
+      <td><p>a numeric indicating the number of step for the approximation of the integral. Suggestion <code>ndh = 500</code>.</p></td>
     </tr>
     </table>
 
