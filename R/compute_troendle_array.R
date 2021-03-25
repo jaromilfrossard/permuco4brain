@@ -3,7 +3,7 @@
 #' @description Compute the Troendle multiple comparison procedure
 #' @param distribution An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.
 #' @param graph A igraph object representing the adjacency of the channels.
-#' @param alternative a character string indicating the alternative hypothesis. Either "greater","less" or "two.sided".
+#' @param alternative a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.
 #' @return graph a list containing an igraph and a data.frame, with the results for each sample, channel.
 #' @family MCP
 #' @export

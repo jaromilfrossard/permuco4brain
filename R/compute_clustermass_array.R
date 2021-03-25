@@ -5,13 +5,13 @@
 #' @param threshold The threshold used to compute the clusters.
 #' @param aggr_FUN The function that aggregate the cluster into a scalar (cluster mass).
 #' @param graph A igraph object representing the adjacency of the channels.
-#' @param alternative a character string indicating the alternative hypothesis. Either "greater","less" or "two.sided".
+#' @param alternative a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.
 #' @return graph A list containing a igraph object, a data frame containing the channels, time, statistic, cluster-mass and p-values,
 #' @importFrom igraph set_vertex_attr delete_vertices clusters vertex_attr V set.vertex.attribute
 #' @family MCP
 #' @export
 compute_clustermass_array = function(distribution, threshold, aggr_FUN, graph, alternative){
-  alternative <- match.arg(alternative, c("greater","less","two.sided"))
+  alternative <- match.arg(alternative, c("greater", "less", "two.sided"))
   switch(alternative,
          "greater" = {
     threshold <- abs(threshold)

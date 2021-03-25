@@ -21,7 +21,7 @@ compute_clustermass_array(
 
 \item{graph}{A igraph object representing the adjacency of the channels.}
 
-\item{alternative}{a character string indicating the alternative hypothesis. Either "greater","less" or "two.sided".}
+\item{alternative}{a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.}
 }
 \value{
 graph A list containing a igraph object, a data frame containing the channels, time, statistic, cluster-mass and p-values,

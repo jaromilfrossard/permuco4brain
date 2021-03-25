@@ -9,7 +9,7 @@ compute_troendle_array(distribution, alternative, graph)
 \arguments{
 \item{distribution}{An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.}
 
-\item{alternative}{a character string indicating the alternative hypothesis. Either "greater","less" or "two.sided".}
+\item{alternative}{a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.}
 
 \item{graph}{A igraph object representing the adjacency of the channels.}
 }

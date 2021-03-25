@@ -3,17 +3,16 @@
 #' @description Compute the TFCE statistics and p-value
 #' @param distribution An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.
 #' @param graph A igraph object representing the adjacency of the channels.
-#' @param alternative a character string indicating the alternative hypothesis. Either "greater","less" or "two.sided".
-#' @param E  a numeric indicating the parameter associated to the cluster extend. Suggestion `E = 0.5`.
-#' @param H a numeric indicating the parameter associated to the cluster height. Suggestion for t statistic: `H = 1`, for F statistic: `H = 2` .
-#' @param ndh a numeric indicating the number of step for the approximation of the integral. Suggestion `ndh = 500`.
-#' @param progress a logical indicating if the progress should be displayed.
+#' @param alternative a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.
+#' @param E  a numeric indicating the parameter associated to the cluster extend. Suggestion \code{E = 0.5}.
+#' @param H a numeric indicating the parameter associated to the cluster height. Suggestion for t statistic: \code{H = 1}, for F statistic: \code{H = 2}.
+#' @param ndh a numeric indicating the number of step for the approximation of the integral. Suggestion \code{ndh = 500}.
 #' @return graph a list containing an igraph and a data.frame, with the results for each sample, channel.
 #' @importFrom future.apply future_lapply
 #' @importFrom abind abind
 #' @family MCP
 #' @export
-compute_tfce_array <- function(distribution, graph , alternative, E, H, ndh, progress = TRUE){
+compute_tfce_array <- function(distribution, graph , alternative, E, H, ndh){
   alternative <- match.arg(alternative, c("greater","less","two.sided"))
 
   switch(alternative,
@@ -37,8 +36,8 @@ compute_tfce_array <- function(distribution, graph , alternative, E, H, ndh, pro
   HH <- dh*dhi^H
 
 
-  if(progress){
-    cat("computation of TFCE statistic:\n")}
+
+  cat("Computing the TFCE statistic\n")
 
   out <- future_lapply(seq_len(dim(distribution)[1]),function(permi){
     outi <- cluster_extend_array(distribution = distribution[permi,,,drop=F],graph = graph,threshold = dhi)

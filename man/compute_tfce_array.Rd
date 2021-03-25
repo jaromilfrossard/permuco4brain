@@ -4,30 +4,20 @@
 \alias{compute_tfce_array}
 \title{Threshold-free cluster-enhancement}
 \usage{
-compute_tfce_array(
-  distribution,
-  graph,
-  alternative,
-  E,
-  H,
-  ndh,
-  progress = TRUE
-)
+compute_tfce_array(distribution, graph, alternative, E, H, ndh)
 }
 \arguments{
 \item{distribution}{An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.}
 
 \item{graph}{A igraph object representing the adjacency of the channels.}
 
-\item{alternative}{a character string indicating the alternative hypothesis. Either "greater","less" or "two.sided".}
+\item{alternative}{a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.}
 
-\item{E}{a numeric indicating the parameter associated to the cluster extend. Suggestion `E = 0.5`.}
+\item{E}{a numeric indicating the parameter associated to the cluster extend. Suggestion \code{E = 0.5}.}
 
-\item{H}{a numeric indicating the parameter associated to the cluster height. Suggestion for t statistic: `H = 1`, for F statistic: `H = 2` .}
+\item{H}{a numeric indicating the parameter associated to the cluster height. Suggestion for t statistic: \code{H = 1}, for F statistic: \code{H = 2}.}
 
-\item{ndh}{a numeric indicating the number of step for the approximation of the integral. Suggestion `ndh = 500`.}
-
-\item{progress}{a logical indicating if the progress should be displayed.}
+\item{ndh}{a numeric indicating the number of step for the approximation of the integral. Suggestion \code{ndh = 500}.}
 }
 \value{
 graph a list containing an igraph and a data.frame, with the results for each sample, channel.
