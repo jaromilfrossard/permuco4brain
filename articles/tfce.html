@@ -131,7 +131,7 @@
 <span class="va">tfce</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainperm.html">brainperm</a></span><span class="op">(</span><span class="va">signal</span> <span class="op">~</span> <span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">*</span><span class="va">mvpa_c</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">Error</a></span><span class="op">(</span><span class="va">participant</span><span class="op">/</span><span class="op">(</span><span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">)</span><span class="op">)</span>,
                   data <span class="op">=</span> <span class="va">design</span>, graph <span class="op">=</span> <span class="va">graph</span>, multcomp <span class="op">=</span> <span class="st">"tfce"</span><span class="op">)</span></code></pre></div>
 <p>It should run for around half-hour per effect (here 7 effects).</p>
-<p>Similarly to the cluster-mass test, we can produce heatmap using the <code><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image()</a></code> function:</p>
+<p>Similarly to the cluster-mass test, we produce a heat-map using the <code><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image()</a></code> function:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="va">tfce</span>, effect <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="tfce_heatmap.png"></p>
@@ -143,6 +143,10 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tfce_full_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">tfce</span>, table_type <span class="op">=</span> <span class="st">"full"</span><span class="op">)</span></code></pre></div>
 <p>Finally, the vignette <a href="https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html" class="external-link"><code>Figure using ggplot2</code></a> shows more examples for figures that can be customize for publication.</p>
+</div>
+<div id="reference" class="section level1 unnumbered">
+<h1 class="hasAnchor">
+<a href="#reference" class="anchor"></a>Reference</h1>
 <div id="refs" class="references">
 <div id="ref-future">
 <p>Bengtsson, Henrik. 2020. <em>A Unifying Framework for Parallel and Distributed Processing in R Using Futures</em>. <a href="https://arxiv.org/abs/2008.00553" class="external-link">https://arxiv.org/abs/2008.00553</a>.</p>

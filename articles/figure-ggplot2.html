@@ -99,8 +99,9 @@
 
     
     
-<p><code>permuco4brain</code> has currently 2 built-in functions for plotting. The <code><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image()</a></code> function provides a heatmap of the results for 1 effect and the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function draws the adjacency graph for 1 time and 1 effect where the vertices are colored depending and the <span class="math inline">\(p\)</span>-value. These functions are fast but not easy to custom. Hence they are useful for checking results of the test but are may not be useful for publication purpose.</p>
+<p><code>permuco4brain</code> has currently 2 built-in functions for plotting. The <code><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image()</a></code> function provides a heat-map of the results for 1 effect and the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function draws the adjacency graph for 1 time and 1 effect where the vertices are colored depending and the <span class="math inline">\(p\)</span>-value. These functions are fast but not easy to custom. Hence they are useful for checking results of the test but are may not be useful for publication purpose.</p>
 <p>In this vignette, we show how to extract the results of the test to produce 3 types of graphical representations using <code>ggplot2</code> <span class="citation">(Wickham 2016)</span>. These function may be slower to run but provides plots that can be custom for publication.</p>
+<p>These representation may be useful if you performed the cluster-mass test <span class="citation">(Maris and Oostenveld 2007)</span>, the TFCE <span class="citation">(Smith and Nichols 2009)</span> or the procedure from <span class="citation">Troendle (1995)</span>. However, the interpretation may be different.</p>
 <p>We assume that you have already run the example in the <code>download-example-cheval</code> included in <code>permuco4brain</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jaromilfrossard/permuco4brain"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -380,11 +381,20 @@
 <div id="ref-geofacet">
 <p>Hafen, Ryan. 2019. <em>Geofacet: ’Ggplot2’ Faceting Utilities for Geographical Data</em>. <a href="https://CRAN.R-project.org/package=geofacet" class="external-link">https://CRAN.R-project.org/package=geofacet</a>.</p>
 </div>
+<div id="ref-maris_nonparametric_2007">
+<p>Maris, Eric, and Robert Oostenveld. 2007. “Nonparametric Statistical Testing of EEG- and MEG-Data.” <em>Journal of Neuroscience Methods</em> 164 (1): 177–90. <a href="https://doi.org/10.1016/j.jneumeth.2007.03.024" class="external-link">https://doi.org/10.1016/j.jneumeth.2007.03.024</a>.</p>
+</div>
 <div id="ref-nicenboim_eeguana_2020">
 <p>Nicenboim, Bruno. 2018. <em>eeguana: A Package for Manipulating EEG Data in R</em>. <a href="https://doi.org/10.5281/zenodo.2533138" class="external-link">https://doi.org/10.5281/zenodo.2533138</a>.</p>
 </div>
 <div id="ref-ggforce">
 <p>Pedersen, Thomas Lin. 2019. <em>Ggforce: Accelerating ’Ggplot2’</em>. <a href="https://CRAN.R-project.org/package=ggforce" class="external-link">https://CRAN.R-project.org/package=ggforce</a>.</p>
+</div>
+<div id="ref-smith_thresholdfree_2009">
+<p>Smith, S, and T Nichols. 2009. “Threshold-Free Cluster Enhancement: Addressing Problems of Smoothing, Threshold Dependence and Localisation in Cluster Inference.” <em>NeuroImage</em> 44 (1): 83–98. <a href="https://doi.org/10.1016/j.neuroimage.2008.03.061" class="external-link">https://doi.org/10.1016/j.neuroimage.2008.03.061</a>.</p>
+</div>
+<div id="ref-troendle_stepwise_1995">
+<p>Troendle, James F. 1995. “A Stepwise Resampling Method of Multiple Hypothesis Testing.” <em>Journal of the American Statistical Association</em> 90 (429): 370–78. <a href="https://doi.org/10.1080/01621459.1995.10476522" class="external-link">https://doi.org/10.1080/01621459.1995.10476522</a>.</p>
 </div>
 <div id="ref-ggplot2">
 <p>Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org" class="external-link">https://ggplot2.tidyverse.org</a>.</p>

@@ -91,7 +91,7 @@
 <a href="#permuco4brain" class="anchor"></a>permuco4brain</h1></div>
 <!-- badges: start -->
 
-<p><code>permuco4brain</code> provides functions to compute permutation test in brain imagery data. It is designed for M-EEG/ERP data. <code>permuco4brain</code> is an add-on to <code>permuco</code> to computing clustermass tests on spatio-temporal data (e.g.: full-scalp EEG data).</p>
+<p><code>permuco4brain</code> provides functions to compute permutation test in brain imagery data. It is designed for M-EEG/ERP data. <code>permuco4brain</code> is an add-on to <code>permuco</code> to computing cluster-mass tests, the “threshold-free clusters-enhancement” and the Troendle’s procedure for tests distribution in space and time (e.g.: full-scalp EEG data).</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -114,6 +114,8 @@
 <li>
 <code>graph</code>: an <code>igraph</code> object defining spatial adjacency of the channels (third dimension of the signal). The names of the vertices should correspond to the names of the 3rd dimension of signal.</li>
 </ol>
+<p>By default, the <code><a href="reference/brainperm.html">brainperm()</a></code> function produces the cluster-mass test, but you can choose the TFCE with the argument <code>multcomp = "tfce"</code> or the Troendle’s procedure <code>multcomp = "troendle"</code>.</p>
+<p><code>permuco4brain</code> uses the <a href="https://CRAN.R-project.org/package=future" class="external-link"><code>future</code></a> package to handle multi-cores computing.</p>
 <p>You can inspect result using the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method and visualize them using <code><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image()</a></code>.</p>
 </div>
 <div id="documentation" class="section level2">
@@ -133,11 +135,16 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"download-example-cheval"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
 <p>In this tutorial, you learn how to download EEG data from <code>zenodo</code> and analyze them using <code>permuco4brain</code>.</p>
 <ol start="3" style="list-style-type: decimal">
-<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html" class="external-link">figure-ggplot2</a> vignette presents how to use <code>ggplot2</code> to produce graphical representation of the results for publication:</li>
+<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/tfce.html" class="external-link">tfce</a> vignette presents how to use <code>permuco4brain</code> and <code>future</code> to run the TFCE:</li>
 </ol>
 <!-- end list --><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"tfce"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html" class="external-link">figure-ggplot2</a> vignette presents how to use <code>ggplot2</code> to produce graphical representation of the results for publication:</li>
+</ol>
+<!-- end list --><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"figure-ggplot2"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
-<p>In this tutorial, you find 3 different types of plot that present the results of a clustermass test. All of them use the <code>ggplot2</code> package and may easily be customized for publication.</p>
+<p>In this tutorial, you find 3 different types of plot that present the results of a cluster-mass test or TFCE. All of them use the <code>ggplot2</code> package and may easily be customized for publication.</p>
 </div>
 </div>
   </div>

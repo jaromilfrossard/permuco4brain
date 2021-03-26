@@ -99,7 +99,7 @@
 
     
     
-<p>In the following tutorial, we download EEG data and reanalyze the data in <span class="citation">Cheval et al. (2018)</span>. This dataset is stored in the <a href="https://zenodo.org/record/1169140" class="external-link">zenodo repository</a> as <code>.edf</code> files.</p>
+<p>In the following tutorial, we download EEG data and reanalyze the data in <span class="citation">Cheval et al. (2018)</span>. This dataset is stored in the <a href="https://zenodo.org/record/1169140" class="external-link">zenodo repository</a> as <code>.edf</code> files. It produces a cluster-mass test <span class="citation">(Maris and Oostenveld 2007)</span> that controls the <a href="https://en.wikipedia.org/wiki/Family-wise_error_rate" class="external-link">family-wise error rate</a> over the all times-points and all channels of full scalpe EEG data.</p>
 <div id="installing-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installing-packages" class="anchor"></a>Installing packages</h2>
@@ -217,9 +217,9 @@
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/position_to_graph.html">position_to_graph</a></span><span class="op">(</span><span class="va">coord</span>, delta <span class="op">=</span> <span class="fl">35</span>, name <span class="op">=</span> <span class="st">"channel"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="final-step" class="section level2">
+<div id="test-and-plots" class="section level2">
 <h2 class="hasAnchor">
-<a href="#final-step" class="anchor"></a>Final step</h2>
+<a href="#test-and-plots" class="anchor"></a>Test and plots</h2>
 <p>We may want to save the 3 objects: <code>signal</code>, <code>design</code> and <code>graph</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># save(signal,design,graph,file = "signal_design_graph.RData")</span></code></pre></div>
@@ -229,7 +229,7 @@
 <span class="va">clustermass</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainperm.html">brainperm</a></span><span class="op">(</span><span class="va">signal</span> <span class="op">~</span> <span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">*</span><span class="va">mvpa_c</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">Error</a></span><span class="op">(</span><span class="va">participant</span><span class="op">/</span><span class="op">(</span><span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">)</span><span class="op">)</span>,
                          data <span class="op">=</span> <span class="va">design</span>, graph <span class="op">=</span> <span class="va">graph</span><span class="op">)</span></code></pre></div>
 <p>It will take around 1 to run the 7 tests on a modern computer.</p>
-<p>Once it finished, we visualize the results using the <code><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image()</a></code>function to produce a headmap.</p>
+<p>Once it finished, we visualize the results using the <code><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image()</a></code>function to produce a heat-map.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="va">clustermass</span>, effect <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="download_example_cheval_clustermass_heatmap.png"></p>
@@ -269,6 +269,9 @@
 </div>
 <div id="ref-edf">
 <p>Henelius, Andreas. 2016. <em>Edf: Read Data from European Data Format (EDF and EDF+) Files</em>.</p>
+</div>
+<div id="ref-maris_nonparametric_2007">
+<p>Maris, Eric, and Robert Oostenveld. 2007. “Nonparametric Statistical Testing of EEG- and MEG-Data.” <em>Journal of Neuroscience Methods</em> 164 (1): 177–90. <a href="https://doi.org/10.1016/j.jneumeth.2007.03.024" class="external-link">https://doi.org/10.1016/j.jneumeth.2007.03.024</a>.</p>
 </div>
 <div id="ref-abind">
 <p>Plate, Tony, and Richard Heiberger. 2016. <em>Abind: Combine Multidimensional Arrays</em>. <a href="https://CRAN.R-project.org/package=abind" class="external-link">https://CRAN.R-project.org/package=abind</a>.</p>
