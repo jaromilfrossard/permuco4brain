@@ -19,23 +19,23 @@ knitr::opts_chunk$set(
 ```
 
 
-## TFCE and default parameters
+## TFCE in `permuco4brain`
 
-The threshold-free cluster-enhancement [@smith_thresholdfree_2009] (or TFCE) is a transformation of the statistical signal or map. After running the test for all voxels (samples $\times$ channels), we transformed the observed statistic $T_i$ for the voxel $i$ using:
+The threshold-free cluster-enhancement [@smith_thresholdfree_2009] (or TFCE) is a transformation of the statistical signal or map. After running the test for all voxels (samples $\times$ channels), the TFCE transforms the observed statistic $T_i$ for the voxel $i$ using:
 
 $$
 \text{TFCE}(i) = \int_{h=0}^{T_i} e_i(h)^E h^H \text{d} h.
 $$
 
-The TFCE does an integral over all the thresholds $h$. The function $e_i(h)$ is called the extend of the cluster created by the threshold $h$ and represents the number of test/voxel in that cluster. Finally, $E$ and $H$ are two additional parameters that are set _a priori_. The $p$-values for the voxel $i$ is computed by comparing its $\text{TFCE}(i)$ with the null distribution of the TFCE. For each permuted signal $T_i^\ast$, we keep the maximal $\max_i\left[\text{TFCE}^*(i) \right]$ for the null distribution of the TFCE.
+The TFCE does an integral over all the thresholds $h$. The function $e_i(h)$ is called the extend of the cluster created by the threshold $h$ and represents the number of test/voxel in that cluster. In addition, the parameters $E$ and $H$ are set _a priori_ and controls the influence of the extend of height on the TFCE. The $p$-value for the voxel $i$ is computed by comparing its $\text{TFCE}(i)$ with the null distribution of the TFCE. For each permuted signal $T_i^\ast$, we keep the maximal value over the whole signal $\max_i\left[\text{TFCE}^*(i) \right]$ for the null distribution of the TFCE.
 
 
-In `permuco4brain`, we implement the suggestion from @pernet_clusterbased_2015 to use $E<1$. In `permuco4brain`, the default values are $E = 0.5$ and for a F statistic, $H = 1$  and for a $t$ statistic $H = 2$. 
+In `permuco4brain`, we implement the suggestion from @pernet_clusterbased_2015 and @smith_thresholdfree_2009 to use $E<1$. Hence, the default values are $E = 0.5$ and, for a F statistic, $H = 1$  and, for a $t$ statistic, $H = 2$. 
 
 Moreover,  by default in `permuco4brain`, the integral is estimated using `ndh = 500` steps. More precisely, the maximal over all statistics, ( all samples and all permutations) is equally divided into `ndh = 500` values for the $h$'s. All the default arguments for the TFCE can be changed by adding the arguments `E = ...`, `H = ...` or `ndh = ...` in the `brainperm()` function. 
 
 
-Finally, the threshold-free cluster-enhancement [@smith_thresholdfree_2009] (or TFCE) is similar to the cluster-mass test in `permuco4brain`. However, the TFCE use more computational resources that the cluster-mass test and it must be consider before running the function.
+Finally, the threshold-free cluster-enhancement [@smith_thresholdfree_2009] (or TFCE) is performed simply by specifying the argument `multcomp = "tfce` in the `brainperm()`. However, the TFCE uses more computational resources than the default cluster-mass test [@maris_nonparametric_2007] and it must be consider before running the function.
 
 
 ## Running the TFCE

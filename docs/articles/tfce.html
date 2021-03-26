@@ -103,17 +103,18 @@
 
     
     
-<div id="tfce-and-default-parameters" class="section level2">
+<div id="tfce-in-permuco4brain" class="section level2">
 <h2 class="hasAnchor">
-<a href="#tfce-and-default-parameters" class="anchor"></a>TFCE and default parameters</h2>
-<p>The threshold-free cluster-enhancement <span class="citation">(Smith and Nichols 2009)</span> (or TFCE) is a transformation of the statistical signal or map. After running the test for all voxels (samples <span class="math inline">\(\times\)</span> channels), we transformed the observed statistic <span class="math inline">\(T_i\)</span> for the voxel <span class="math inline">\(i\)</span> using:</p>
+<a href="#tfce-in-permuco4brain" class="anchor"></a>TFCE in <code>permuco4brain</code>
+</h2>
+<p>The threshold-free cluster-enhancement <span class="citation">(Smith and Nichols 2009)</span> (or TFCE) is a transformation of the statistical signal or map. After running the test for all voxels (samples <span class="math inline">\(\times\)</span> channels), the TFCE transforms the observed statistic <span class="math inline">\(T_i\)</span> for the voxel <span class="math inline">\(i\)</span> using:</p>
 <p><span class="math display">\[
 \text{TFCE}(i) = \int_{h=0}^{T_i} e_i(h)^E h^H \text{d} h.
 \]</span></p>
-<p>The TFCE does an integral over all the thresholds <span class="math inline">\(h\)</span>. The function <span class="math inline">\(e_i(h)\)</span> is called the extend of the cluster created by the threshold <span class="math inline">\(h\)</span> and represents the number of test/voxel in that cluster. Finally, <span class="math inline">\(E\)</span> and <span class="math inline">\(H\)</span> are two additional parameters that are set <em>a priori</em>. The <span class="math inline">\(p\)</span>-values for the voxel <span class="math inline">\(i\)</span> is computed by comparing its <span class="math inline">\(\text{TFCE}(i)\)</span> with the null distribution of the TFCE. For each permuted signal <span class="math inline">\(T_i^\ast\)</span>, we keep the maximal <span class="math inline">\(\max_i\left[\text{TFCE}^*(i) \right]\)</span> for the null distribution of the TFCE.</p>
-<p>In <code>permuco4brain</code>, we implement the suggestion from <span class="citation">Pernet et al. (2015)</span> to use <span class="math inline">\(E&lt;1\)</span>. In <code>permuco4brain</code>, the default values are <span class="math inline">\(E = 0.5\)</span> and for a F statistic, <span class="math inline">\(H = 1\)</span> and for a <span class="math inline">\(t\)</span> statistic <span class="math inline">\(H = 2\)</span>.</p>
+<p>The TFCE does an integral over all the thresholds <span class="math inline">\(h\)</span>. The function <span class="math inline">\(e_i(h)\)</span> is called the extend of the cluster created by the threshold <span class="math inline">\(h\)</span> and represents the number of test/voxel in that cluster. In addition, the parameters <span class="math inline">\(E\)</span> and <span class="math inline">\(H\)</span> are set <em>a priori</em> and controls the influence of the extend of height on the TFCE. The <span class="math inline">\(p\)</span>-value for the voxel <span class="math inline">\(i\)</span> is computed by comparing its <span class="math inline">\(\text{TFCE}(i)\)</span> with the null distribution of the TFCE. For each permuted signal <span class="math inline">\(T_i^\ast\)</span>, we keep the maximal value over the whole signal <span class="math inline">\(\max_i\left[\text{TFCE}^*(i) \right]\)</span> for the null distribution of the TFCE.</p>
+<p>In <code>permuco4brain</code>, we implement the suggestion from <span class="citation">Pernet et al. (2015)</span> and <span class="citation">Smith and Nichols (2009)</span> to use <span class="math inline">\(E&lt;1\)</span>. Hence, the default values are <span class="math inline">\(E = 0.5\)</span> and, for a F statistic, <span class="math inline">\(H = 1\)</span> and, for a <span class="math inline">\(t\)</span> statistic, <span class="math inline">\(H = 2\)</span>.</p>
 <p>Moreover, by default in <code>permuco4brain</code>, the integral is estimated using <code>ndh = 500</code> steps. More precisely, the maximal over all statistics, ( all samples and all permutations) is equally divided into <code>ndh = 500</code> values for the <span class="math inline">\(h\)</span>’s. All the default arguments for the TFCE can be changed by adding the arguments <code>E = ...</code>, <code>H = ...</code> or <code>ndh = ...</code> in the <code><a href="../reference/brainperm.html">brainperm()</a></code> function.</p>
-<p>Finally, the threshold-free cluster-enhancement <span class="citation">(Smith and Nichols 2009)</span> (or TFCE) is similar to the cluster-mass test in <code>permuco4brain</code>. However, the TFCE use more computational resources that the cluster-mass test and it must be consider before running the function.</p>
+<p>Finally, the threshold-free cluster-enhancement <span class="citation">(Smith and Nichols 2009)</span> (or TFCE) is performed simply by specifying the argument <code>multcomp = "tfce</code> in the <code><a href="../reference/brainperm.html">brainperm()</a></code>. However, the TFCE uses more computational resources than the default cluster-mass test <span class="citation">(Maris and Oostenveld 2007)</span> and it must be consider before running the function.</p>
 </div>
 <div id="running-the-tfce" class="section level2">
 <h2 class="hasAnchor">
@@ -154,6 +155,9 @@
 <div id="refs" class="references">
 <div id="ref-future">
 <p>Bengtsson, Henrik. 2020. <em>A Unifying Framework for Parallel and Distributed Processing in R Using Futures</em>. <a href="https://arxiv.org/abs/2008.00553">https://arxiv.org/abs/2008.00553</a>.</p>
+</div>
+<div id="ref-maris_nonparametric_2007">
+<p>Maris, Eric, and Robert Oostenveld. 2007. “Nonparametric Statistical Testing of EEG- and MEG-Data.” <em>Journal of Neuroscience Methods</em> 164 (1): 177–90. <a href="https://doi.org/10.1016/j.jneumeth.2007.03.024">https://doi.org/10.1016/j.jneumeth.2007.03.024</a>.</p>
 </div>
 <div id="ref-pernet_clusterbased_2015">
 <p>Pernet, C. R., M. Latinus, T. E. Nichols, and G. A. Rousselet. 2015. “Cluster-Based Computational Methods for Mass Univariate Analyses of Event-Related Brain Potentials/Fields: A Simulation Study.” <em>Journal of Neuroscience Methods</em> 250: 85–93. <a href="https://doi.org/10.1016/j.jneumeth.2014.08.003">https://doi.org/10.1016/j.jneumeth.2014.08.003</a>.</p>
