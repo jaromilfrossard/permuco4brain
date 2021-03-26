@@ -58,6 +58,9 @@
     <li>
       <a href="../articles/permuco4brain-with-eeguana.html">Using `permuco4brain` with `eeguana`</a>
     </li>
+    <li>
+      <a href="../articles/tfce.html">Threshold-Free Cluster-Enhancement</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -87,7 +90,7 @@
       <h1 data-toc-skip>Download example of full scalp EEG data</h1>
                         <h4 data-toc-skip class="author">Jaromil Frossard</h4>
             
-            <h4 data-toc-skip class="date">2021-03-25</h4>
+            <h4 data-toc-skip class="date">2021-03-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/download-example-cheval.Rmd" class="external-link"><code>vignettes/download-example-cheval.Rmd</code></a></small>
       <div class="hidden name"><code>download-example-cheval.Rmd</code></div>
@@ -225,6 +228,18 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span>
 <span class="va">clustermass</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainperm.html">brainperm</a></span><span class="op">(</span><span class="va">signal</span> <span class="op">~</span> <span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">*</span><span class="va">mvpa_c</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">Error</a></span><span class="op">(</span><span class="va">participant</span><span class="op">/</span><span class="op">(</span><span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">)</span><span class="op">)</span>,
                          data <span class="op">=</span> <span class="va">design</span>, graph <span class="op">=</span> <span class="va">graph</span><span class="op">)</span></code></pre></div>
+<p>It will take around 1 to run the 7 tests on a modern computer.</p>
+<p>Once it finished, we visualize the results using the <code><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image()</a></code>function to produce a headmap.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="va">clustermass</span>, effect <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<p><img src="download_example_cheval_clustermass_heatmap.png"></p>
+<p>We have a spatial representation, for 1 particular sample, using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clustermass</span>, effect <span class="op">=</span> <span class="fl">2</span>, samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>,<span class="fl">120</span>,<span class="fl">120</span>,<span class="fl">130</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="download_example_cheval_clustermass_scalp.png"></p>
+<p>In addition, the vignette <a href="https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html" class="external-link"><code>Figure using ggplot2</code></a> shows more examples for figures that can be customize for publication. Finally, you can extract all the results by specifying <code>table_type = "full"</code> in the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>. It produces a list of 7 data.frames (1 per effects) with 1 row per channel <span class="math inline">\(\times\)</span> sample (<span class="math inline">\(64 \times 411 = 26304\)</span>)</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">full_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">clustermass</span>, table_type <span class="op">=</span> <span class="st">"full"</span><span class="op">)</span></code></pre></div>
 <!-- We vizualise the result with a heatmap for the effect of the stimuli: -->
 <!-- ```{r echo=F,eval=T} -->
 <!-- library(permuco4brain) -->
