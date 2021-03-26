@@ -119,11 +119,11 @@
 <div id="running-the-tfce" class="section level2">
 <h2 class="hasAnchor">
 <a href="#running-the-tfce" class="anchor"></a>Running the TFCE</h2>
-<p>First, we activate the package <code>permuco4brain</code> <span class="citation">(<span class="citeproc-not-found" data-reference-id="permuco4brain"><strong>???</strong></span>)</span> and <code>future</code> <span class="citation">(Bengtsson 2020)</span></p>
+<p>First, we activate the package <code>permuco4brain</code> and <code>future</code> <span class="citation">(Bengtsson 2020)</span></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco4brain">permuco4brain</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HenrikBengtsson/future">future</a></span><span class="op">)</span></code></pre></div>
-<p>Following the <a href="https://jaromilfrossard.github.io/permuco4brain/articles/download-example-cheval.html">vignette</a>, you may have saved the data (<code>signal</code> 3D array, an <code>igraph</code> object called graph and <code>data.frame</code> called <code>design</code>). We open the it using:</p>
+<p>Following the <a href="https://jaromilfrossard.github.io/permuco4brain/articles/download-example-cheval.html">vignette</a>, you may have saved the data (<code>signal</code>: a 3D array, <code>graph</code>: an <code>igraph</code> defining the adjacency of the channel and design: a <code>data.frame</code>). We load it using:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"signal_design_graph.RData"</span><span class="op">)</span></code></pre></div>
 <p>Using the <code>future</code> for multi-core processing, we set <span class="math inline">\(2000\)</span>M RAM per workers by changing the options:</p>

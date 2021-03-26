@@ -40,14 +40,14 @@ Finally, the threshold-free cluster-enhancement [@smith_thresholdfree_2009] (or 
 
 ## Running the TFCE
 
-First, we activate the package `permuco4brain` [@permuco4brain] and  `future` [@future]
+First, we activate the package `permuco4brain` and  `future` [@future]
 
 ```{r package, eval = FALSE}
 library(permuco4brain)
 library(future)
 ```
 
-Following the [vignette](https://jaromilfrossard.github.io/permuco4brain/articles/download-example-cheval.html), you may have saved the data (`signal` 3D array, an `igraph` object called graph and `data.frame` called `design`). We open the it using:
+Following the [vignette](https://jaromilfrossard.github.io/permuco4brain/articles/download-example-cheval.html), you may have saved the data (`signal`: a 3D array, `graph`: an `igraph` defining the adjacency of the channel and design: a `data.frame`). We load it using:
 
 ```{r load, eval = FALSE}
 load("signal_design_graph.RData")
