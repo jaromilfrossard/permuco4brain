@@ -196,6 +196,31 @@ clustermass <- brainperm(signal ~ action*stimuli*mvpa_c + Error(participant/(act
 ```
 
 
+It will take around 1 to run the 7 tests on a modern computer. 
+
+Once it finished, we visualize the results using the `image()`function to produce a headmap.
+
+```{r heatmap, echo=TRUE,eval=FALSE}
+image(clustermass, effect = 2)
+```
+
+![](download_example_cheval_clustermass_heatmap.png)
+
+
+We have a spatial representation, for 1 particular sample, using the `plot()` function:
+
+
+```{r scalp, echo=TRUE,eval=FALSE}
+plot(clustermass, effect = 2, samples = c(100,120,120,130))
+```
+![](download_example_cheval_clustermass_scalp.png)
+
+In addition, the vignette [`Figure using ggplot2`](https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html) shows more examples for figures that can be customize for publication. Finally, you can extract all the results by specifying `table_type = "full"` in the `summary()`. It produces a list of 7 data.frames (1 per effects) with 1 row per channel $\times$ sample ($64 \times 411 = 26304$)
+
+```{r summary, echo=TRUE,eval=FALSE}
+full_table <- summary(clustermass, table_type = "full")
+```
+
 <!-- We vizualise the result with a heatmap for the effect of the stimuli: -->
 
 <!-- ```{r echo=F,eval=T} -->

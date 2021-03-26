@@ -70,7 +70,7 @@ Next we get the results of the test by specifying the `table_type = "full"` argu
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=TRUE}
 ### test tibble
-df_gg <- summary(model,table_type = "full")
+df_gg <- summary(model, table_type = "full")
 df_gg <-
   tibble(effect = names(df_gg),
          data = df_gg)%>%
@@ -82,8 +82,8 @@ Next we merge the channel's information to the data-frame with the tests informa
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=TRUE}
 ### add channel info
 df_gg <- df_gg%>%
-  nest(data=-channel)%>%
-  left_join(chan_tbl,by = c("channel"="name"))
+  nest(data = -channel)%>%
+  left_join(chan_tbl, by = c("channel" = "name"))
 ```
 
 
@@ -92,12 +92,12 @@ We sort the channels and effects which will be is useful for ordering the panels
 ```{r eval=myeval, fig.height=6, fig.width=7, message=FALSE, warning=FALSE, include=TRUE}
 ### order channel
 df_gg <- df_gg%>%
-  arrange(y,desc(x))%>%
+  arrange(y, desc(x))%>%
   mutate(order = 1:n())%>%
-  mutate(channel = fct_reorder(channel,order,min))%>%
+  mutate(channel = fct_reorder(channel, order, min))%>%
   select(-order)%>%
   unnest(data)%>%
-  mutate(effect = fct_relevel(effect,c("action","stimuli","action:stimuli")))
+  mutate(effect = fct_relevel(effect, c("action", "stimuli", "action:stimuli")))
 ```
 
 
@@ -199,13 +199,13 @@ Next we transform the position of the channel in order to simplify the creation 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 df_grid = chan_tbl%>%
   select(name, x_pol, y_pol)%>%
-  transmute(name=name,
-            code=name,
-            row=as.integer(round(y_pol*5)),
-            col=as.integer(round(x_pol*5)))%>%
-  mutate(row=row-min(row),
-         row = max(row)-row+1,
-         col=col-min(col)+1)
+  transmute(name = name,
+            code = name,
+            row = as.integer(round(y_pol*5)),
+            col = as.integer(round(x_pol*5)))%>%
+  mutate(row = row - min(row),
+         row = max(row) - row + 1,
+         col = col - min(col) + 1)
 ```
 
 Then, running the function `grid_design()` launches the web-app from `geofacet` on your browser. It allows to fine-tune the position of each channel and copy-paste the resulting data-frame.
@@ -240,12 +240,12 @@ The final plot is created by using the grid and highlighting the time-points in 
 df_gg%>%
   filter(effect == "action:stimuli")%>%
   ggplot()+
-  geom_ribbon(data=.%>%
-                mutate(statistic = if_else(pvalue<0.05, statistic,NA_real_)),
-              aes(x = sample,ymin=0, ymax= statistic),fill= "red")+
+  geom_ribbon(data =.%>%
+                mutate(statistic = if_else(pvalue<0.05, statistic, NA_real_)),
+              aes(x = sample,ymin = 0, ymax = statistic), fill = "red")+
   geom_line(aes(x = sample, y = statistic))+
-  labs(x="",y="")+
-  facet_geo(~channel,grid=df_grid)+
+  labs(x = "", y = "")+
+  facet_geo(~channel, grid = df_grid)+
   theme(axis.title = element_blank(),
         axis.text.x = element_text(angle = 90))
 ```
@@ -311,10 +311,10 @@ And we merge data from test and the channel position:
 
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 df_gg <- df_gg%>%
-  nest(data =- channel)%>%
-  left_join(chan_tbl,by = c("channel"="name"))%>%
+  nest(data = -channel)%>%
+  left_join(chan_tbl, by = c("channel" = "name"))%>%
   unnest(data)%>%
-  mutate(effect = fct_relevel(effect,c("action","stimuli","action:stimuli")))
+  mutate(effect = fct_relevel(effect, c("action", "stimuli", "action:stimuli")))
 ```
 
 Next we use the channel position to compute the size of the channel. Here the radius of the circles will be the $1/5$ of the minimal distance between 2 channels.
@@ -322,7 +322,7 @@ Next we use the channel position to compute the size of the channel. Here the ra
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 rad <- 
   (chan_tbl%>%
-  select(x_pol,y_pol)%>%
+  select(x_pol, y_pol)%>%
   dist()%>%
   min())/5
 ```
@@ -336,10 +336,10 @@ df_chan_pos <-
 
 edge_tbl = as_data_frame(model$graph, what = c("edges"))%>%
   as_tibble()%>%
-  left_join(df_chan_pos,by = c("from"="channel"))%>%
-  rename(x_from = x_pol,y_from = y_pol)%>%
-  left_join(df_chan_pos,by = c("to"="channel"))%>%
-  rename(x_to = x_pol,y_to = y_pol)
+  left_join(df_chan_pos, by = c("from" = "channel"))%>%
+  rename(x_from = x_pol, y_from = y_pol)%>%
+  left_join(df_chan_pos, by = c("to"="channel"))%>%
+  rename(x_to = x_pol, y_to = y_pol)
 ```
 
 In order to have a representation of the edges that fits nicely with the size of the circles, we reduce the length of each segment using simple triangle geometry formula:
@@ -347,14 +347,14 @@ In order to have a representation of the edges that fits nicely with the size of
 ```{r eval=myeval, message=FALSE, warning=FALSE, include=T}
 edge_tbl<- 
   edge_tbl%>%
-  mutate(slope = (y_from-y_to)/(x_from-x_to),
-         dy = sqrt(rad^2/(1+1/slope^2)),
-         dx = sqrt(rad^2/(1+slope^2)))%>%
+  mutate(slope = (y_from - y_to)/(x_from - x_to),
+         dy = sqrt(rad^2/(1 + 1/slope^2)),
+         dx = sqrt(rad^2/(1 + slope^2)))%>%
   transmute(from = from,to = to,
-            x_from=if_else(x_from < x_to, x_from+dx,x_from-dx),
-            x_to = if_else(x_from < x_to, x_to- dx,x_to+dx),
-            y_from = if_else(y_from < y_to, y_from+dy,y_from-dy),
-            y_to = if_else(y_from < y_to, y_to-dy,y_to+dy))
+            x_from = if_else(x_from < x_to, x_from + dx, x_from - dx),
+            x_to = if_else(x_from < x_to, x_to- dx, x_to + dx),
+            y_from = if_else(y_from < y_to, y_from + dy, y_from - dy),
+            y_to = if_else(y_from < y_to, y_to - dy, y_to + dy))
 ```
 
 Finally, the plot the result for 1 time-frame:
@@ -363,17 +363,18 @@ Finally, the plot the result for 1 time-frame:
 df_gg%>%
   filter(sample%in%c(80))%>%
   ggplot()+
-  geom_circle(data=.%>%filter(cluster_id==0),
-              aes(x0 = x_pol, y0 = y_pol,r=rad), fill="#00000000")+
+  geom_circle(data=.%>%filter(cluster_id == 0),
+              aes(x0 = x_pol, y0 = y_pol,r = rad), fill="#00000000")+
   geom_circle(data=.%>%filter(cluster_id!=0&pvalue>0.05),
               aes(x0 = x_pol, y0 = y_pol,r=rad), fill="white")+
   geom_circle(data=.%>%filter(pvalue<0.05),
               aes(x0 = x_pol, y0 = y_pol,r=rad,fill=pvalue))+
   scale_fill_gradientn(colours = c("red","yellow"),
                        limits = c(0, 0.05))+
-  geom_segment(data=edge_tbl, mapping=aes(x=x_from,y=y_from,xend=x_to,yend=y_to),
-             inherit.aes =F,col="grey20")+
-  geom_text(aes(x = x_pol, y = y_pol+2.4*rad,label = channel))+
+  geom_segment(data=edge_tbl, 
+               mapping = aes(x = x_from, y = y_from, xend = x_to, yend= y_to),
+               inherit.aes = F, col = "grey20")+
+  geom_text(aes(x = x_pol, y = y_pol + 2.4*rad, label = channel))+
   coord_fixed()+
   facet_grid(sample~effect)+  
   theme(axis.title = element_blank(),
@@ -398,17 +399,18 @@ Or several time-frames of 1 effect (here the interaction). We deleted the names 
 df_gg%>%
   filter(sample%in%(c(5:13)*10),effect=="action:stimuli")%>%
   ggplot()+
-  geom_circle(aes(x0 = x_pol, y0 = y_pol,r=rad), fill="#00000000")+
+  geom_circle(aes(x0 = x_pol, y0 = y_pol,r = rad), fill = "#00000000")+
   geom_circle(data=.%>%filter(cluster_id!=0),
-              aes(x0 = x_pol, y0 = y_pol,r=rad), fill="white")+
+              aes(x0 = x_pol, y0 = y_pol,r = rad), fill = "white")+
   geom_circle(data=.%>%filter(pvalue<0.05),
-              aes(x0 = x_pol, y0 = y_pol,r=rad,fill=pvalue))+
+              aes(x0 = x_pol, y0 = y_pol,r = rad,fill = pvalue))+
   scale_fill_gradientn(colours = c("red","yellow"),
                        limits = c(0, 0.05))+
-  geom_segment(data=edge_tbl, mapping=aes(x=x_from,y=y_from,xend=x_to,yend=y_to),
-             inherit.aes =F,col="grey20")+
+  geom_segment(data = edge_tbl, 
+               mapping=aes(x = x_from, y = y_from, xend = x_to, yend = y_to),
+             inherit.aes = F, col = "grey20")+
   coord_fixed()+
-  facet_wrap(~sample,ncol=3)+ 
+  facet_wrap(~sample, ncol = 3)+ 
   theme(axis.title = element_blank(),
         axis.ticks = element_blank(),
         axis.text = element_blank(),

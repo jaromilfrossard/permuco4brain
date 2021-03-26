@@ -63,17 +63,21 @@ dimnames(signal)[[3]]<-c("A","B","C","D")
 gi<- position_to_graph(df_channel,delta=1.2,name="channel")
 
 fl_f_cm <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2,
-                     method = "freedman_lane",ncores=1,multcomp = c("clustermass"))
+                     method = "freedman_lane",multcomp = c("clustermass"))
 m_f_tr <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2,
-                    method = "manly",ncores=1,multcomp = c("troendle"))
+                    method = "manly",multcomp = c("troendle"))
+
+m_f_tfce <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2,
+                    method = "manly",multcomp = c("tfce"))
 
 fl_t_cm <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2,
-                     method = "freedman_lane",ncores=1,multcomp = c("clustermass"), test ="t")
+                     method = "freedman_lane",multcomp = c("clustermass"), test ="t")
 
 
-m_t_tr <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2, method = "manly",ncores=1,
+m_t_tr <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2, method = "manly",
                     multcomp = c("troendle"), test = "t")
-
+m_t_tfce <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2, method = "manly",
+                    multcomp = c("tfce"), test = "t")
 
 
 plot(m_f_tr,samples=c(1,2,3))
@@ -89,6 +93,8 @@ test_that("Equal statistic freedman_lane and kennedy", {
 
   expect_true(max_diff<1e-12)
 })
+
+
 
 
 test_that("Summary-cluster dimension", {

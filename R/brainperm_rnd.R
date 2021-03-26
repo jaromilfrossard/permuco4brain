@@ -223,6 +223,7 @@ brainperm_rnd <- function(formula, data, method, threshold, np, P, graph, effect
     out$data=mf
     out$method = method
     out$multcomp = multcomp
+    out$test <- test
     out$threshold = threshold
     out$effect = effect
     out$graph = graph
