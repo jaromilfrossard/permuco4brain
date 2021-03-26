@@ -12,8 +12,9 @@ coverage](https://codecov.io/gh/jaromilfrossard/permuco4brain/branch/master/grap
 
 `permuco4brain` provides functions to compute permutation test in brain
 imagery data. It is designed for M-EEG/ERP data. `permuco4brain` is an
-add-on to `permuco` to computing clustermass tests on spatio-temporal
-data (e.g.: full-scalp EEG data).
+add-on to `permuco` to computing cluster-mass tests, the “threshold-free
+clusters-enhancement” and the Troendle’s procedure for tests
+distribution in space and time (e.g.: full-scalp EEG data).
 
 ## Installation
 
@@ -44,6 +45,14 @@ The main function of `permuco4brain` is `brainperm()` and it needs:
 3.  `graph`: an `igraph` object defining spatial adjacency of the
     channels (third dimension of the signal). The names of the vertices
     should correspond to the names of the 3rd dimension of signal.
+
+By default, the `brainperm()` function produces the cluster-mass test,
+but you can choose the TFCE with the argument `multcomp = "tfce"` or the
+Troendle’s procedure `multcomp = "troendle"`.
+
+`permuco4brain` uses the
+[`future`](https://CRAN.R-project.org/package=future) package to handle
+multi-cores computing.
 
 You can inspect result using the `summary()` method and visualize them
 using `image()`.
@@ -84,6 +93,17 @@ In this tutorial, you learn how to download EEG data from `zenodo` and
 analyze them using `permuco4brain`.
 
 3.  The
+    [tfce](https://jaromilfrossard.github.io/permuco4brain/articles/tfce.html)
+    vignette presents how to use `permuco4brain` and `future` to run the
+    TFCE:
+
+<!-- end list -->
+
+``` r
+vignette("tfce", package = "permuco4brain")
+```
+
+4.  The
     [figure-ggplot2](https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html)
     vignette presents how to use `ggplot2` to produce graphical
     representation of the results for publication:
@@ -95,5 +115,5 @@ vignette("figure-ggplot2", package = "permuco4brain")
 ```
 
 In this tutorial, you find 3 different types of plot that present the
-results of a clustermass test. All of them use the `ggplot2` package and
-may easily be customized for publication.
+results of a cluster-mass test or TFCE. All of them use the `ggplot2`
+package and may easily be customized for publication.

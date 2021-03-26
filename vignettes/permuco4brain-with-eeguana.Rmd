@@ -21,22 +21,22 @@ knitr::opts_chunk$set(
 
 ### Extracting 3D array using eeguana
 
-The `eeguana` package [@nicenboim_eeguana_2020] provides tools for the pre-processing of EEG data. Once the pre-processing is done with `eeguana`, the 3D matrix/array of the signals should be extracted from the `eeguana`. To perform the cluster-mass test, this 3D matrix/array is the left part of the formula of the `brainperm()` function.
+The `eeguana` package [@nicenboim_eeguana_2020] provides tools for the pre-processing of EEG data. Once the pre-processing is done with `eeguana`, the 3D matrix/array of the signals should be extracted from the `eeguana`. This signals are stored in a 3D matrix/array that is the left part of the formula of the `brainperm()` function to perform the cluster-mass test or TFCE.
 
 The EEG data [@nicenboim_eeg_2019] available on the Open Science Framework repository was analyzed using the `eeguana` package by @nicenboim2019words. We use the same data-set in the following tutorial.
 
 ### Downloading data from OSF
 
-From the [EEG data](https://osf.io/ut7xq/) repository we found the "03_data_summarization.Rmd" file which provides functions to easily download the EE data. It is a large dataset (more than 20GB) so we only download the pre-processed signals performed using [ICA](https://en.wikipedia.org/wiki/Independent_component_analysis). Following the first chunk of the "03_data_summarization.Rmd" file you should have (at least):
+From the [EEG data](https://osf.io/ut7xq/) repository we found the `"03_data_summarization.Rmd"` file which provides functions to easily download the EEG data. As it is a large dataset (more than 20GB), we only download the pre-processed signals using the [ICA](https://en.wikipedia.org/wiki/Independent_component_analysis). When following the first chunk of the `"03_data_summarization.Rmd"` file you should have (at least):
 
 1. A folder `data/` containing 5 csv files, 2 tsv files and 2 folders. 
-2. The folder `data/preproc_ica/` contains 120 RDA files (1 for each subject). Each file contains an `eeg_lst` object from eeguana with pre-processed EEG data.
+2. The folder `data/preproc_ica/` contains 120 RDA files (1 for each subject). Each file contains an `eeg_lst` object from `eeguana` with pre-processed EEG data.
 3. The folder `data/opensesame_files/` contains 120 csv files (1 for each subject)
 
 
 ## R package
 
-In the following analysis, we will mainly use functions from the `tidyverse` [@tidyverse], from `eeguana` [@nicenboim_eeguana_2020], from `permuco` [@frossard_permuco], from `permuco4brain` [@frossard_permuco4brain], from `future` [@future] and from `igraph` [@csardi_igraph]:
+In the following analysis, we mainly use functions from the `tidyverse` [@tidyverse], from `eeguana` [@nicenboim_eeguana_2020], from `permuco` [@frossard_permuco], from `permuco4brain` [@frossard_permuco4brain], from `future` [@future] and from `igraph` [@csardi_igraph]:
 
 ```{r package, echo=TRUE,eval=FALSE}
 library(tidyverse)
@@ -195,6 +195,7 @@ plan(multisession)
 model <- brainperm(formula = formula, data = design, graph = graph)
 ```
 
+By default, the `brainperm()` function run the cluster-mass test [@maris_nonparametric_2007]. However, the procedure from @troendle_stepwise_1995 and the TFCE [@smith_thresholdfree_2009] are also available by specifying the arguments `multcomp = "troendle"` or `multcomp = "tfce"`.
 
-### Bibliography
+### Reference
 

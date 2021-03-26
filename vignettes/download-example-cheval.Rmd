@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 
 
-In the following tutorial, we download EEG data and reanalyze the data in @cheval. This dataset is stored in the [zenodo repository](https://zenodo.org/record/1169140) as `.edf` files.
+In the following tutorial, we download EEG data and reanalyze the data in @cheval. This dataset is stored in the [zenodo repository](https://zenodo.org/record/1169140) as `.edf` files. It produces a cluster-mass test [@maris_nonparametric_2007] that controls the [family-wise error rate](https://en.wikipedia.org/wiki/Family-wise_error_rate) over the all times-points and all channels of full scalpe EEG data.
 
 ## Installing packages
 
@@ -179,7 +179,7 @@ graph <- position_to_graph(coord, delta = 35, name = "channel")
 ```
 
 
-## Final step
+## Test and plots
 
 We may want to save the 3 objects: `signal`, `design` and `graph`.
 
@@ -198,7 +198,7 @@ clustermass <- brainperm(signal ~ action*stimuli*mvpa_c + Error(participant/(act
 
 It will take around 1 to run the 7 tests on a modern computer. 
 
-Once it finished, we visualize the results using the `image()`function to produce a headmap.
+Once it finished, we visualize the results using the `image()`function to produce a heat-map.
 
 ```{r heatmap, echo=TRUE,eval=FALSE}
 image(clustermass, effect = 2)

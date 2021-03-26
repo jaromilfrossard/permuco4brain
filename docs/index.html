@@ -62,6 +62,9 @@
     <li>
       <a href="articles/permuco4brain-with-eeguana.html">Using `permuco4brain` with `eeguana`</a>
     </li>
+    <li>
+      <a href="articles/tfce.html">Threshold-Free Cluster-Enhancement</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -92,11 +95,11 @@
 <a href="#permuco4brain" class="anchor"></a>permuco4brain</h1></div>
 <!-- badges: start -->
 
-<p><code>permuco4brain</code> provides functions to compute permutation test in brain imagery data. It is specially designed for M-EEG/ERP data. <code>permuco4brain</code> is an add-on to <code>permuco</code> to computing clustermass tests on spatio-temporal data (e.g.: full-scalp EEG data).</p>
+<p><code>permuco4brain</code> provides functions to compute permutation test in brain imagery data. It is designed for M-EEG/ERP data. <code>permuco4brain</code> is an add-on to <code>permuco</code> to computing cluster-mass tests, the “threshold-free clusters-enhancement” and the Troendle’s procedure for tests distribution in space and time (e.g.: full-scalp EEG data).</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p><code>permuco4brain</code> currently works with <code>permuco</code> 1.1.1 (github). Download it using:</p>
+<p><code>permuco4brain</code> currently works jointly with <code>permuco</code> 1.1.1 (github). Download it using:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"jaromilfrossard/permuco"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><code>permuco4brain</code> is still under development and you can expect changes. Make sure to install <code>permuco4brain</code> with its full documentation:</p>
@@ -111,10 +114,12 @@
 <li>
 <code>formula</code>: a formula object defining the design (right side) and a 3D array containing the signals (left side). The signal is a 3D array visible in the global environment. Its dimension is the design X samples X channels. Each “rows” of the 3D array should be related to the corresponding row of the design (<code>data</code> argument).</li>
 <li>
-<code>data</code>: a data-frame containing the variables of the design.</li>
+<code>data</code>: a dataframe containing the variables of the design.</li>
 <li>
 <code>graph</code>: an <code>igraph</code> object defining spatial adjacency of the channels (third dimension of the signal). The names of the vertices should correspond to the names of the 3rd dimension of signal.</li>
 </ol>
+<p>By default, the <code><a href="reference/brainperm.html">brainperm()</a></code> function produces the cluster-mass test, but you can choose the TFCE with the argument <code>multcomp = "tfce"</code> or the Troendle’s procedure <code>multcomp = "troendle"</code>.</p>
+<p><code>permuco4brain</code> uses the <a href="https://CRAN.R-project.org/package=future"><code>future</code></a> package to handle multi-cores computing.</p>
 <p>You can inspect result using the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> method and visualize them using <code><a href="https://rdrr.io/r/graphics/image.html">image()</a></code>.</p>
 </div>
 <div id="documentation" class="section level2">
@@ -134,11 +139,16 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"download-example-cheval"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
 <p>In this tutorial, you learn how to download EEG data from <code>zenodo</code> and analyze them using <code>permuco4brain</code>.</p>
 <ol>
-<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html">figure-ggplot2</a> vignette presents how to use <code>ggplot2</code> to produce graphical representation for publication:</li>
+<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/tfce.html">tfce</a> vignette presents how to use <code>permuco4brain</code> and <code>future</code> to run the TFCE:</li>
 </ol>
 <!-- end list --><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"tfce"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
+<ol>
+<li>The <a href="https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html">figure-ggplot2</a> vignette presents how to use <code>ggplot2</code> to produce graphical representation of the results for publication:</li>
+</ol>
+<!-- end list --><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"figure-ggplot2"</span>, package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
-<p>In this tutorial, you find 3 different types of plot that present the results of a clustermass test. All of them use the <code>ggplot2</code> package and may easily be customized for publication.</p>
+<p>In this tutorial, you find 3 different types of plot that present the results of a cluster-mass test or TFCE. All of them use the <code>ggplot2</code> package and may easily be customized for publication.</p>
 </div>
 </div>
   </div>
@@ -170,9 +180,8 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/jaromilfrossard/permuco4brain"><img src="https://travis-ci.org/jaromilfrossard/permuco4brain.svg?branch=master" alt="Travis build status"></a></li>
-<li><a href="https://github.com/jaromilfrossard/permuco4brain/actions"><img src="https://github.com/jaromilfrossard/permuco4brain/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://codecov.io/gh/jaromilfrossard/permuco4brain?branch=master"><img src="https://codecov.io/gh/jaromilfrossard/permuco4brain/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/jaromilfrossard/permuco4brain/actions"><img src="https://github.com/jaromilfrossard/permuco4brain/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 </div>

@@ -2,14 +2,14 @@
 % Please edit documentation in R/position_to_graph.R
 \name{position_to_graph}
 \alias{position_to_graph}
-\title{\code{igraph} object from the positions of the channels}
+\title{Create a graph of adjacency based on the position of the channel}
 \usage{
 position_to_graph(data, delta = 4, name = "name", x = "x", y = "y", z = "z")
 }
 \arguments{
 \item{data}{a data.frame containing the name and position of channels.}
 
-\item{delta}{an double defining the maximal distance for adjacency of two channels.}
+\item{delta}{a numeric defining the maximal distance for adjacency of two channels.}
 
 \item{name}{the column in the data containing the name of the channels.}
 

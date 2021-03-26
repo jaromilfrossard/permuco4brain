@@ -1,9 +1,9 @@
-#' \code{igraph} object from the positions of the channels
+#' Create a graph of adjacency based on the position of the channel
 #'
 #' Create an igraph object defining adjacency of the channels. Adjacency is defined when 2 channels have a (Euclidean) distance inferior to delta.
 #'
 #' @param data a data.frame containing the name and position of channels.
-#' @param delta an double defining the maximal distance for adjacency of two channels.
+#' @param delta a numeric defining the maximal distance for adjacency of two channels.
 #' @param name the column in the data containing the name of the channels.
 #' @param x the column in the data containing the X position of the channels.
 #' @param y the column in the data containing the Y position of the channels.

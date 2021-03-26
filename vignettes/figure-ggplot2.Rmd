@@ -20,9 +20,11 @@ myeval = F
 ```
 
 
-`permuco4brain` has currently 2 built-in functions for plotting. The `image()` function provides a heatmap of the results for 1 effect and the `plot()` function draws the adjacency graph for 1 time and 1 effect where the vertices are colored depending and the $p$-value. These functions are fast but not easy to custom. Hence they are useful for checking results of the test but are may not be useful for publication purpose. 
+`permuco4brain` has currently 2 built-in functions for plotting. The `image()` function provides a heat-map of the results for 1 effect and the `plot()` function draws the adjacency graph for 1 time and 1 effect where the vertices are colored depending and the $p$-value. These functions are fast but not easy to custom. Hence they are useful for checking results of the test but are may not be useful for publication purpose. 
 
 In this vignette, we show how to extract the results of the test to produce 3 types of graphical representations using `ggplot2` [@ggplot2]. These function may be slower to run but provides plots that can be custom for publication.
+
+These representation may be useful if you performed the cluster-mass test [@maris_nonparametric_2007], the TFCE [@smith_thresholdfree_2009] or the procedure from @troendle_stepwise_1995. However, the interpretation may be different.
 
 We assume that you have already run the example in the `download-example-cheval` included in `permuco4brain`:
 

@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/jaromilfrossard/permuco4brain/workflows/R-CMD-check/badge.svg)](https://github.com/jaromilfrossard/permuco4brain/actions)
 <!-- badges: end -->
 
-`permuco4brain` provides functions to compute permutation test in brain imagery data. It is designed for M-EEG/ERP data. `permuco4brain` is an add-on to `permuco` to computing clustermass tests on spatio-temporal data (e.g.: full-scalp EEG data).
+`permuco4brain` provides functions to compute permutation test in brain imagery data. It is designed for M-EEG/ERP data. `permuco4brain` is an add-on to `permuco` to computing cluster-mass tests, the "threshold-free clusters-enhancement" and the Troendle's procedure for tests distribution in space and time (e.g.: full-scalp EEG data).
 
 ## Installation
 
@@ -43,6 +43,11 @@ The main function of `permuco4brain` is `brainperm()` and it needs:
 1. `formula`: a formula object defining the design (right side) and a 3D array containing the signals (left side). The signal is a 3D array visible in the global environment. Its dimension is the design X samples X channels. Each "rows" of the 3D array should be related to the corresponding row of the design (`data` argument).
 2. `data`: a dataframe containing the variables of the design.
 3. `graph`: an `igraph` object defining spatial adjacency of the channels (third dimension of the signal). The names of the vertices should correspond to the names of the 3rd dimension of signal.
+
+By default, the `brainperm()` function produces the cluster-mass test, but you can choose the TFCE with the argument `multcomp = "tfce"` or the Troendle's procedure `multcomp = "troendle"`.
+
+`permuco4brain` uses the [`future`](https://CRAN.R-project.org/package=future) package to handle multi-cores computing.
+
 
 You can inspect result using the `summary()` method and visualize them using `image()`.
 
@@ -69,11 +74,18 @@ vignette("download-example-cheval", package = "permuco4brain")
 In this tutorial, you learn how to download EEG data from `zenodo` and analyze them using `permuco4brain`.
 
 
-3. The [figure-ggplot2](https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html) vignette presents how to use `ggplot2` to produce graphical representation of the results for publication:
+3. The [tfce](https://jaromilfrossard.github.io/permuco4brain/articles/tfce.html) vignette presents how to use `permuco4brain` and `future` to run the TFCE:
+
+```{r eval=FALSE, warning=FALSE, include=TRUE}
+vignette("tfce", package = "permuco4brain")
+```
+
+
+4. The [figure-ggplot2](https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html) vignette presents how to use `ggplot2` to produce graphical representation of the results for publication:
 
 ```{r eval=FALSE, warning=FALSE, include=TRUE}
 vignette("figure-ggplot2", package = "permuco4brain")
 ```
 
-In this tutorial, you find 3 different types of plot that present the results of a clustermass test. All of them use the `ggplot2` package and may easily be customized for publication.
+In this tutorial, you find 3 different types of plot that present the results of a cluster-mass test or TFCE. All of them use the `ggplot2` package and may easily be customized for publication.
 

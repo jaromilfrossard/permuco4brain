@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Clustermass test based for multiple signals — brainperm • permuco4brain</title>
+<title>Multiple comparisons procedure for multiple signals — brainperm • permuco4brain</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Clustermass test based for multiple signals — brainperm" />
-<meta property="og:description" content="Compute permutation test with FWER correction on multiple signals spatially distributed." />
+<meta property="og:title" content="Multiple comparisons procedure for multiple signals — brainperm" />
+<meta property="og:description" content="Compute permutation test with with multiples comparison procedure (cluster-mass, TFCE or Troendle)." />
 
 
 
@@ -103,6 +103,9 @@
     <li>
       <a href="../articles/permuco4brain-with-eeguana.html">Using `permuco4brain` with `eeguana`</a>
     </li>
+    <li>
+      <a href="../articles/tfce.html">Threshold-Free Cluster-Enhancement</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -129,13 +132,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Clustermass test based for multiple signals</h1>
+    <h1>Multiple comparisons procedure for multiple signals</h1>
     <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco4brain/blob/master/R/brainperm.R'><code>R/brainperm.R</code></a></small>
     <div class="hidden name"><code>brainperm.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute permutation test with FWER correction on multiple signals spatially distributed.</p>
+    <p>Compute permutation test with with multiples comparison procedure (cluster-mass, TFCE or Troendle).</p>
     </div>
 
     <pre class="usage"><span class='fu'>brainperm</span><span class='op'>(</span>
@@ -166,7 +169,7 @@
     </tr>
     <tr>
       <th>graph</th>
-      <td><p>An igraph object. It specifies the neighborhoods/spatial relationship between the signals/nodes.</p></td>
+      <td><p>An <code>igraph</code> object. It specifies the neighborhoods/adjacency between the signals/nodes.</p></td>
     </tr>
     <tr>
       <th>np</th>
@@ -215,7 +218,10 @@
 <p>Other arguments could be pass in <code>...</code> :<br /> <br />
 <code>P</code> : A matrix containing the permutation of class <code>matrix</code> or <code>Pmat</code>; which is used for the reproducibility of the results. The first column must be the identity. <code>P</code> overwrites <code>np</code> argument.<br /> <br />
 <code>return_distribution = FALSE</code> : return the permutation distribution of the statistics. Warnings : return one high dimensional matrices (number of test times number of permutation) for each test.<br />
-<code>coding_sum = TRUE</code> : a logical defining the coding of the design matrix to <code>contr.sum</code>: set by default to <code>TRUE</code> for ANOVA (when the argument <code>test</code> is <code>"fisher"</code> ) to tests main effects and is set to <code>FALSE</code> when <code>test</code> is <code>"t"</code>.  If <code>coding_sum</code> is set to <code>FALSE</code> the design matrix is computed with the coding defined in the dataframe and the tests of simple effects are possible with a coding of the dataframe set to <code>contr.treatment</code>. <br /></p>
+<code>coding_sum = TRUE</code> : a logical defining the coding of the design matrix to <code>contr.sum</code>: set by default to <code>TRUE</code> for ANOVA (when the argument <code>test</code> is <code>"fisher"</code> ) to tests main effects and is set to <code>FALSE</code> when <code>test</code> is <code>"t"</code>.  If <code>coding_sum</code> is set to <code>FALSE</code> the design matrix is computed with the coding defined in the dataframe and the tests of simple effects are possible with a coding of the dataframe set to <code>contr.treatment</code>. <br />
+<code>E = 0.5</code> : a numeric for extend parameter of the TFCE.
+<code>H</code> : a numeric for height parameter of the TFCE. When <code>test = "t"</code>, the default is <code>H = 2</code> and when <code>test = "fisher"</code>, the default is <code>H = 1</code>.
+<code>ndh = 500</code> : an integer defining the number of steps when estimating the integral of the TFCE.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

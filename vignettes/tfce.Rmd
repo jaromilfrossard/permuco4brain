@@ -72,7 +72,7 @@ tfce <- brainperm(signal ~ action*stimuli*mvpa_c + Error(participant/(action*sti
 It should run for around half-hour per effect (here 7 effects).
 
 
-Similarly to the cluster-mass test, we can produce heatmap using the `image()` function:
+Similarly to the cluster-mass test, we produce a heat-map using the `image()` function:
 
 ```{r heatmap, eval = FALSE}
 image(tfce, effect = 2)
@@ -97,3 +97,4 @@ tfce_full_table <- summary(tfce, table_type = "full")
 Finally, the vignette [`Figure using ggplot2`](https://jaromilfrossard.github.io/permuco4brain/articles/figure-ggplot2.html) shows more examples for figures that can be customize for publication.
 
 
+# Reference

@@ -1,10 +1,10 @@
-#' Clustermass test based for multiple signals
+#' Multiple comparisons procedure for multiple signals
 #'
-#'@description Compute permutation test with FWER correction on multiple signals spatially distributed.
+#'@description Compute permutation test with with multiples comparison procedure (cluster-mass, TFCE or Troendle).
 #'
 #'@param formula A formula defining the design of the model. The left part should be a 3 dimensional array. Its rows are the observations (or design), its column are the samples (or time-point) and the third dimension are the space (or the nodes of the graph). Each row should correspond to the design in the \code{data} argument.
 #'@param data A dataframe containing the design.
-#'@param graph An igraph object. It specifies the neighborhoods/spatial relationship between the signals/nodes.
+#'@param graph An \code{igraph} object. It specifies the neighborhoods/adjacency between the signals/nodes.
 #'@param np A scalar indicating the number of permutations. It will be overwrite if \code{P} is manually specified.
 #'@param type A character string to specify the type of re-sampling transformation. Default is \code{"permutation"} and \code{"signflip"} is also available. Is overridden if \code{P} is specified. See help from \code{Pmat} in \code{permuco}.
 #'@param test A character string to specify the name of the test. Default is \code{"fisher"}. \code{"t"} is available for the fixed effects model.
@@ -24,6 +24,9 @@
 #' \code{P} : A matrix containing the permutation of class \code{matrix} or \code{Pmat}; which is used for the reproducibility of the results. The first column must be the identity. \code{P} overwrites \code{np} argument.\cr \cr
 #' \code{return_distribution = FALSE} : return the permutation distribution of the statistics. Warnings : return one high dimensional matrices (number of test times number of permutation) for each test.\cr
 #' \code{coding_sum = TRUE} : a logical defining the coding of the design matrix to \code{contr.sum}: set by default to \code{TRUE} for ANOVA (when the argument \code{test} is \code{"fisher"} ) to tests main effects and is set to \code{FALSE} when \code{test} is \code{"t"}.  If \code{coding_sum} is set to \code{FALSE} the design matrix is computed with the coding defined in the dataframe and the tests of simple effects are possible with a coding of the dataframe set to \code{contr.treatment}. \cr
+#' \code{E = 0.5} : a numeric for extend parameter of the TFCE.
+#' \code{H} : a numeric for height parameter of the TFCE. When \code{test = "t"}, the default is \code{H = 2} and when \code{test = "fisher"}, the default is \code{H = 1}.
+#' \code{ndh = 500} : an integer defining the number of steps when estimating the integral of the TFCE.
 #'
 #'@import permuco
 #'@family main functions
