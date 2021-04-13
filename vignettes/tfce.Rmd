@@ -27,7 +27,7 @@ $$
 \text{TFCE}(i) = \int_{h=0}^{T_i} e_i(h)^E h^H \text{d} h.
 $$
 
-The TFCE does an integral over all the thresholds $h$. The function $e_i(h)$ is called the extend of the cluster created by the threshold $h$ and represents the number of test/voxel in that cluster. In addition, the parameters $E$ and $H$ are set _a priori_ and controls the influence of the extend of height on the TFCE. The $p$-value for the voxel $i$ is computed by comparing its $\text{TFCE}(i)$ with the null distribution of the TFCE. For each permuted signal $T_i^\ast$, we keep the maximal value over the whole signal $\max_i\left[\text{TFCE}^*(i) \right]$ for the null distribution of the TFCE.
+The TFCE does an integral over all the thresholds $h$. The function $e_i(h)$ is called the _extend_ of the cluster created by the threshold $h$ and represents the number of test/voxel in that cluster. In addition, the parameters $E$ and $H$ are set _a priori_ and controls the influence of the extend and height on the TFCE. The $p$-value for the voxel $i$ is computed by comparing its $\text{TFCE}(i)$ with the null distribution of the TFCE. For each permuted signal $T_i^\ast$, we keep the maximal value over the whole signal $\max_i\left[\text{TFCE}^*(i) \right]$ for the null distribution of the TFCE.
 
 
 In `permuco4brain`, we implement the suggestion from @pernet_clusterbased_2015 and @smith_thresholdfree_2009 to use $E<1$. Hence, the default values are $E = 0.5$ and, for a F statistic, $H = 1$  and, for a $t$ statistic, $H = 2$. 
@@ -53,16 +53,16 @@ Following the [vignette](https://jaromilfrossard.github.io/permuco4brain/article
 load("signal_design_graph.RData")
 ```
 
-Using the `future` for multi-core processing, we set $2000$M RAM per workers by changing the options: 
+Using `future` for parallelization, we set $2000$M RAM per workers by changing the options: 
 
 ```{r ram, eval = FALSE}
 options(future.globals.maxSize = 2000 * 1024^2)
 ```
 
-This value should mainly depends on the number of tests/voxel (here $64$ channels $\times$ $411$ times-points $26304$) and the number of steps in the approximation of the integral (here $500$). Moreover, the RAM per worker $\times$ the number of worker should not exceed the total RAM of your computer.
+This value should mainly depends on the number of tests/voxels (here $64$ channels $\times$ $411$ times-points $26304$) and the number of steps in the approximation of the integral (here $500$). Moreover, the RAM per worker $\times$ the number of worker should not exceed the total RAM of your computer.
 
 
-Using the `plan()` function we define a multi-core computing process with 6 `workers` and run the TFCE by simply specifying `multcomp = "tfce"`.
+Using the `plan()` function, we parallelize the computation using 6 `workers` and run the TFCE by simply specifying `multcomp = "tfce"`.
 
 ```{r tfce, eval = FALSE}
 plan(multisession, workers = 6)
@@ -70,7 +70,7 @@ tfce <- brainperm(signal ~ action*stimuli*mvpa_c + Error(participant/(action*sti
                   data = design, graph = graph, multcomp = "tfce")
 ```
 
-It should run for around half-hour per effect (here 7 effects).
+It should run for 30-40 minutes per effect. Using this formula, there is a total of 7 effects including 3 main effects, 3 double interactions and 1 triple interaction.
 
 
 Similarly to the cluster-mass test, we produce a heat-map using the `image()` function:

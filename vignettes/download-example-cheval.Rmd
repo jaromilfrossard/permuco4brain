@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 
 
-In the following tutorial, we download EEG data and reanalyze the data in @cheval. This dataset is stored in the [zenodo repository](https://zenodo.org/record/1169140) as `.edf` files. It produces a cluster-mass test [@maris_nonparametric_2007] that controls the [family-wise error rate](https://en.wikipedia.org/wiki/Family-wise_error_rate) over the all times-points and all channels of full scalpe EEG data.
+In the following tutorial, we download EEG data and reanalyze the data in @cheval. This dataset is stored in the [zenodo repository](https://zenodo.org/record/1169140) as `.edf` files. It produces a cluster-mass test [@maris_nonparametric_2007] that controls the [family-wise error rate](https://en.wikipedia.org/wiki/Family-wise_error_rate) over the all times-points and all channels of full scalp EEG data.
 
 ## Installing packages
 

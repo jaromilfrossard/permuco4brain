@@ -25,13 +25,16 @@ compute_troendle_array = function(distribution,alternative, graph){
   tr <- permuco::compute_troendle(matrix(distribution,nrow=dim(distribution)[1],
                                         ncol=prod(dim(distribution)[-1])),alternative = alternative)
 
+  pvalue = t(matrix(tr$main[,2], ncol = dim(distribution)[3]))
+
+
   graph <- full_graph(graph, t = dim(distribution)[2])
 
   graph <- set_vertex_attr(graph, name = "statistic",
                           value = as.numeric(t(distribution[1, , ])))
 
   graph <- set_vertex_attr(graph, name = "pvalue",
-                          value = as.numeric(tr$main[,2]))
+                          value = as.numeric(pvalue))
 
 
   df <- data.frame(channel = vertex_attr(graph, name = c("channel")),
