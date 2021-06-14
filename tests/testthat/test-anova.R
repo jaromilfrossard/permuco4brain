@@ -67,6 +67,12 @@ fl_f_cm <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2,
 m_f_tr <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2,
                     method = "manly",multcomp = c("troendle"))
 
+m_f_sdmaxt <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2,
+                    method = "manly",multcomp = c("stepdownmaxT"))
+
+m_f_cd <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2,
+                        method = "manly",multcomp = c("clusterdepth"))
+
 m_f_tfce <- brainperm(signal~x1*A*B,data=design,graph = gi,np =2,
                     method = "manly",multcomp = c("tfce"))
 

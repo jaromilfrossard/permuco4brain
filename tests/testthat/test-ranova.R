@@ -84,12 +84,19 @@ gi<- position_to_graph(df_channel,delta=1.2,name="channel")
 
 
 rd_cm <- brainperm(signal~bw*wt + Error(id/wt),data=design,graph = gi,np =2,
-                     method = "Rd_kheradPajouh_renaud",ncores=1,multcomp = c("clustermass"))
+                     method = "Rd_kheradPajouh_renaud",multcomp = c("clustermass"))
 
 rde_t <- brainperm(signal~bw*wt + Error(id/wt),data=design,graph = gi,np =2,
-                   method = "Rde_kheradPajouh_renaud",ncores=1,multcomp = c("troendle"))
+                   method = "Rde_kheradPajouh_renaud",multcomp = c("troendle"))
 
+rde_tfce <- brainperm(signal~bw*wt + Error(id/wt),data=design,graph = gi,np =2,
+                   method = "Rde_kheradPajouh_renaud",multcomp = c("tfce"))
 
+rde_cd <- brainperm(signal~bw*wt + Error(id/wt),data=design,graph = gi,np =2,
+                      method = "Rde_kheradPajouh_renaud",multcomp = c("clusterdepth"))
+
+rde_sdmaxt <- brainperm(signal~bw*wt + Error(id/wt),data=design,graph = gi,np =2,
+                    method = "Rde_kheradPajouh_renaud",multcomp = c("stepdownmaxT"))
 
 test_that("Equal statistic rd and rde", {
   max_diff <- max(abs(unlist(lapply(rd_cm $multiple_comparison,function(effi)effi$uncorrected$statistic))-

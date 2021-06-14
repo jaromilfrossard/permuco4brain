@@ -48,6 +48,10 @@ brainperm <- function(formula, data, graph, np = 5000,method = NULL, type = "per
     dotargs$new_method = F
   }
 
+  if (is.null(dotargs$border)) {
+    dotargs$border = "reverse"
+  }
+
 
 
   if (is.null(dotargs$coding_sum)) {
@@ -74,7 +78,7 @@ brainperm <- function(formula, data, graph, np = 5000,method = NULL, type = "per
   }
 
 
-  multcomp <- match.arg(multcomp, c("clustermass", "troendle", "tfce"), several.ok = F)
+  multcomp <- match.arg(multcomp, c("clustermass", "troendle", "tfce", "clusterdepth", "stepdownmaxT"), several.ok = F)
 
   type <- match.arg(type, c("permutation", "signflip"), several.ok = F)
 
@@ -83,7 +87,8 @@ brainperm <- function(formula, data, graph, np = 5000,method = NULL, type = "per
                                graph = graph, effect = effect, coding_sum = dotargs$coding_sum, test = test,
                                aggr_FUN = aggr_FUN, multcomp = multcomp, type = type,
                                return_distribution = dotargs$return_distribution,new_method = dotargs$new_method,
-                               rnd_rotation = dotargs$rnd_rotation, E = dotargs$E, H = dotargs$H, ndh = dotargs$ndh)
+                               rnd_rotation = dotargs$rnd_rotation, E = dotargs$E, H = dotargs$H, ndh = dotargs$ndh,
+                               border = dotargs$border)
   }
   else if (!is.null(indError)) {
     if (test != "fisher") {
@@ -94,7 +99,7 @@ brainperm <- function(formula, data, graph, np = 5000,method = NULL, type = "per
                             graph = graph, effect = effect, coding_sum = dotargs$coding_sum, test = test,
                             aggr_FUN = aggr_FUN, multcomp = multcomp, type = type,
                             return_distribution = dotargs$return_distribution,new_method = dotargs$new_method,
-                            E = dotargs$E, H = dotargs$H, ndh = dotargs$ndh)
+                            E = dotargs$E, H = dotargs$H, ndh = dotargs$ndh, border = dotargs$border)
   }
   return(result)
 }

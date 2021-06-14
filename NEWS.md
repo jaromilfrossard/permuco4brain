@@ -3,6 +3,8 @@
 
 * Adding TFCE
 * Future backend for multiprocessing
+* Adding the clusterdepth test
+* Adding maxT and the stepdownmaxT
 
 # permuco4brain 0.1.0
 

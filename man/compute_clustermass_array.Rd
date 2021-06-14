@@ -31,6 +31,8 @@ Compute the cluster-mass test with adjacency define by a graph.
 }
 \seealso{
 Other MCP: 
+\code{\link{compute_clusterdepth_array}()},
+\code{\link{compute_stepdownmaxT_array}()},
 \code{\link{compute_tfce_array}()},
 \code{\link{compute_troendle_array}()}
 }

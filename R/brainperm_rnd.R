@@ -20,7 +20,7 @@
 #'@importFrom igraph permute.vertices
 # #'@export
 brainperm_rnd <- function(formula, data, method, threshold, np, P, graph, effect, coding_sum, test,type,
-                               aggr_FUN, multcomp, return_distribution, new_method, E, H, ndh){
+                               aggr_FUN, multcomp, return_distribution, new_method, E, H, ndh, border){
 
 
 ##Method$
@@ -57,15 +57,23 @@ brainperm_rnd <- function(formula, data, method, threshold, np, P, graph, effect
     ###FUN multcomp
   switch(multcomp,
          "clustermass" = {
-           funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh){
+           funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh, border){
              compute_clustermass_array(distribution = distribution,threshold = threshold,
                                        alternative = alternative, aggr_FUN = aggr_FUN,graph = graph)}},
-         "troendle" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh){
+         "troendle" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh, border){
            compute_troendle_array(distribution = distribution,graph = graph, alternative = alternative)
          }},
-         "tfce" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh){
+         "stepdownmaxT" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh, border){
+           compute_stepdownmaxT_array(distribution = distribution,graph = graph, alternative = alternative)
+         }},
+         "tfce" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh, border){
            compute_tfce_array(distribution = distribution,graph = graph, alternative = alternative,E = E, H = H, ndh = ndh)
-         }})
+         }},
+         "clusterdepth" = {
+           funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh, border){
+             compute_clusterdepth_array(distribution = distribution,threshold = threshold,
+                                       alternative = alternative, graph = graph, border = border)
+             }})
 
 
 
@@ -200,7 +208,7 @@ brainperm_rnd <- function(formula, data, method, threshold, np, P, graph, effect
       multiple_comparison[[i]][[2]] =
         funMultComp(distribution = distribution,
                     threshold = threshold[i], aggr_FUN = aggr_FUN, graph = graph,
-                    alternative = test_info$alternative, E = E, H = H, ndh = ndh)
+                    alternative = test_info$alternative, E = E, H = H, ndh = ndh, border = border)
       names(multiple_comparison[[i]])[2] = multcomp
     }
 
