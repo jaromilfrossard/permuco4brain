@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Multiple comparisons procedure for multiple signals — brainperm • permuco4brain</title>
+<title>Cluster-depth Tests — compute_clusterdepth_array • permuco4brain</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Multiple comparisons procedure for multiple signals — brainperm" />
-<meta property="og:description" content="Compute permutation test with with multiples comparison procedure (cluster-mass, TFCE or Troendle)." />
+<meta property="og:title" content="Cluster-depth Tests — compute_clusterdepth_array" />
+<meta property="og:description" content="Compute the Cluster- multiple comparison procedure" />
 
 
 
@@ -134,96 +134,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Multiple comparisons procedure for multiple signals</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco4brain/blob/master/R/brainperm.R'><code>R/brainperm.R</code></a></small>
-    <div class="hidden name"><code>brainperm.Rd</code></div>
+    <h1>Cluster-depth Tests</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco4brain/blob/master/R/compute_clusterdepth_array.R'><code>R/compute_clusterdepth_array.R</code></a></small>
+    <div class="hidden name"><code>compute_clusterdepth_array.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute permutation test with with multiples comparison procedure (cluster-mass, TFCE or Troendle).</p>
+    <p>Compute the Cluster- multiple comparison procedure</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>brainperm</span><span class='op'>(</span>
-  <span class='va'>formula</span>,
-  <span class='va'>data</span>,
-  <span class='va'>graph</span>,
-  np <span class='op'>=</span> <span class='fl'>5000</span>,
-  method <span class='op'>=</span> <span class='cn'>NULL</span>,
-  type <span class='op'>=</span> <span class='st'>"permutation"</span>,
-  test <span class='op'>=</span> <span class='st'>"fisher"</span>,
-  aggr_FUN <span class='op'>=</span> <span class='cn'>NULL</span>,
-  threshold <span class='op'>=</span> <span class='cn'>NULL</span>,
-  multcomp <span class='op'>=</span> <span class='st'>"clustermass"</span>,
-  effect <span class='op'>=</span> <span class='cn'>NULL</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>compute_clusterdepth_array</span><span class='op'>(</span><span class='va'>distribution</span>, <span class='va'>threshold</span>, <span class='va'>graph</span>, <span class='va'>alternative</span>, <span class='va'>border</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>formula</th>
-      <td><p>A formula defining the design of the model. The left part should be a 3 dimensional array. Its rows are the observations (or design), its column are the samples (or time-point) and the third dimension are the space (or the nodes of the graph). Each row should correspond to the design in the <code>data</code> argument.</p></td>
-    </tr>
-    <tr>
-      <th>data</th>
-      <td><p>A dataframe containing the design.</p></td>
-    </tr>
-    <tr>
-      <th>graph</th>
-      <td><p>An <code>igraph</code> object. It specifies the neighborhoods/adjacency between the signals/nodes.</p></td>
-    </tr>
-    <tr>
-      <th>np</th>
-      <td><p>A scalar indicating the number of permutations. It will be overwrite if <code>P</code> is manually specified.</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>A character string to specify the re-sampling method. See <code>permuco</code> for details on permutation methods.</p></td>
-    </tr>
-    <tr>
-      <th>type</th>
-      <td><p>A character string to specify the type of re-sampling transformation. Default is <code>"permutation"</code> and <code>"signflip"</code> is also available. Is overridden if <code>P</code> is specified. See help from <code>Pmat</code> in <code>permuco</code>.</p></td>
-    </tr>
-    <tr>
-      <th>test</th>
-      <td><p>A character string to specify the name of the test. Default is <code>"fisher"</code>. <code>"t"</code> is available for the fixed effects model.</p></td>
-    </tr>
-    <tr>
-      <th>aggr_FUN</th>
-      <td><p>A function used as mass function. It should aggregate the statistics of a cluster into one scalar. Default is the sum of squares for t statistic and sum for F statistic.</p></td>
+      <th>distribution</th>
+      <td><p>An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>See <code>clusterlm</code> in <code>permuco</code>.</p></td>
+      <td><p>A numeric specifying the height of the threshold to compute the clusters.</p></td>
     </tr>
     <tr>
-      <th>multcomp</th>
-      <td><p>The multiple comparison procedure only <code>"clustermass"</code> (default), <code>"tfce"</code>, <code>"troendle"</code>is available.</p></td>
+      <th>graph</th>
+      <td><p>A igraph object representing the adjacency of the channels.</p></td>
     </tr>
     <tr>
-      <th>effect</th>
-      <td><p>An integer indicating the effect to test. It refers to the <code>assign</code> attribute of the <code>model.matrix</code> object. The default (<code>effect = NULL</code>) compute all effects.</p></td>
+      <th>alternative</th>
+      <td><p>a character string indicating the alternative hypothesis. Either <code>"greater"</code>, <code>"less"</code> or <code>"two.sided"</code>.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>further arguments</p></td>
+      <th>border</th>
+      <td><p>A character string indicating the method to handles the border. Either <code>"reverse"</code>, reversing the computation of the cluster-depth for clusters at the border of the time frame, or <code>"ignore"</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a <code>brainperm</code> object.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <p>graph a list containing an igraph and a data.frame, with the results for each sample, channel.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>The random effects model is only available with a F statistic.<br /></p>
-<p>Other arguments could be pass in <code>...</code> :<br /> <br />
-<code>P</code> : A matrix containing the permutation of class <code>matrix</code> or <code>Pmat</code>; which is used for the reproducibility of the results. The first column must be the identity. <code>P</code> overwrites <code>np</code> argument.<br /> <br />
-<code>return_distribution = FALSE</code> : return the permutation distribution of the statistics. Warnings : return one high dimensional matrices (number of test times number of permutation) for each test.<br />
-<code>coding_sum = TRUE</code> : a logical defining the coding of the design matrix to <code>contr.sum</code>: set by default to <code>TRUE</code> for ANOVA (when the argument <code>test</code> is <code>"fisher"</code> ) to tests main effects and is set to <code>FALSE</code> when <code>test</code> is <code>"t"</code>.  If <code>coding_sum</code> is set to <code>FALSE</code> the design matrix is computed with the coding defined in the dataframe and the tests of simple effects are possible with a coding of the dataframe set to <code>contr.treatment</code>. <br />
-<code>E = 0.5</code> : a numeric for extend parameter of the TFCE.
-<code>H</code> : a numeric for height parameter of the TFCE. When <code>test = "t"</code>, the default is <code>H = 2</code> and when <code>test = "fisher"</code>, the default is <code>H = 1</code>.
-<code>ndh = 500</code> : an integer defining the number of steps when estimating the integral of the TFCE.</p>
+    <div class='dont-index'><p>Other MCP: 
+<code><a href='compute_clustermass_array.html'>compute_clustermass_array</a>()</code>,
+<code><a href='compute_stepdownmaxT_array.html'>compute_stepdownmaxT_array</a>()</code>,
+<code><a href='compute_tfce_array.html'>compute_tfce_array</a>()</code>,
+<code><a href='compute_troendle_array.html'>compute_troendle_array</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
