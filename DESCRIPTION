@@ -30,7 +30,7 @@ Suggests:
     spelling
 Remotes: 
     github::bnicenboim/eeguana,
-    github::jaromilfrossard/permuco
+    github::jaromilfrossard/permuco@rcpp
 VignetteBuilder: knitr
 BugReports: https://github.com/jaromilfrossard/permuco4brain/issues
 Language: en-US
