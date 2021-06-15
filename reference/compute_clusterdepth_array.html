@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cluster-depth Tests — compute_clusterdepth_array • permuco4brain</title>
+<title>Cluster Depth Tests — compute_clusterdepth_array • permuco4brain</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Cluster-depth Tests — compute_clusterdepth_array" />
-<meta property="og:description" content="Compute the Cluster- multiple comparison procedure" />
+<meta property="og:title" content="Cluster Depth Tests — compute_clusterdepth_array" />
+<meta property="og:description" content="Compute the Cluster- multiple comparisons procedure." />
 
 
 
@@ -134,13 +134,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cluster-depth Tests</h1>
+    <h1>Cluster Depth Tests</h1>
     <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco4brain/blob/master/R/compute_clusterdepth_array.R'><code>R/compute_clusterdepth_array.R</code></a></small>
     <div class="hidden name"><code>compute_clusterdepth_array.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute the Cluster- multiple comparison procedure</p>
+    <p>Compute the Cluster- multiple comparisons procedure.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>compute_clusterdepth_array</span><span class='op'>(</span><span class='va'>distribution</span>, <span class='va'>threshold</span>, <span class='va'>graph</span>, <span class='va'>alternative</span>, <span class='va'>border</span><span class='op'>)</span></code></pre></div>
@@ -158,11 +158,11 @@
     </tr>
     <tr>
       <th>graph</th>
-      <td><p>A igraph object representing the adjacency of the channels.</p></td>
+      <td><p>A igraph object representing the adjacency of the channels (used for the outputs only).</p></td>
     </tr>
     <tr>
       <th>alternative</th>
-      <td><p>a character string indicating the alternative hypothesis. Either <code>"greater"</code>, <code>"less"</code> or <code>"two.sided"</code>.</p></td>
+      <td><p>A character string indicating the alternative hypothesis. Either <code>"greater"</code>, <code>"less"</code> or <code>"two.sided"</code>.</p></td>
     </tr>
     <tr>
       <th>border</th>
@@ -172,7 +172,10 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>graph a list containing an igraph and a data.frame, with the results for each sample, channel.</p>
+    <p>A list containing an igraph and a data.frame, with the results for each sample, channel.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Frossard, J., &amp; Renaud, O. (2021). The Cluster Depth Tests: Toward Point-Wise Strong Control of the Family-Wise Error Rate in Massively Univariate Tests with Application to M/EEG. arXiv preprint arXiv:2105.07514.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other MCP: 
