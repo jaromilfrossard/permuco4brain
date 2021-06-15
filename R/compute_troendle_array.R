@@ -1,10 +1,11 @@
-#' Troendle multiple comparison procedure
+#' Troendle's multiple comparisons procedure
 #'
-#' @description Compute the Troendle multiple comparison procedure
-#' @param distribution An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.
-#' @param graph A igraph object representing the adjacency of the channels.
-#' @param alternative a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.
-#' @return graph a list containing an igraph and a data.frame, with the results for each sample, channel.
+#' @description Compute the Troendle's multiple comparisons procedure, which corresponds to the step-wise version of the min-P.
+#' @param distribution An 3d array representing the null distribution of multiple signals. The first dimension is the permutations, the second the samples, the third is the channels.
+#' @param graph An igraph object representing the adjacency of the channels (used for the output only).
+#' @param alternative A character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.
+#' @return A list containing an igraph and a data.frame, with the results for each sample and channels.
+#' @references Troendle, J. F. (1995). A stepwise resampling method of multiple hypothesis testing. Journal of the American Statistical Association, 90(429), 370-378, https://doi.org/10.1080/01621459.1995.10476522.
 #' @family MCP
 #' @export
 compute_troendle_array = function(distribution,alternative, graph){

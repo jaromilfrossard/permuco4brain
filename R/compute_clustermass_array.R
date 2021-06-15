@@ -1,12 +1,13 @@
-#' Cluster-mass test
+#' Cluster Mass Test
 #'
-#' @description Compute the cluster-mass test with adjacency define by a graph.
+#' @description Compute the cluster mass test with adjacency defined by a graph.
 #' @param distribution An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.
 #' @param threshold The threshold used to compute the clusters.
-#' @param aggr_FUN The function that aggregate the cluster into a scalar (cluster mass).
+#' @param aggr_FUN The function that aggregates the cluster into a scalar value (cluster mass).
 #' @param graph A igraph object representing the adjacency of the channels.
 #' @param alternative a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.
-#' @return graph A list containing a igraph object, a data frame containing the channels, time, statistic, cluster-mass and p-values,
+#' @return A list containing an igraph object, a data frame containing the channels, time, statistic, cluster-mass and p-values.
+#' @references Maris, E., & Oostenveld, R. (2007). Nonparametric statistical testing of EEG-and MEG-data. Journal of neuroscience methods, 164(1), 177-190, https://doi.org/10.1016/j.jneumeth.2007.03.024.
 #' @importFrom igraph set_vertex_attr delete_vertices clusters vertex_attr V set.vertex.attribute
 #' @family MCP
 #' @export

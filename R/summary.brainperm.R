@@ -38,19 +38,26 @@ summary.brainperm = function(object, multcomp = NULL, table_type = "cluster",
          "cluster" = {
 
     if(multcomp == "clustermass"){
-      out[[i]] <- brainperm_cluster_table(multiple_comparison[[i]],effect_name = names(multiple_comparison)[i])}
-           else if(multcomp == "troendle"){
+      out[[i]] <- brainperm_cluster_table(multiple_comparison[[i]],effect_name = names(multiple_comparison)[i])
+      }else if(multcomp == "troendle"){
       out[[i]] <- brainperm_pseudocluster_table(multiple_comparison[[i]],effect_name = names(multiple_comparison)[i],
-                                                    multcomp = "troendle",... = ...)}
-           else if(multcomp == "tfce"){
+                                                    multcomp = "troendle",... = ...)
+      }else if(multcomp == "tfce"){
              out[[i]] <- brainperm_pseudocluster_table(multiple_comparison[[i]],effect_name = names(multiple_comparison)[i],
-                                                       multcomp = "tfce",... = ...)}
+                                                       multcomp = "tfce",... = ...)
+      }else if(multcomp == "clusterdepth"){
+        out[[i]] <- brainperm_pseudocluster_table(multiple_comparison[[i]],effect_name = names(multiple_comparison)[i],
+                                                  multcomp = "clusterdepth",... = ...)
+      }else if(multcomp == "stepdownmaxT"){
+        out[[i]] <- brainperm_pseudocluster_table(multiple_comparison[[i]],effect_name = names(multiple_comparison)[i],
+                                                  multcomp = "stepdownmaxT",... = ...)}
+
   },
   "full" = {
     out[[i]] <- brainperm_full_table(multiple_comparison[[i]],effect_name = names(multiple_comparison)[i],
                                      multcomp = multcomp,... = ...)
   })}
-  names(out) = names(multiple_comparison)
+  names(out) <- names(multiple_comparison)
 
 
 

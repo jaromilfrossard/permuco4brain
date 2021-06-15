@@ -2,22 +2,22 @@
 % Please edit documentation in R/compute_stepdownmaxT_array.R
 \name{compute_stepdownmaxT_array}
 \alias{compute_stepdownmaxT_array}
-\title{Step-down version of the max T multiple comparison procedure}
+\title{Step-down version of the max T multiple comparisons procedure}
 \usage{
 compute_stepdownmaxT_array(distribution, alternative, graph)
 }
 \arguments{
 \item{distribution}{An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.}
 
-\item{alternative}{a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.}
+\item{alternative}{A character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.}
 
-\item{graph}{A igraph object representing the adjacency of the channels.}
+\item{graph}{A igraph object representing the adjacency of the channels  (used for the outputs only).}
 }
 \value{
-graph a list containing an igraph and a data.frame, with the results for each sample, channel.
+A list containing an igraph and a data.frame, with the results for each sample, channel.
 }
 \description{
-Compute the step-down version of the max T multiple comparison procedure
+Compute the step-down version of the max T multiple comparisons procedure.
 }
 \seealso{
 Other MCP: 

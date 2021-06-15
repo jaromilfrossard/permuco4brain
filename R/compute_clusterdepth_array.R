@@ -1,12 +1,13 @@
-#' Cluster-depth Tests
+#' Cluster Depth Tests
 #'
-#' @description Compute the Cluster- multiple comparison procedure
+#' @description Compute the Cluster- multiple comparisons procedure.
 #' @param distribution An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.
 #' @param threshold A numeric specifying the height of the threshold to compute the clusters.
-#' @param graph A igraph object representing the adjacency of the channels.
-#' @param alternative a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.
+#' @param graph A igraph object representing the adjacency of the channels (used for the outputs only).
+#' @param alternative A character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.
 #' @param border A character string indicating the method to handles the border. Either \code{"reverse"}, reversing the computation of the cluster-depth for clusters at the border of the time frame, or \code{"ignore"}.
-#' @return graph a list containing an igraph and a data.frame, with the results for each sample, channel.
+#' @return A list containing an igraph and a data.frame, with the results for each sample, channel.
+#' @references Frossard, J., & Renaud, O. (2021). The Cluster Depth Tests: Toward Point-Wise Strong Control of the Family-Wise Error Rate in Massively Univariate Tests with Application to M/EEG. arXiv preprint arXiv:2105.07514.
 #' @family MCP
 #' @export
 compute_clusterdepth_array <- function(distribution, threshold, graph, alternative, border){

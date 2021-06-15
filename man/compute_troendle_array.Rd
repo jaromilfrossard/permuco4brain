@@ -2,22 +2,25 @@
 % Please edit documentation in R/compute_troendle_array.R
 \name{compute_troendle_array}
 \alias{compute_troendle_array}
-\title{Troendle multiple comparison procedure}
+\title{Troendle's multiple comparisons procedure}
 \usage{
 compute_troendle_array(distribution, alternative, graph)
 }
 \arguments{
-\item{distribution}{An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.}
+\item{distribution}{An 3d array representing the null distribution of multiple signals. The first dimension is the permutations, the second the samples, the third is the channels.}
 
-\item{alternative}{a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.}
+\item{alternative}{A character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.}
 
-\item{graph}{A igraph object representing the adjacency of the channels.}
+\item{graph}{An igraph object representing the adjacency of the channels (used for the output only).}
 }
 \value{
-graph a list containing an igraph and a data.frame, with the results for each sample, channel.
+A list containing an igraph and a data.frame, with the results for each sample and channels.
 }
 \description{
-Compute the Troendle multiple comparison procedure
+Compute the Troendle's multiple comparisons procedure, which corresponds to the step-wise version of the min-P.
+}
+\references{
+Troendle, J. F. (1995). A stepwise resampling method of multiple hypothesis testing. Journal of the American Statistical Association, 90(429), 370-378, https://doi.org/10.1080/01621459.1995.10476522.
 }
 \seealso{
 Other MCP: 

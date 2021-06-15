@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Threshold-free cluster-enhancement — compute_tfce_array • permuco4brain</title>
+<title>Threshold-free cluster-enhancement (TFCE) — compute_tfce_array • permuco4brain</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Threshold-free cluster-enhancement — compute_tfce_array" />
-<meta property="og:description" content="Compute the TFCE statistics and p-value" />
+<meta property="og:title" content="Threshold-free cluster-enhancement (TFCE) — compute_tfce_array" />
+<meta property="og:description" content="Compute the TFCE statistics and the corresponding p-values." />
 
 
 
@@ -132,13 +132,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Threshold-free cluster-enhancement</h1>
+    <h1>Threshold-free cluster-enhancement (TFCE)</h1>
     <small class="dont-index">Source: <a href='https://github.com/jaromilfrossard/permuco4brain/blob/master/R/compute_tfce_array.R'><code>R/compute_tfce_array.R</code></a></small>
     <div class="hidden name"><code>compute_tfce_array.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute the TFCE statistics and p-value</p>
+    <p>Compute the TFCE statistics and the corresponding p-values.</p>
     </div>
 
     <pre class="usage"><span class='fu'>compute_tfce_array</span><span class='op'>(</span><span class='va'>distribution</span>, <span class='va'>graph</span>, <span class='va'>alternative</span>, <span class='va'>E</span>, <span class='va'>H</span>, <span class='va'>ndh</span><span class='op'>)</span></pre>
@@ -156,25 +156,28 @@
     </tr>
     <tr>
       <th>alternative</th>
-      <td><p>a character string indicating the alternative hypothesis. Either <code>"greater"</code>, <code>"less"</code> or <code>"two.sided"</code>.</p></td>
+      <td><p>A character string indicating the alternative hypothesis. Either <code>"greater"</code>, <code>"less"</code> or <code>"two.sided"</code>.</p></td>
     </tr>
     <tr>
       <th>E</th>
-      <td><p>a numeric indicating the parameter associated to the cluster extend. Suggestion <code>E = 0.5</code>.</p></td>
+      <td><p>A numeric indicating the parameter associated to the cluster extend. Suggestion <code>E = 0.5</code>.</p></td>
     </tr>
     <tr>
       <th>H</th>
-      <td><p>a numeric indicating the parameter associated to the cluster height. Suggestion for t statistic: <code>H = 1</code>, for F statistic: <code>H = 2</code>.</p></td>
+      <td><p>A numeric indicating the parameter associated to the cluster height. Suggestion for t statistic: <code>H = 1</code>, for F statistic: <code>H = 2</code>.</p></td>
     </tr>
     <tr>
       <th>ndh</th>
-      <td><p>a numeric indicating the number of step for the approximation of the integral. Suggestion <code>ndh = 500</code>.</p></td>
+      <td><p>A numeric indicating the number of step for the approximation of the integral. Suggestion <code>ndh = 500</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>graph a list containing an igraph and a data.frame, with the results for each sample, channel.</p>
+    <p>A list containing an igraph and a data.frame, with the results for each sample, channel.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Smith, S. M., &amp; Nichols, T. E. (2009). Threshold-free cluster enhancement: addressing problems of smoothing, threshold dependence and localisation in cluster inference. Neuroimage, 44(1), 83-98, https://doi.org/10.1016/j.neuroimage.2008.03.061.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other MCP: 

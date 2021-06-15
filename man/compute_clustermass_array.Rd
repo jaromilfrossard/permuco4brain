@@ -2,7 +2,7 @@
 % Please edit documentation in R/compute_clustermass_array.R
 \name{compute_clustermass_array}
 \alias{compute_clustermass_array}
-\title{Cluster-mass test}
+\title{Cluster Mass Test}
 \usage{
 compute_clustermass_array(
   distribution,
@@ -17,17 +17,20 @@ compute_clustermass_array(
 
 \item{threshold}{The threshold used to compute the clusters.}
 
-\item{aggr_FUN}{The function that aggregate the cluster into a scalar (cluster mass).}
+\item{aggr_FUN}{The function that aggregates the cluster into a scalar value (cluster mass).}
 
 \item{graph}{A igraph object representing the adjacency of the channels.}
 
 \item{alternative}{a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.}
 }
 \value{
-graph A list containing a igraph object, a data frame containing the channels, time, statistic, cluster-mass and p-values,
+A list containing an igraph object, a data frame containing the channels, time, statistic, cluster-mass and p-values.
 }
 \description{
-Compute the cluster-mass test with adjacency define by a graph.
+Compute the cluster mass test with adjacency defined by a graph.
+}
+\references{
+Maris, E., & Oostenveld, R. (2007). Nonparametric statistical testing of EEG-and MEG-data. Journal of neuroscience methods, 164(1), 177-190, https://doi.org/10.1016/j.jneumeth.2007.03.024.
 }
 \seealso{
 Other MCP: 

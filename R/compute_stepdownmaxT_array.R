@@ -1,10 +1,10 @@
-#' Step-down version of the max T multiple comparison procedure
+#' Step-down version of the max T multiple comparisons procedure
 #'
-#' @description Compute the step-down version of the max T multiple comparison procedure
+#' @description Compute the step-down version of the max T multiple comparisons procedure.
 #' @param distribution An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.
-#' @param graph A igraph object representing the adjacency of the channels.
-#' @param alternative a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.
-#' @return graph a list containing an igraph and a data.frame, with the results for each sample, channel.
+#' @param graph A igraph object representing the adjacency of the channels  (used for the outputs only).
+#' @param alternative A character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.
+#' @return A list containing an igraph and a data.frame, with the results for each sample, channel.
 #' @family MCP
 #' @export
 compute_stepdownmaxT_array = function(distribution,alternative, graph){

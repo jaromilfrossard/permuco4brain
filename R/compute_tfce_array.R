@@ -1,13 +1,14 @@
-#' Threshold-free cluster-enhancement
+#' Threshold-free cluster-enhancement (TFCE)
 #'
-#' @description Compute the TFCE statistics and p-value
+#' @description Compute the TFCE statistics and the corresponding p-values.
 #' @param distribution An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.
 #' @param graph A igraph object representing the adjacency of the channels.
-#' @param alternative a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.
-#' @param E  a numeric indicating the parameter associated to the cluster extend. Suggestion \code{E = 0.5}.
-#' @param H a numeric indicating the parameter associated to the cluster height. Suggestion for t statistic: \code{H = 1}, for F statistic: \code{H = 2}.
-#' @param ndh a numeric indicating the number of step for the approximation of the integral. Suggestion \code{ndh = 500}.
-#' @return graph a list containing an igraph and a data.frame, with the results for each sample, channel.
+#' @param alternative A character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.
+#' @param E  A numeric indicating the parameter associated to the cluster extend. Suggestion \code{E = 0.5}.
+#' @param H A numeric indicating the parameter associated to the cluster height. Suggestion for t statistic: \code{H = 1}, for F statistic: \code{H = 2}.
+#' @param ndh A numeric indicating the number of step for the approximation of the integral. Suggestion \code{ndh = 500}.
+#' @return A list containing an igraph and a data.frame, with the results for each sample, channel.
+#' @references Smith, S. M., & Nichols, T. E. (2009). Threshold-free cluster enhancement: addressing problems of smoothing, threshold dependence and localisation in cluster inference. Neuroimage, 44(1), 83-98, https://doi.org/10.1016/j.neuroimage.2008.03.061.
 #' @importFrom future.apply future_lapply
 #' @importFrom abind abind
 #' @family MCP

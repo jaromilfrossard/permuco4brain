@@ -2,7 +2,7 @@
 % Please edit documentation in R/compute_clusterdepth_array.R
 \name{compute_clusterdepth_array}
 \alias{compute_clusterdepth_array}
-\title{Cluster-depth Tests}
+\title{Cluster Depth Tests}
 \usage{
 compute_clusterdepth_array(distribution, threshold, graph, alternative, border)
 }
@@ -11,17 +11,20 @@ compute_clusterdepth_array(distribution, threshold, graph, alternative, border)
 
 \item{threshold}{A numeric specifying the height of the threshold to compute the clusters.}
 
-\item{graph}{A igraph object representing the adjacency of the channels.}
+\item{graph}{A igraph object representing the adjacency of the channels (used for the outputs only).}
 
-\item{alternative}{a character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.}
+\item{alternative}{A character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.}
 
 \item{border}{A character string indicating the method to handles the border. Either \code{"reverse"}, reversing the computation of the cluster-depth for clusters at the border of the time frame, or \code{"ignore"}.}
 }
 \value{
-graph a list containing an igraph and a data.frame, with the results for each sample, channel.
+A list containing an igraph and a data.frame, with the results for each sample, channel.
 }
 \description{
-Compute the Cluster- multiple comparison procedure
+Compute the Cluster- multiple comparisons procedure.
+}
+\references{
+Frossard, J., & Renaud, O. (2021). The Cluster Depth Tests: Toward Point-Wise Strong Control of the Family-Wise Error Rate in Massively Univariate Tests with Application to M/EEG. arXiv preprint arXiv:2105.07514.
 }
 \seealso{
 Other MCP: 
