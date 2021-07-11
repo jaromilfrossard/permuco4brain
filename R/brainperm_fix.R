@@ -1,6 +1,6 @@
 #' @importFrom stats rnorm qt pt
 brainperm_fix <- function(formula, data, method, threshold, np, P, graph, effect, coding_sum, test,type,
-                          aggr_FUN, multcomp, return_distribution, new_method,rnd_rotation, E, H, ndh, border){
+                          aggr_FUN, multcomp, return_distribution, new_method,rnd_rotation, E, H, ndh){
 
   ##Method$
   if(is.null(method)){method = "freedman_lane"}
@@ -38,22 +38,22 @@ brainperm_fix <- function(formula, data, method, threshold, np, P, graph, effect
   ###FUN multcomp
   switch(multcomp,
          "clustermass" = {
-           funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh, border){
+           funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh){
              compute_clustermass_array(distribution = distribution,threshold = threshold,
                                        alternative = alternative, aggr_FUN = aggr_FUN,graph = graph)}},
-         "troendle" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh, border){
+         "troendle" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh){
            compute_troendle_array(distribution = distribution,graph = graph, alternative = alternative)
          }},
-         "stepdownmaxT" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh, border){
+         "stepdownmaxT" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh){
            compute_stepdownmaxT_array(distribution = distribution,graph = graph, alternative = alternative)
          }},
-         "tfce" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh, border){
+         "tfce" = {funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh){
            compute_tfce_array(distribution = distribution,graph = graph, alternative = alternative,E = E, H = H, ndh = ndh)
          }},
          "clusterdepth" = {
-           funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh, border){
+           funMultComp = function(distribution,threshold,aggr_FUN,graph,alternative, E, H, ndh){
              compute_clusterdepth_array(distribution = distribution,threshold = threshold,
-                                       alternative = alternative, graph = graph, border = border)}})
+                                       alternative = alternative, graph = graph)}})
 
   #Formula transforamtion
 
@@ -228,7 +228,7 @@ brainperm_fix <- function(formula, data, method, threshold, np, P, graph, effect
 
     multiple_comparison[[i]][[2]] =
       funMultComp(distribution = distribution, threshold = threshold[i], aggr_FUN = aggr_FUN,
-                  graph = graph, alternative = test_info$alternative, E = E, H = H, ndh = ndh, border = border)
+                  graph = graph, alternative = test_info$alternative, E = E, H = H, ndh = ndh)
     names(multiple_comparison[[i]])[2] = multcomp
 
     if(test=="t"){
@@ -241,7 +241,7 @@ brainperm_fix <- function(formula, data, method, threshold, np, P, graph, effect
                                                            test_info = test_info)
       multiple_comparison_greater[[i]][[2]] =
         funMultComp(distribution = distribution, threshold = threshold[i], aggr_FUN = aggr_FUN,
-                    graph = graph, alternative = test_info$alternative, E = E, H = H, ndh = ndh, border = border)
+                    graph = graph, alternative = test_info$alternative, E = E, H = H, ndh = ndh)
       names(multiple_comparison_greater[[i]])[2] = multcomp
 
       test_info$alternative <- "less"
@@ -251,7 +251,7 @@ brainperm_fix <- function(formula, data, method, threshold, np, P, graph, effect
                                                         test_info = test_info)
       multiple_comparison_less[[i]][[2]] =
         funMultComp(distribution = distribution, threshold = threshold[i], aggr_FUN = aggr_FUN,
-                    graph = graph, alternative = test_info$alternative, E = E, H = H, ndh = ndh, border = border)
+                    graph = graph, alternative = test_info$alternative, E = E, H = H, ndh = ndh)
       names(multiple_comparison_less[[i]])[2] = multcomp
 
 

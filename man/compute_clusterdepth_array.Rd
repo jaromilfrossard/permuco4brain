@@ -4,7 +4,7 @@
 \alias{compute_clusterdepth_array}
 \title{Cluster Depth Tests}
 \usage{
-compute_clusterdepth_array(distribution, threshold, graph, alternative, border)
+compute_clusterdepth_array(distribution, threshold, graph, alternative)
 }
 \arguments{
 \item{distribution}{An 3d array representing the null distribution of multiple signal. The first dimension is the permutations, the second the samples, the third is the channels.}
@@ -14,8 +14,6 @@ compute_clusterdepth_array(distribution, threshold, graph, alternative, border)
 \item{graph}{A igraph object representing the adjacency of the channels (used for the outputs only).}
 
 \item{alternative}{A character string indicating the alternative hypothesis. Either \code{"greater"}, \code{"less"} or \code{"two.sided"}.}
-
-\item{border}{A character string indicating the method to handles the border. Either \code{"reverse"}, reversing the computation of the cluster-depth for clusters at the border of the time frame, or \code{"ignore"}.}
 }
 \value{
 A list containing an igraph and a data.frame, with the results for each sample, channel.
