@@ -33,11 +33,10 @@ compute_clusterdepth_array <- function(distribution, threshold, graph, alternati
 
       cluster_head <- permuco:::get_cluster_matrix(distribution[,,chani],threshold = threshold,side = "starting")
       depth_head <-  permuco:::get_clusterdepth_head(cluster_head, border = "ignore")
+      distr_head<- permuco:::depth_distribution(distribution[,,chani], head_mat = depth_head)
 
       cluster_tail <- permuco:::get_cluster_matrix(distribution[,,chani],threshold = threshold,side = "ending")
       depth_tail <-  permuco:::get_clusterdepth_tail(cluster_tail, border = "ignore")
-
-      distr_head<- permuco:::depth_distribution(distribution[,,chani], head_mat = depth_head)
       distr_tail<- permuco:::depth_distribution(distribution[,,chani], tail_mat = depth_tail)
 
 
@@ -74,19 +73,12 @@ compute_clusterdepth_array <- function(distribution, threshold, graph, alternati
           } )
         })
 
-    mx_len = max(sapply(stats_head,function(x)
-      if(length(x)==0){
-        0
-      }else{
-        max(sapply(x,length))
-      }
 
-      ))
     ## pvalue and maximum head
     pval_head <-
       lapply(stats_head, function(stats_chan){
         lapply(stats_chan,function(stats_cli){
-            compute_troendle(rbind(c(stats_cli,rep(0,mx_len-length(stats_cli))),distr_head[,seq_len(mx_len),drop=F]),alternative = alternative)$main[seq_len(length(stats_cli)),2]
+            compute_troendle(rbind(c(stats_cli,rep(0,ncol(distr_head)-length(stats_cli))),distr_head),alternative = alternative)$main[seq_along(stats_cli),2]
           })
         })
 
@@ -120,21 +112,13 @@ compute_clusterdepth_array <- function(distribution, threshold, graph, alternati
         } )
       })
 
-    mx_len = max(sapply(stats_tail,function(x)
-      if(length(x)==0){
-        0
-      }else{
-        max(sapply(x,length))
-      }
-
-    ))
 
 
     ## pvalue and maximum head
     pval_tail <-
       lapply(stats_tail, function(stats_chan){
         lapply(stats_chan,function(stats_cli){
-          compute_troendle(rbind(c(rep(0,mx_len-length(stats_cli)),stats_cli),distr_tail[,seq_len(mx_len),drop=F]),alternative = alternative)$main[mx_len- rev(seq_len(length(stats_cli))) +1,2]
+          compute_troendle(rbind(c(rep(0,ncol(distr_tail)-length(stats_cli)),stats_cli),distr_tail),alternative = alternative)$main[seq_along(stats_cli)+ncol(distr_tail)-length(stats_cli),2]
         })
       })
 
