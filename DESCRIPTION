@@ -27,10 +27,10 @@ Suggests:
     MASS,
     purrr,
     covr,
-    spelling
+    spelling,
+    permuco
 Remotes: 
-    github::bnicenboim/eeguana,
-    github::jaromilfrossard/permuco@rcpp
+    github::bnicenboim/eeguana
 VignetteBuilder: knitr
 BugReports: https://github.com/jaromilfrossard/permuco4brain/issues
 Language: en-US
