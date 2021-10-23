@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permuco4brain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@
 </h1>
                         <h4 data-toc-skip class="author">Jaromil Frossard</h4>
             
-            <h4 data-toc-skip class="date">2021-07-15</h4>
+            <h4 data-toc-skip class="date">2021-10-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/permuco4brain-with-eeguana.Rmd" class="external-link"><code>vignettes/permuco4brain-with-eeguana.Rmd</code></a></small>
       <div class="hidden name"><code>permuco4brain-with-eeguana.Rmd</code></div>
@@ -100,15 +100,15 @@
 
     
     
-<div id="extracting-3d-array-using-eeguana" class="section level3">
-<h3 class="hasAnchor">
-<a href="#extracting-3d-array-using-eeguana" class="anchor" aria-hidden="true"></a>Extracting 3D array using eeguana</h3>
+<div class="section level3">
+<h3 id="extracting-3d-array-using-eeguana">Extracting 3D array using eeguana<a class="anchor" aria-label="anchor" href="#extracting-3d-array-using-eeguana"></a>
+</h3>
 <p>The <code>eeguana</code> package <span class="citation">(Nicenboim 2018)</span> provides tools for the pre-processing of EEG data. Once the pre-processing is done with <code>eeguana</code>, the 3D matrix/array of the signals should be extracted from the <code>eeguana</code>. This signals are stored in a 3D matrix/array that is the left part of the formula of the <code><a href="../reference/brainperm.html">brainperm()</a></code> function to perform the cluster-mass test or TFCE.</p>
 <p>The EEG data <span class="citation">(Nicenboim 2019)</span> available on the Open Science Framework repository was analyzed using the <code>eeguana</code> package by <span class="citation">Nicenboim, Vasishth, and Rösler (2019)</span>. We use the same data-set in the following tutorial.</p>
 </div>
-<div id="downloading-data-from-osf" class="section level3">
-<h3 class="hasAnchor">
-<a href="#downloading-data-from-osf" class="anchor" aria-hidden="true"></a>Downloading data from OSF</h3>
+<div class="section level3">
+<h3 id="downloading-data-from-osf">Downloading data from OSF<a class="anchor" aria-label="anchor" href="#downloading-data-from-osf"></a>
+</h3>
 <p>From the <a href="https://osf.io/ut7xq/" class="external-link">EEG data</a> repository we found the <code>"03_data_summarization.Rmd"</code> file which provides functions to easily download the EEG data. As it is a large dataset (more than 20GB), we only download the pre-processed signals using the <a href="https://en.wikipedia.org/wiki/Independent_component_analysis" class="external-link">ICA</a>. When following the first chunk of the <code>"03_data_summarization.Rmd"</code> file you should have (at least):</p>
 <ol style="list-style-type: decimal">
 <li>A folder <code>data/</code> containing 5 csv files, 2 tsv files and 2 folders.</li>
@@ -116,9 +116,9 @@
 <li>The folder <code>data/opensesame_files/</code> contains 120 csv files (1 for each subject)</li>
 </ol>
 </div>
-<div id="r-package" class="section level2">
-<h2 class="hasAnchor">
-<a href="#r-package" class="anchor" aria-hidden="true"></a>R package</h2>
+<div class="section level2">
+<h2 id="r-package">R package<a class="anchor" aria-label="anchor" href="#r-package"></a>
+</h2>
 <p>In the following analysis, we mainly use functions from the <code>tidyverse</code> <span class="citation">(Wickham et al. 2019)</span>, from <code>eeguana</code> <span class="citation">(Nicenboim 2018)</span>, from <code>permuco</code> <span class="citation">(Frossard and Renaud 2020b)</span>, from <code>permuco4brain</code> <span class="citation">(Frossard and Renaud 2020a)</span>, from <code>future</code> <span class="citation">(Bengtsson 2020)</span> and from <code>igraph</code> <span class="citation">(Csardi and Nepusz 2006)</span>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
@@ -126,11 +126,11 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco" class="external-link">permuco</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco4brain" class="external-link">permuco4brain</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org" class="external-link">igraph</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HenrikBengtsson/future" class="external-link">future</a></span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span></code></pre></div>
 </div>
-<div id="computing-the-erps" class="section level2">
-<h2 class="hasAnchor">
-<a href="#computing-the-erps" class="anchor" aria-hidden="true"></a>Computing the ERPs</h2>
+<div class="section level2">
+<h2 id="computing-the-erps">Computing the ERPs<a class="anchor" aria-label="anchor" href="#computing-the-erps"></a>
+</h2>
 <p>First, we compute ERPs following the design of the experiment and save them in the folder <code>data_erp/</code>. To reduce the number of samples (and the computing time), we delete samples (or time-point) before the event and downsample to 256Hz. Finally, the ERPs are computed by taking the average for each sample, each channel and each experimental condition, which are the interaction between the <code>within</code> participant factors <code>region</code> and <code>cond</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">datadir</span> <span class="op">&lt;-</span> <span class="st">"data/preproc_ica/"</span>
@@ -165,9 +165,9 @@
 <span class="va">erps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"bind"</span>,<span class="va">erps</span><span class="op">)</span></code></pre></div>
 <p>Now, the <code>erps</code> object contains the ERPs for all participants. It is <code>eeg_lst</code> object which can be manipulated using the functions from <code>eeguana</code>.</p>
 </div>
-<div id="adding-the-between-participant-variables" class="section level2">
-<h2 class="hasAnchor">
-<a href="#adding-the-between-participant-variables" class="anchor" aria-hidden="true"></a>Adding the <code>between</code>-participant variables</h2>
+<div class="section level2">
+<h2 id="adding-the-between-participant-variables">Adding the <code>between</code>-participant variables<a class="anchor" aria-label="anchor" href="#adding-the-between-participant-variables"></a>
+</h2>
 <p>We download the <code>between</code>-participant variables by combining 4 files. We choose to keep the age, the batch and the occupation as <code>between</code>-participant factors.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_subj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="st">"data/students.csv"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span>
@@ -202,9 +202,9 @@
   <span class="va">erps</span><span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of</a></span><span class="op">(</span><span class="va">chan_to_rm</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="extracting-the-3d-matrix" class="section level2">
-<h2 class="hasAnchor">
-<a href="#extracting-the-3d-matrix" class="anchor" aria-hidden="true"></a>Extracting the 3D matrix</h2>
+<div class="section level2">
+<h2 id="extracting-the-3d-matrix">Extracting the 3D matrix<a class="anchor" aria-label="anchor" href="#extracting-the-3d-matrix"></a>
+</h2>
 <p>We extract the 3D matrix using the following script. The dimensions are the design <span class="math inline">\(\times\)</span> the samples <span class="math inline">\(\times\)</span> the channels.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">signal</span> <span class="op">&lt;-</span> 
@@ -235,15 +235,15 @@
 <span class="co">#      design = design,</span>
 <span class="co">#      graph = graph,file = "signal_design_graph.RData")</span></code></pre></div>
 <p>Finally, we use <code>permuco4brain</code> for testing the difference between experimental conditions. We have a repeated measures ANCOVA, with 1 covariate (the centered age), 1 between-participants factors (the occupation) and 2 within-participants factors (region and condition). The permutation tests is computed for all samples, all channels while controlling for the family-wise error rate (FWER).</p>
-<p>The <code><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan()</a></code> function from the <a href="https://github.com/HenrikBengtsson/future" class="external-link"><code>future</code> package</a> handles multi-cores computing</p>
+<p>The <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan()</a></code> function from the <a href="https://github.com/HenrikBengtsson/future" class="external-link"><code>future</code> package</a> handles multi-cores computing</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">formula</span> <span class="op">&lt;-</span> <span class="va">signal</span> <span class="op">~</span> <span class="va">age_c</span><span class="op">*</span><span class="va">occupation</span><span class="op">*</span><span class="va">region</span><span class="op">*</span><span class="va">cond</span> <span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">Error</a></span><span class="op">(</span><span class="va">.recording</span><span class="op">/</span><span class="op">(</span><span class="va">region</span><span class="op">*</span><span class="va">cond</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span>
+<span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span>
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainperm.html">brainperm</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">formula</span>, data <span class="op">=</span> <span class="va">design</span>, graph <span class="op">=</span> <span class="va">graph</span><span class="op">)</span></code></pre></div>
 <p>By default, the <code><a href="../reference/brainperm.html">brainperm()</a></code> function run the cluster-mass test <span class="citation">(Maris and Oostenveld 2007)</span>. However, the procedure from <span class="citation">Troendle (1995)</span> and the TFCE <span class="citation">(Smith and Nichols 2009)</span> are also available by specifying the arguments <code>multcomp = "troendle"</code> or <code>multcomp = "tfce"</code>.</p>
-<div id="reference" class="section level3 unnumbered">
-<h3 class="hasAnchor">
-<a href="#reference" class="anchor" aria-hidden="true"></a>Reference</h3>
+<div class="section level3 unnumbered">
+<h3 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
+</h3>
 <div id="refs" class="references">
 <div id="ref-future">
 <p>Bengtsson, Henrik. 2020. <em>A Unifying Framework for Parallel and Distributed Processing in R Using Futures</em>. <a href="https://arxiv.org/abs/2008.00553" class="external-link">https://arxiv.org/abs/2008.00553</a>.</p>
@@ -300,7 +300,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>

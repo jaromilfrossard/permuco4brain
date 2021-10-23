@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permuco4brain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
       <h1 data-toc-skip>Download example of full scalp EEG data</h1>
                         <h4 data-toc-skip class="author">Jaromil Frossard</h4>
             
-            <h4 data-toc-skip class="date">2021-07-15</h4>
+            <h4 data-toc-skip class="date">2021-10-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/download-example-cheval.Rmd" class="external-link"><code>vignettes/download-example-cheval.Rmd</code></a></small>
       <div class="hidden name"><code>download-example-cheval.Rmd</code></div>
@@ -100,21 +100,21 @@
     
     
 <p>In the following tutorial, we download EEG data and reanalyze the data in <span class="citation">Cheval et al. (2018)</span>. This dataset is stored in the <a href="https://zenodo.org/record/1169140" class="external-link">zenodo repository</a> as <code>.edf</code> files. It produces a cluster-mass test <span class="citation">(Maris and Oostenveld 2007)</span> that controls the <a href="https://en.wikipedia.org/wiki/Family-wise_error_rate" class="external-link">family-wise error rate</a> over the all times-points and all channels of full scalp EEG data.</p>
-<div id="installing-packages" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installing-packages" class="anchor" aria-hidden="true"></a>Installing packages</h2>
+<div class="section level2">
+<h2 id="installing-packages">Installing packages<a class="anchor" aria-label="anchor" href="#installing-packages"></a>
+</h2>
 <p>We need several packages including <code>tidyverse</code> <span class="citation">(Wickham et al. 2019)</span>, <code>edf</code> <span class="citation">(Henelius 2016)</span>, <code>abind</code> <span class="citation">(Plate and Heiberger 2016)</span>, <code>readxl</code> <span class="citation">(Wickham and Bryan 2019)</span>, <code>permuco4brain</code> <span class="citation">(Frossard and Renaud 2020)</span> and <code>future</code> <span class="citation">(Bengtsson 2020)</span>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">edf</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">abind</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org" class="external-link">readxl</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HenrikBengtsson/future" class="external-link">future</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco4brain" class="external-link">permuco4brain</a></span><span class="op">)</span></code></pre></div>
 </div>
-<div id="downloading-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#downloading-data" class="anchor" aria-hidden="true"></a>Downloading data</h2>
+<div class="section level2">
+<h2 id="downloading-data">Downloading data<a class="anchor" aria-label="anchor" href="#downloading-data"></a>
+</h2>
 <p>We download the data in a temporary files before unzipping the <code>.edf</code> files.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">temp_zip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span>
@@ -136,9 +136,9 @@
          mvpa_c <span class="op">=</span> <span class="va">MVPA</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">MVPA</span><span class="op">)</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">subject</span>,<span class="va">mvpa_c</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="reshaping-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#reshaping-data" class="anchor" aria-hidden="true"></a>Reshaping data</h2>
+<div class="section level2">
+<h2 id="reshaping-data">Reshaping data<a class="anchor" aria-label="anchor" href="#reshaping-data"></a>
+</h2>
 <p>We create the design from the filenames and we join the “between”-subject variables. Moreover, we keep only the <code>"Round"</code> stimuli as neutral shapes.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span><span class="op">&lt;-</span> 
@@ -178,9 +178,9 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">temp_zip</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">temp_edf</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="extracting-the-signal-the-design-and-the-graph" class="section level2">
-<h2 class="hasAnchor">
-<a href="#extracting-the-signal-the-design-and-the-graph" class="anchor" aria-hidden="true"></a>Extracting the signal, the design and the graph</h2>
+<div class="section level2">
+<h2 id="extracting-the-signal-the-design-and-the-graph">Extracting the signal, the design and the graph<a class="anchor" aria-label="anchor" href="#extracting-the-signal-the-design-and-the-graph"></a>
+</h2>
 <p>We create the 3D array that stores the signals:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">signal</span><span class="op">&lt;-</span> 
@@ -217,15 +217,15 @@
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/position_to_graph.html">position_to_graph</a></span><span class="op">(</span><span class="va">coord</span>, delta <span class="op">=</span> <span class="fl">35</span>, name <span class="op">=</span> <span class="st">"channel"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="test-and-plots" class="section level2">
-<h2 class="hasAnchor">
-<a href="#test-and-plots" class="anchor" aria-hidden="true"></a>Test and plots</h2>
+<div class="section level2">
+<h2 id="test-and-plots">Test and plots<a class="anchor" aria-label="anchor" href="#test-and-plots"></a>
+</h2>
 <p>We may want to save the 3 objects: <code>signal</code>, <code>design</code> and <code>graph</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># save(signal,design,graph,file = "signal_design_graph.RData")</span></code></pre></div>
-<p>The <code><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan()</a></code> function from the <a href="https://github.com/HenrikBengtsson/future" class="external-link"><code>future</code> package</a> handles multi-cores computing. Finally, we run the permutation tests using:</p>
+<p>The <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan()</a></code> function from the <a href="https://github.com/HenrikBengtsson/future" class="external-link"><code>future</code> package</a> handles multi-cores computing. Finally, we run the permutation tests using:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span>
 <span class="va">clustermass</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainperm.html">brainperm</a></span><span class="op">(</span><span class="va">signal</span> <span class="op">~</span> <span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">*</span><span class="va">mvpa_c</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">Error</a></span><span class="op">(</span><span class="va">participant</span><span class="op">/</span><span class="op">(</span><span class="va">action</span><span class="op">*</span><span class="va">stimuli</span><span class="op">)</span><span class="op">)</span>,
                          data <span class="op">=</span> <span class="va">design</span>, graph <span class="op">=</span> <span class="va">graph</span><span class="op">)</span></code></pre></div>
 <p>It will take around 1 to run the 7 tests on a modern computer.</p>
@@ -254,9 +254,9 @@
 <!-- plot(clustermass, effect = 2,samples = c(100,120,120,130)) -->
 <!-- ``` -->
 </div>
-<div id="reference" class="section level1 unnumbered">
-<h1 class="hasAnchor">
-<a href="#reference" class="anchor" aria-hidden="true"></a>Reference</h1>
+<div class="section level1 unnumbered">
+<h1 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
+</h1>
 <div id="refs" class="references">
 <div id="ref-future">
 <p>Bengtsson, Henrik. 2020. <em>A Unifying Framework for Parallel and Distributed Processing in R Using Futures</em>. <a href="https://arxiv.org/abs/2008.00553" class="external-link">https://arxiv.org/abs/2008.00553</a>.</p>
@@ -303,7 +303,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>

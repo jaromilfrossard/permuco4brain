@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">permuco4brain</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
       <h1 data-toc-skip>Figure using ggplot2</h1>
                         <h4 data-toc-skip class="author">Jaromil Frossard</h4>
             
-            <h4 data-toc-skip class="date">2021-07-15</h4>
+            <h4 data-toc-skip class="date">2021-10-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jaromilfrossard/permuco4brain/blob/master/vignettes/figure-ggplot2.Rmd" class="external-link"><code>vignettes/figure-ggplot2.Rmd</code></a></small>
       <div class="hidden name"><code>figure-ggplot2.Rmd</code></div>
@@ -107,9 +107,9 @@
 <code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jaromilfrossard/permuco4brain"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"download-example-cheval"</span>,package <span class="op">=</span> <span class="st">"permuco4brain"</span><span class="op">)</span></code></pre></div>
 <p>In the <code>download-example-cheval</code> vignette, the final step is to perform test on a repeated measures ANCOVA model using <code>signal ~ action*stimuli*mvpa_c + Error(participant/(action*stimuli))</code>. In the following tutorial, we will assume the same data-set but adjusting a slightly simpler model, using the formula: <code>signal ~ action*stimuli + Error(participant/(action*stimuli))</code>.</p>
-<div id="the-heat-map" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-heat-map" class="anchor" aria-hidden="true"></a>The heat-map</h2>
+<div class="section level2">
+<h2 id="the-heat-map">The heat-map<a class="anchor" aria-label="anchor" href="#the-heat-map"></a>
+</h2>
 <p>In this section, we create a similar heat-map than the <code><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image()</a></code> function applied to a <code>brainperm</code> object. We need the following package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jaromilfrossard/permuco" class="external-link">permuco</a></span><span class="op">)</span>
@@ -174,9 +174,9 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span></code></pre></div>
 <p><img src="figure_ggplot2_heatmap_stat.png"></p>
 </div>
-<div id="the-signals-on-grid" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-signals-on-grid" class="anchor" aria-hidden="true"></a>The signals on grid</h2>
+<div class="section level2">
+<h2 id="the-signals-on-grid">The signals on grid<a class="anchor" aria-label="anchor" href="#the-signals-on-grid"></a>
+</h2>
 <p>In EEG analysis, it is common to plot the ERP of each channel on the representation of the head. This type representation usually displays the data or average per group but we adapt it to display the statistical signal for each effect. We will use the <code>geofacet</code> <span class="citation">(Hafen 2019)</span> package and its web-app to construct the grid.</p>
 <p>We need the following package:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -256,9 +256,9 @@
         axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="figure_ggplot2_signal_grid.png"></p>
 </div>
-<div id="the-graph-of-the-channels" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-graph-of-the-channels" class="anchor" aria-hidden="true"></a>The graph of the channels</h2>
+<div class="section level2">
+<h2 id="the-graph-of-the-channels">The graph of the channels<a class="anchor" aria-label="anchor" href="#the-graph-of-the-channels"></a>
+</h2>
 <p>In the following section, we plot the graph of adjacency of the channel for 1 sample by highlighting the channels belonging to significant clusters. It produces an accurate representation the clusters at a precise time-point.</p>
 <p>In addition to the usual package we need <code>ggforce</code> <span class="citation">(Pedersen 2019)</span> as it facilitates the representation of the channels (using <code><a href="https://ggforce.data-imaginist.com/reference/geom_circle.html" class="external-link">geom_circle()</a></code>).</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -374,9 +374,9 @@
         legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span></code></pre></div>
 <p><img src="figure_ggplot2_graph_all.png"></p>
 </div>
-<div id="reference" class="section level1 unnumbered">
-<h1 class="hasAnchor">
-<a href="#reference" class="anchor" aria-hidden="true"></a>Reference</h1>
+<div class="section level1 unnumbered">
+<h1 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
+</h1>
 <div id="refs" class="references">
 <div id="ref-geofacet">
 <p>Hafen, Ryan. 2019. <em>Geofacet: ’Ggplot2’ Faceting Utilities for Geographical Data</em>. <a href="https://CRAN.R-project.org/package=geofacet" class="external-link">https://CRAN.R-project.org/package=geofacet</a>.</p>
@@ -420,7 +420,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
